@@ -34,15 +34,15 @@ Useful css syntax notes:
 // **** **** **** **** **** **** **** **** */
 
 p {
-    font-family: Arial;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 h1 {
-    font-family: Serif;
+    font-family: Times, serif;
 }
 
 li {
-   font-family: Arial, Sans Serif;
+   font-family: Arial, Helvetica, sans-serif;
 }
 
 .publication{
