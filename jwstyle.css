@@ -40,3 +40,11 @@ p {
 h1 {
     font-family: Serif;
 }
+
+li {
+   font-family: Arial, Sans Serif;
+}
+
+.publication{
+    font-family: "Times New Roman", Times, serif;
+}
