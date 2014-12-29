@@ -52,6 +52,7 @@ li {
 #sidebar{
     display: inline-block;
     vertical-align: top;
+    float: left;
 }
 
 #main{
