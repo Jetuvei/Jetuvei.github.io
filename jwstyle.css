@@ -56,3 +56,11 @@ li {
 #main{
     display: inline-block;
 }
+
+/*
+ DEBUG/SANITY
+*/
+
+*{
+    border: 1px dashed;
+}
