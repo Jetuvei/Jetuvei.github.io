@@ -48,3 +48,11 @@ li {
 .publication{
     font-family: "Times New Roman", Times, serif;
 }
+
+#sidebar{
+    display: inline-block;
+}
+
+#main{
+    display: inline-block;
+}
