@@ -52,6 +52,7 @@ Useful css syntax notes:
     vertical-align: center;
     float: center;
     padding: 10px;
+    background-color: #dddddd;
 }
 
 .nav li a{
