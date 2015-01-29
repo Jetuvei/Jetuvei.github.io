@@ -49,7 +49,7 @@ Useful css syntax notes:
 
 .nav li{
     display: inline-block;
-    vertical-align: top;
+    vertical-align: center;
     float: center;
     padding: 10px;
 }
