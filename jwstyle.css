@@ -64,7 +64,11 @@ li {
     padding: 10px;
 }
 
-#main{
+/*
+ *** MAIN ***
+ */
+
+.main{
     display: inline-block;
 }
 
