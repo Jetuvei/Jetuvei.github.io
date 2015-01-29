@@ -34,11 +34,11 @@ Useful css syntax notes:
 // **** **** **** **** **** **** **** **** */
 
 p {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: Times, serif;
 }
 
 h1 {
-    font-family: Times, serif;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 li {
@@ -49,10 +49,19 @@ li {
     font-family: "Times New Roman", Times, serif;
 }
 
+/*
+ *** NAV ***
+ */
+
 .nav{
+    border-bottom: solid 1px;
+}
+
+.nav li{
     display: inline-block;
     vertical-align: top;
-    float: left;
+    float: center;
+    padding: 10px;
 }
 
 #main{
