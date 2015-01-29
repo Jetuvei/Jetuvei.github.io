@@ -33,13 +33,24 @@ Useful css syntax notes:
 
 // **** **** **** **** **** **** **** **** */
 
-.publication{
-    font-family: "Times New Roman", Times, serif;
-}
-
+/* 
+ *** general ***
+ */
 
 body{
   background-color: #eeeeee;
+}
+
+a{
+  text-decoration: none;
+}
+
+/*
+ *** PUBLICATION ***
+ */
+
+.publication{
+    font-family: "Times New Roman", Times, serif;
 }
 
 /*
