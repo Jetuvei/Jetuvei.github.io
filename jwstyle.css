@@ -33,18 +33,6 @@ Useful css syntax notes:
 
 // **** **** **** **** **** **** **** **** */
 
-p {
-    font-family: Times, serif;
-}
-
-h1 {
-    font-family: Arial, Helvetica, sans-serif;
-}
-
-li {
-   font-family: Arial, Helvetica, sans-serif;
-}
-
 .publication{
     font-family: "Times New Roman", Times, serif;
 }
@@ -71,6 +59,28 @@ li {
 .main{
     display: inline-block;
 }
+
+
+.main p {
+    font-family: Times, serif;
+}
+
+.main h1 {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.main h2 {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.main h3 {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.main li {
+   font-family: Arial, Helvetica, sans-serif;
+}
+
 
 /*
  DEBUG/SANITY
