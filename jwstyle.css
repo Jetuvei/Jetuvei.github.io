@@ -43,6 +43,8 @@ Useful css syntax notes:
 
 .nav{
     border-bottom: solid 1px;
+    margin-left: 10%;
+    margin-right: 10%;
 }
 
 .nav li{
@@ -58,6 +60,8 @@ Useful css syntax notes:
 
 .main{
     display: inline-block;
+    margin-left: 10%;
+    margin-right: 10%;
 }
 
 
