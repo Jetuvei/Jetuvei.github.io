@@ -49,7 +49,7 @@ li {
     font-family: "Times New Roman", Times, serif;
 }
 
-#sidebar{
+.sidebar{
     display: inline-block;
     vertical-align: top;
     float: left;
