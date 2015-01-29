@@ -53,6 +53,11 @@ body{
     background-color: white;
 }
 
+.nav ul{
+    background-color: gray;
+    margin: 0;
+}
+
 .nav li{
     display: inline-block;
     vertical-align: center;
