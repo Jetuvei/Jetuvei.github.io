@@ -52,13 +52,24 @@ Useful css syntax notes:
     vertical-align: center;
     float: center;
     padding: 10px;
-    background-color: #dddddd;
+    background-color: gray;
+}
+
+.nav li:hover{
+    background-color: black;
 }
 
 .nav li a{
      font-family: Arial, sans-serif;
      font-size: 18pt;
      font-weight: bold;
+     font-color: black;
+     text-decoration: none;
+     color: black;
+}
+
+.nav li a:hover{
+     color: gray;
 }
 
 /*
