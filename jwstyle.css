@@ -37,6 +37,11 @@ Useful css syntax notes:
     font-family: "Times New Roman", Times, serif;
 }
 
+
+body{
+  background-color: #eeeeee;
+}
+
 /*
  *** NAV ***
  */
@@ -45,6 +50,7 @@ Useful css syntax notes:
     border-bottom: solid 1px;
     margin-left: 10%;
     margin-right: 10%;
+    background-color: white;
 }
 
 .nav li{
@@ -80,6 +86,7 @@ Useful css syntax notes:
     display: inline-block;
     margin-left: 10%;
     margin-right: 10%;
+    background-color: white;
 }
 
 
