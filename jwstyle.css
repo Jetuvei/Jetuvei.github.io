@@ -57,6 +57,12 @@ a:visited{
 
 .publication{
     font-family: "Times New Roman", Times, serif;
+    padding-top: 5pt;
+    padding-bottom: 5pt;
+}
+
+.publication li{
+    list-style-type: none;
 }
 
 /*
