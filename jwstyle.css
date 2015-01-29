@@ -60,6 +60,14 @@ a:visited{
 }
 
 /*
+ *** PROF-PIC ***
+ */
+
+ .prof-pic img{
+    padding-left: 20pt;
+ }
+
+/*
  *** NAV ***
  */
 
@@ -139,5 +147,5 @@ a:visited{
 */
 
 *{
-    /*border: 1px dashed;*/
+    border: 1px dashed;
 }
