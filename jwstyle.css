@@ -54,6 +54,12 @@ Useful css syntax notes:
     padding: 10px;
 }
 
+.nav li a{
+     font-family: Arial, sans-serif;
+     font-size: 18pt;
+     font-weight: bold;
+}
+
 /*
  *** MAIN ***
  */
