@@ -97,9 +97,11 @@ a:visited{
     background-color: gray;
 }
 
+/*
 .nav li:hover{
-    /* background-color: black; */
+    background-color: black;
 }
+*/
 
 .nav li a{
      font-family: Arial, sans-serif;
@@ -108,12 +110,16 @@ a:visited{
      font-color: black;
      text-decoration: none;
      color: black;
+     margin: 0;
+     padding: 0;
 }
 
+/*
 .nav li a:hover{
      background-color: black;
      color: gray;
 }
+*/
 
 /*
  *** MAIN ***
