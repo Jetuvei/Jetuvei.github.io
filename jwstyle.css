@@ -33,10 +33,133 @@ Useful css syntax notes:
 
 // **** **** **** **** **** **** **** **** */
 
-p {
-    font-family: Arial;
+/* 
+ *** general ***
+ */
+
+body{
+  background-color: #eeeeee;
 }
 
-h1 {
-    font-family: Serif;
+a{
+  text-decoration: none;
+  color: black;
+  font-weight: bold;
 }
+
+a:visited{
+  color: darkred;
+}
+
+/*
+ *** PUBLICATION ***
+ */
+
+.publication{
+    font-family: "Times New Roman", Times, serif;
+    padding-top: 5pt;
+    padding-bottom: 5pt;
+}
+
+.publication li{
+    list-style-type: none;
+}
+
+/*
+ *** PROF-PIC ***
+ */
+
+ .prof-pic img{
+    padding-left: 20pt;
+ }
+
+/*
+ *** NAV ***
+ */
+
+.nav{
+    border-bottom: solid 1px;
+    margin-left: 10%;
+    margin-right: 10%;
+    background-color: white;
+}
+
+.nav ul{
+    background-color: gray;
+    margin: 0;
+}
+
+.nav li{
+    display: inline-block;
+    vertical-align: center;
+    float: center;
+    padding: 10px;
+    background-color: gray;
+}
+
+/*
+.nav li:hover{
+    background-color: black;
+}
+*/
+
+.nav li a{
+     font-family: Arial, sans-serif;
+     font-size: 18pt;
+     font-weight: bold;
+     font-color: black;
+     text-decoration: none;
+     color: black;
+     margin: 0;
+     padding: 0;
+}
+
+/*
+.nav li a:hover{
+     background-color: black;
+     color: gray;
+}
+*/
+
+/*
+ *** MAIN ***
+ */
+
+.main{
+    display: inline-block;
+    margin-left: 10%;
+    margin-right: 10%;
+    background-color: white;
+    padding: 5pt;
+}
+
+
+.main p {
+    font-family: Times, serif;
+}
+
+.main h1 {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.main h2 {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.main h3 {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.main li {
+   font-family: Arial, Helvetica, sans-serif;
+}
+
+
+/*
+ DEBUG/SANITY
+*/
+
+/*
+*{
+    border: 1px dashed;
+}*/
