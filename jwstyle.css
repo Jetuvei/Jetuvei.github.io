@@ -98,7 +98,7 @@ a:visited{
 }
 
 .nav li:hover{
-    background-color: black;
+    /* background-color: black; */
 }
 
 .nav li a{
@@ -111,6 +111,7 @@ a:visited{
 }
 
 .nav li a:hover{
+     background-color: black;
      color: gray;
 }
 
