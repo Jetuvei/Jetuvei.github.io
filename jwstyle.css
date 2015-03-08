@@ -37,7 +37,11 @@ Useful css syntax notes:
   would you find information about whether a link had been clicked on or not? 
   It isn't there!
 
-  Pseudo-class selectors let us style these kinds of changes in our HTML document. For example, we saw we could change a link's text-decoration property to make it something other than blue and underlined. Using pseudo selectors, you can control the appearance of unvisited and visited links—even links the user is hovering over but hasn't clicked!
+  Pseudo-class selectors let us style these kinds of changes in our HTML 
+  document. For example, we saw we could change a link's text-decoration 
+  property to make it something other than blue and underlined. Using pseudo 
+  selectors, you can control the appearance of unvisited and visited links — 
+  even links the user is hovering over but hasn't clicked!
 
   e.g. a:hover{...}
 
