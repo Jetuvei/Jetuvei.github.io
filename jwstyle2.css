@@ -74,7 +74,7 @@ a:visited{
  */
 
  .prof-pic img{
-    /*padding-left: 20pt;*/
+   width: 100%;
  }
 
 /*
@@ -141,6 +141,7 @@ a:visited{
  */
 
 .sidebar{
+  width: 29%;
   background-color: blue;
 }
 
@@ -151,8 +152,7 @@ a:visited{
 .main{
     display: inline-block;
     background-color: white;
-    padding: 5pt;
-    width: 50%;
+    width: 69%;
 }
 
 
