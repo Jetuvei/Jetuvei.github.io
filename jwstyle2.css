@@ -41,6 +41,10 @@ body{
   background-color: #eeeeee;
 }
 
+body div{
+  display: inline-block;
+}
+
 a{
   text-decoration: none;
   color: black;
@@ -70,7 +74,7 @@ a:visited{
  */
 
  .prof-pic img{
-    padding-left: 20pt;
+    /*padding-left: 20pt;*/
  }
 
 /*
@@ -122,15 +126,22 @@ a:visited{
 */
 
 /*
+ *** SIDEBAR ***
+ */
+
+.sidebar{
+  background-color: blue;
+}
+
+/*
  *** MAIN ***
  */
 
 .main{
     display: inline-block;
-    margin-left: 10%;
-    margin-right: 10%;
     background-color: white;
     padding: 5pt;
+    width: 50%;
 }
 
 
@@ -159,7 +170,6 @@ a:visited{
  DEBUG/SANITY
 */
 
-/*
 *{
     border: 1px dashed;
-}*/
+}
