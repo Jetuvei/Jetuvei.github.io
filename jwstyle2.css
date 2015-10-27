@@ -143,6 +143,12 @@ a:visited{
 .sidebar{
   width: 29%;
   background-color: blue;
+  vertical-align: top;
+  height: 100%;
+}
+
+.sidebar ul{
+  list-style-type: none;
 }
 
 /*
