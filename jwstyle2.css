@@ -126,6 +126,17 @@ a:visited{
 */
 
 /*
+ * CONTENT
+ */
+
+.content{
+  margin-right: 10%;
+  margin-left: 10%;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+/*
  *** SIDEBAR ***
  */
 
