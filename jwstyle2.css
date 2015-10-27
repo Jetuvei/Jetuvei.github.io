@@ -90,6 +90,8 @@ a:visited{
     background-color: yellow;
     width: 100%;
     margin: 0;
+    padding: 0;
+    margin: 0;
 }
 
 .nav li{
@@ -99,7 +101,6 @@ a:visited{
     padding: 10px;
     width: 100%;
     background-color: gray;
-    margin-left: -20px;
 }
 
 /*
