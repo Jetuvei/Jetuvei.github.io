@@ -73,9 +73,22 @@ a:visited{
  *** PROF-PIC ***
  */
 
- .prof-pic img{
-   width: 100%;
- }
+.prof-pic img{
+  width: 100%;
+}
+
+/*
+ *** CONTACT ***
+ */
+
+.contact{
+  background-color: white;
+  padding: 10pt;
+}
+
+.contact img{
+  width: 80%;
+}
 
 /*
  *** NAV ***
@@ -192,7 +205,7 @@ a:visited{
 /*
  DEBUG/SANITY
 */
-
+/*
 *{
     border: 1px dashed;
-}
+}*/
