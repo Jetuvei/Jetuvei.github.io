@@ -157,7 +157,7 @@ a:visited{
  */
 
 .sidebar{
-  width: 29%;
+  width: 25%;
   background-color: blue;
   vertical-align: top;
   height: 100%;
@@ -176,8 +176,8 @@ a:visited{
 .main{
     display: inline-block;
     background-color: white;
-    width: 69%;
-    padding: 5pt;
+    width: 65%;
+    padding: 10pt;
 }
 
 
