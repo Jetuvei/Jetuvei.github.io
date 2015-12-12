@@ -186,28 +186,28 @@ a:visited{
 
 
 .main p {
-    font-family: Source Serif Pro, Times, serif;
+    font-family: Georgia, Source Serif Pro, Times, serif;
 }
 
 .main h1 {
-    font-family: Source Sans Pro, Arial, Helvetica, sans-serif;
+    font-family: Geneva, Calibri, Source Sans Pro, Arial, Helvetica, sans-serif;
 }
 
 .main h2 {
-    font-family: Source Sans Pro, Arial, Helvetica, sans-serif;
+    font-family: Geneva, Calibri, Source Sans Pro, Arial, Helvetica, sans-serif;
 }
 
 .main h3 {
-    font-family: Source Sans Pro, Arial, Helvetica, sans-serif;
+    font-family: Geneva, Calibri, Source Sans Pro, Arial, Helvetica, sans-serif;
 }
 
 .main h4 {
-    font-family: Source Sans Pro, Arial, Helvetica, sans-serif;
+    font-family: Geneva, Calibri, Source Sans Pro, Arial, Helvetica, sans-serif;
     font-style: italic;
 }
 
 .main li {
-   font-family: Source Sans Pro, Arial, Helvetica, sans-serif;
+   font-family: Geneva, Calibri, Source Sans Pro, Arial, Helvetica, sans-serif;
 }
 
 
