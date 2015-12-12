@@ -8,56 +8,64 @@
   (Although, there are probably better examples of html out there
   that you could fork...)
 
-  I also owe a lot to www.codeacademy.com, which is where I've 
+  I also owe a lot to www.codecademy.com, which is where I've 
   been learning html/css.
 -->
 
 <html>
  <head>
-  <link type="text/css" rel="stylesheet" href="jwstyle.css"/>
+  <link href='https://fonts.googleapis.com/css?family=Source+Serif+Pro' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
+  <link type="text/css" rel="stylesheet" href="jwstyle_simple.css"/>
   <title>Justin's Homepage</title>
  </head>
 
  <body>
 
-<!--
-<!-- SIDEBAR - ->
-  <div class="nav">
-   
-   <ul>
-    <li><a href="#home">Home</a></li>
-    <li><a href="#aboutme">About Me!</a></li>
-    <li><a href="#publications">Publications</a></li>
-    <li><a href="#cv">Curiculum Vitae</a></li>
-   </ul>
+ <!-- content div wraps sidebar and main to control positioning of the two -->
+ <div class="content">
+
+<!-- SIDEBAR -->
+
+  <div class="sidebar">
+
+    <!-- display sidebar contents on top of one another -->
+    <ul>
+      <li>
+       <div class="prof-pic">
+        <img src="web-prof-pic.jpg">
+       </div>
+      </li>
+      <li>
+       <div class="contact">
+        <h2>Contact</h2>
+        <img src="email_address.png">
+       </div>
+      </li>
+     </ul>
 
   </div>
--->
 
 <!-- MAIN -->
   <div class="main">
 
-   <div class="prof-pic">
-    <img src="web-prof-pic.jpg" align="right">
-   </div>
-
    <h1>Justin Whitehouse</h1>
-
-   <h2 id="home">Under Development</h2>
-
-    <p>Hello! My webpage is currently <it>under development</it>. Hopefully it will look more complete soon!
-    </p>
-
-    <p>You can also look at <a href="http://www.ph.ed.ac.uk/people/justin-whitehouse">my page</a> on the University of Edinburgh School of Physics and Astronomy Website, but I would rather you didn't because my photo on there is really embarrassing.
-    </p>
 
     <h3 id="aboutme">About Me!</h3>
 
-    <p>I am a PhD student, studying nonequilibrium stochastic processes, in the School of Physics and Astronomy at the University of Edinburgh. I am funded by the Scottish Universities Physics Alliance (<a href="http://www.supa.ac.uk/">SUPA</a>) through the Condensed Matter Doctoral Training Centre (<a href="http://cm-dtc.supa.ac.uk/">CM-DTC</a>). 
+    <p>I have recently finished a PhD in non-equilibrium stochastic processes, which I completed at the School of Physics and Astronomy at the University of Edinburgh, UK. 
+    </p>
+
+    <p>I am funded by the Scottish Universities Physics Alliance (<a href="http://www.supa.ac.uk/">SUPA</a>) through the Scottish Doctoral Training Centre in Condensed Matter Physics (<a href="http://cm-cdt.supa.ac.uk/">CM-CDT</a>). 
     </p>
 
     <p>You can find me on <a href="https://www.researchgate.net/profile/Justin_Whitehouse">Research Gate</a> and <a href="https://www.linkedin.com/profile/public-profile-settings?trk=prof-edit-edit-public_profile">LinkedIn</a>.
     </p>
+
+    <p>You can also look at <a href="http://www.ph.ed.ac.uk/people/justin-whitehouse">my page</a> on the University of Edinburgh School of Physics and Astronomy Website.
+    </p>
+
+    
 
     <h3>Publications</h3>
 
@@ -69,7 +77,7 @@
        Effect of Partial Absorption on Diffusion with Resetting
        <ul>
         <li><a href="http://journals.aps.org/pre/abstract/10.1103/PhysRevE.87.022118">Phys. Rev. E <strong>87</strong> 022118 (2013)</a></li>
-        <li><a href="http://arxiv.org/abs/1301.2489">arxiv</a> <a href="http://arxiv.org/pdf/1301.2489.pdf">pdf</a></li>
+        <li><a href="http://arxiv.org/abs/1301.2489">arxiv</a> (<a href="http://arxiv.org/pdf/1301.2489.pdf">pdf</a>)</li>
        </ul>
       </li>
 
@@ -81,38 +89,27 @@
        Maintenance of Order in a Moving Strong Condensate
        <ul>
         <li><a href="http://iopscience.iop.org/1742-5468/2014/11/P11029">J. Stat. Mech. (2014) P11029</a></li>
-        <li><a href="http://arxiv.org/abs/1407.1668">arxiv</a> <a href="http://arxiv.org/pdf/1407.1668v3.pdf">pdf</a></li>
+        <li><a href="http://arxiv.org/abs/1407.1668">arxiv</a> (<a href="http://arxiv.org/pdf/1407.1668v3.pdf">pdf</a>)</li>
        </ul>
       </li>
 
-     </div>
-
-     <div class="publication"> 
-      <li>
-       Statistical Physics: Predicting the Odds
-       <ul>
-        <li><a href="http://cm-dtc.supa.ac.uk/outreach/combinedarticles.pdf">Modern Condensed Matter Issue 1</a>, CM-DTC Outreach Magazine (2012)</li>
-       </ul>
-      </li>
-     </div>
-
-     <div class="publication"> 
-      <li>
-       Time to Burn
-       <ul>
-        <li><a href="http://www.eusci.org.uk/">EUSci Magazine</a>, Winter 2014</li>
-       </ul>
-      </li>
      </div>
 
     </ul>
     
-    <h3>Curiculum Vitae</h3>
+    <h3>CV/R&eacute;sum&eacute;</h3>
 
-    <p><it>Coming soon!</it>
+    <p>
+      You can download a pdf version of my cv <a href="WHITEHOUSE_Justin_cv.pdf">here</a>.
+    </p>
+
+   <h4 id="home">Under Development</h4>
+
+    <p><i>This page had been hand-made by me as I teach myself html and css. As such, it may behave weirdly from time to time. I also haven't given any consideration to different browsers or to how it displays on mobile devices.</i>
     </p>
 
   </div> 
 
+ </div>
  </body>
 </html>
