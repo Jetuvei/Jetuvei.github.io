@@ -153,7 +153,7 @@ a:visited{
   margin-left: 10%;
   margin-top: 0;
   margin-bottom: 0;
-  background-color: pink;
+  background-color: white ;/*pink;*/
 }
 
 /*
@@ -162,7 +162,7 @@ a:visited{
 
 .sidebar{
   width: 25%;
-  background-color: blue;
+  /*background-color: blue;*/
   vertical-align: top;
   height: 100%;
 }
