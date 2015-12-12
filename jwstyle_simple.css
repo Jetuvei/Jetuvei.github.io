@@ -197,6 +197,11 @@ a:visited{
     font-family: Source Sans Pro, Arial, Helvetica, sans-serif;
 }
 
+.main h4 {
+    font-family: Source Sans Pro, Arial, Helvetica, sans-serif;
+    font-style: italic;
+}
+
 .main li {
    font-family: Source Sans Pro, Arial, Helvetica, sans-serif;
 }
