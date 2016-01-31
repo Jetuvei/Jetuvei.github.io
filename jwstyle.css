@@ -5,8 +5,6 @@ this is my stylesheet!
 
 Useful css syntax notes:
 
-(Most if not all of the text below is from codeacademy.)
-
 - Tag:
 
     SELECTOR{...}
@@ -15,33 +13,21 @@ Useful css syntax notes:
 
     #SELECTOR{...}
 
-  IDs are great for when you have exactly one element that should receive a 
-  certain kind of styling.
+  IDs are great for when you have exactly one element that should receive a certain kind of styling.
 
 - Class:
 
     .SELECTOR{...}
    
-  Classes are useful when you have a bunch of elements that should all receive
-  the same styling. Rather than applying the same rules to several selectors, 
-  you can simply apply the same class to all those HTML elements, then define 
-  the styling for that class in the CSS tab.
+  Classes are useful when you have a bunch of elements that should all receive the same styling. Rather than applying the same rules to several selectors, you can simply apply the same class to all those HTML elements, then define the styling for that class in the CSS tab.
 
 - Pseudo-class selector:
 
     SELECTOR:PSEUDO-CLASS{...}
 
-  A pseudo-class selector is a way of accessing HTML items that aren't part of 
-  the document tree (remember the tree structure we talked about earlier?). 
-  For instance, it's very easy to see where a link is in the tree. But where 
-  would you find information about whether a link had been clicked on or not? 
-  It isn't there!
+  A pseudo-class selector is a way of accessing HTML items that aren't part of the document tree (remember the tree structure we talked about earlier?). For instance, it's very easy to see where a link is in the tree. But where would you find information about whether a link had been clicked on or not? It isn't there!
 
-  Pseudo-class selectors let us style these kinds of changes in our HTML 
-  document. For example, we saw we could change a link's text-decoration 
-  property to make it something other than blue and underlined. Using pseudo 
-  selectors, you can control the appearance of unvisited and visited links — 
-  even links the user is hovering over but hasn't clicked!
+  Pseudo-class selectors let us style these kinds of changes in our HTML document. For example, we saw we could change a link's text-decoration property to make it something other than blue and underlined. Using pseudo selectors, you can control the appearance of unvisited and visited links—even links the user is hovering over but hasn't clicked!
 
   e.g. a:hover{...}
 
@@ -53,6 +39,10 @@ Useful css syntax notes:
 
 body{
   background-color: #eeeeee;
+}
+
+body div{
+  display: inline-block;
 }
 
 a{
@@ -83,9 +73,26 @@ a:visited{
  *** PROF-PIC ***
  */
 
- .prof-pic img{
-    padding-left: 20pt;
- }
+.prof-pic img{
+  width: 100%;
+}
+
+/*
+ *** CONTACT ***
+ */
+
+.contact{
+  background-color: white;
+  padding: 10pt;
+}
+
+.contact img{
+  width: 80%;
+}
+
+.contact h2{
+  width: 80%;
+}
 
 /*
  *** NAV ***
@@ -93,18 +100,20 @@ a:visited{
 
 .nav{
     border-bottom: solid 1px;
-    margin-left: 10%;
-    margin-right: 10%;
-    background-color: white;
+    background-color:green;
+    width: 100%;
 }
 
 .nav ul{
-    background-color: gray;
+    background-color: yellow;
+    width: 100%;
+    margin: 0;
+    padding: 0;
     margin: 0;
 }
 
 .nav li{
-    display: inline-block;
+    /*display: inline-block;*/
     vertical-align: center;
     float: center;
     padding: 10px;
@@ -118,7 +127,7 @@ a:visited{
 */
 
 .nav li a{
-     font-family: Arial, sans-serif;
+     font-family: Source Sans Pro, Arial, sans-serif;
      font-size: 18pt;
      font-weight: bold;
      font-color: black;
@@ -136,44 +145,75 @@ a:visited{
 */
 
 /*
+ * CONTENT
+ */
+
+.content{
+  margin-right: 10%;
+  margin-left: 10%;
+  margin-top: 0;
+  margin-bottom: 0;
+  background-color: white ;/*pink;*/
+}
+
+/*
+ *** SIDEBAR ***
+ */
+
+.sidebar{
+  width: 25%;
+  /*background-color: blue;*/
+  vertical-align: top;
+  height: 100%;
+}
+
+.sidebar ul{
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+/*
  *** MAIN ***
  */
 
 .main{
     display: inline-block;
-    margin-left: 10%;
-    margin-right: 10%;
     background-color: white;
-    padding: 5pt;
-    font-family: Tahoma, Arial, Helvetica, sans-serif;
+    width: 65%;
+    padding: 10pt;
 }
 
 
 .main p {
-    font-family: Tahoma, Arial, Helvetica, sans-serif;
+    font-family: Georgia, Source Serif Pro, Times, serif;
 }
 
 .main h1 {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: Geneva, Calibri, Source Sans Pro, Arial, Helvetica, sans-serif;
 }
 
 .main h2 {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: Geneva, Calibri, Source Sans Pro, Arial, Helvetica, sans-serif;
 }
 
 .main h3 {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: Geneva, Calibri, Source Sans Pro, Arial, Helvetica, sans-serif;
+}
+
+.main h4 {
+    font-family: Geneva, Calibri, Source Sans Pro, Arial, Helvetica, sans-serif;
+    font-style: italic;
 }
 
 .main li {
-   font-family: Arial, Helvetica, sans-serif;
+   font-family: Geneva, Calibri, Source Sans Pro, Arial, Helvetica, sans-serif;
 }
 
 
 /*
  DEBUG/SANITY
 */
-
 /*
 *{
     border: 1px dashed;
