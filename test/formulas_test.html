@@ -1,0 +1,108 @@
+
+<html>
+<head>
+<meta name="Author" content="Justin Whitehouse">
+
+<script type="text/javascript" src="../formulaquiz/formulas.js"> </script>
+
+<!-- empty style. use stylesheet later. -->
+<style></style>
+
+<!-- here is script to run simulation and animate -->
+<script>
+
+    // debug
+
+    function DEBUG()
+    {
+        alert("DEBUG: Hello World!");
+    }
+
+    // start
+
+    function OnStart()
+    {
+        // do stuff
+        var welcome = document.getElementById("welcome");
+        welcome.innerHTML = "Welcome to the formulas test page!";
+        testAll();
+    }
+
+    // run test
+
+    function runTest(test)
+    {
+        if(test())
+        {
+            result = "pass";
+        }
+        else
+        {
+            result = "fail";
+        }
+
+        return tset.name + ": " + result;
+    }
+
+    // specific tests
+
+    var test_F_GPE_init_01 = function()
+    {
+        if (   F_GPE.variable_map["E<sub>p</sub>"] === "Gravitational Potential Energy"
+            && F_GPE.variable_map["m"] === "Mass"
+            && F_GPE.variable_map["g"] === "Gravitational Acceleration"
+            && F_GPE.variable_map["h"] === "Height"
+            )
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    var test_F_GPE_init_02 = function()
+    {
+        if( F_GPE.correct_formula === "E<sub>p</sub> = mgh"])
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    // test all
+
+    var TEST_LIST = [test_F_GPE_init_01,
+                     test_F_GPE_init_02
+                     ]
+
+    var testAll = function()
+    {
+        test_results = document.getElementById("test_results");
+        
+        for (t in TEST_LIST)
+        {
+            test_resulst.innerHTML += "<li>"+runTest(t)+"</li>";
+        }
+
+    }
+
+</script>
+
+<title>Test Formulas</title>
+</head>
+
+<body onload="DEBUG();OnStart();">
+
+<h1>Test Formulas</h1>
+<p id="welcome">Hello World!</p>
+
+<ol id="test_results">
+</ol>
+
+</body>
+
+</html>
