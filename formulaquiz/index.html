@@ -23,17 +23,71 @@
   <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
   <link type="text/css" rel="stylesheet" href="../jwstyle.css"/>
   
+  <!--
+   <script type="text/javascript" src="../formulaquiz/formulas.js"> </script>
+  -->
+
   <!-- SCRIPT -->
   <script>
+
+    var current_question;
+    var question_generator;
+
+    var is_correct;
+
+    var question_text;
+    var answer_text;
+    var is_correct_text;
+
+    var CORRECT_MSG = "Correct!";
+    var NOT_CORRECT_MSG = "Woops! That's incorrect.";
+
+    function onLoad()
+    {
+      alert("DEBUG: OnLoad();")
+
+      question_generator = new QuestionGenerator();
+      question_text = document.getElementById("question-text");
+      answer_text = document.getElementById("answer-text");
+      is_correct_text = document.getElementById("is-correct-text");
+
+      refreshQuestion();
+    }
+
+    function refreshQuestion()
+    {
+      is_correct = null;
+      current_question = QuestionGenerator.nextQuestion();
+      question_text.innerHTML = current_question.getQuestionText();
+    }
+
+    function submitAnswer(ans)
+    {
+      if (ans === current_question.getAnswerKey())
+      {
+        is_correct = true;
+      }
+      else
+      {
+        is_correct = false;
+      }
+      
+      if(is_correct)
+      {
+        is_correct_text.innerHTML = CORRECT_MSG;
+      }
+      else
+      {
+        is_correct_text.innerHTML = NOT_CORRECT_MSG;
+      }
+    }
   </script>
-
-
 
 
   <title>Physics Formula Quiz</title>
  </head>
 
- <body>
+ <body onload="onLoad();">
 
  <!-- content div wraps sidebar and main to control positioning of the two -->
  <div class="content">
@@ -52,7 +106,6 @@
     <p id="question-text">QUESTION GOES HERE</p></br>
    </div>
 
-
    <div id="button-row">
     <table>
       <tr>
@@ -61,13 +114,18 @@
         <td><button onclick="SubmitAnswer('C');">C</button></td>
         <td><button onclick="SubmitAnswer('D');">D</button></td>
       </tr>
+      <tr>
+        <td colspan="4"><button onclick="refreshQuestion();">New Question</button></td>
+      </tr>
     </table>
   </div> 
 
   <div id="answer-area">
+    <p id="is-correct-text">IS CORRECT?</p>
     <p id="answer-text">ANSWER GOES HERE</p>
   </div>
 
  </div>
+
  </body>
 </html>
