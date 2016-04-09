@@ -13,10 +13,23 @@
 -->
 
 <html>
+ 
+ <!-- HEAD -->
  <head>
+
+  <!-- LINKS -->
+
   <link href='https://fonts.googleapis.com/css?family=Source+Serif+Pro' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
   <link type="text/css" rel="stylesheet" href="../jwstyle.css"/>
+  
+  <!-- SCRIPT -->
+  <script>
+  </script>
+
+
+
+
   <title>Physics Formula Quiz</title>
  </head>
 
@@ -26,17 +39,34 @@
  <div class="content">
 
 <!-- SIDEBAR -->
-
+<!-- - ->
   <div class="sidebar">
 
-    
   </div>
+<!- - -->
 
 <!-- MAIN -->
   <div class="main">
 
-   
+   <div id="question-area">
+    <p id="question-text">QUESTION GOES HERE</p></br>
+   </div>
+
+
+   <div id="button-row">
+    <table>
+      <tr>
+        <td><button onclick="SubmitAnswer('A');">A</button></td>
+        <td><button onclick="SubmitAnswer('B');">B</button></td>
+        <td><button onclick="SubmitAnswer('C');">C</button></td>
+        <td><button onclick="SubmitAnswer('D');">D</button></td>
+      </tr>
+    </table>
   </div> 
+
+  <div id="answer-area">
+    <p id="answer-text">ANSWER GOES HERE</p>
+  </div>
 
  </div>
  </body>
