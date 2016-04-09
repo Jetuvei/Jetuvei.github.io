@@ -66,7 +66,7 @@ Function.prototype.getShuffledList = function()
 // SPECIFIC FORMULAS
 // (prefix "F" in variable names for "Formula")
 
-var F_GPE = new Formala
+var F_GPE = new Formula
 (
 	{"E<sub>p</sub>":"Gravitational Potential Energy",
 	 "m":"Mass",
