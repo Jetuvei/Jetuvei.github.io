@@ -21,21 +21,23 @@ function Question(formula)
 
 }
 
-Question.prototype.findCorrectIndex()
+Question.prototype.findCorrectIndex = function()
 {
-	var position = null;
+	var idx = null;
+
 	for(i=0; i < this.answer_choices.length; i++)
 	{
 		if(this.answer_choices[i] === this.formula.correct_formula)
 		{
-			position = i;
+			idx = i;
 			break;
 		}
 	}
-	return position;
+
+	return idx;
 }
 
-Question.prototype.findCorrectKey()
+Question.prototype.findCorrectKey = function()
 {
 	var key = null;
 	switch(this.findCorrectIndex())
@@ -62,12 +64,12 @@ Question.prototype.findCorrectKey()
 	return key;
 }
 
-Question.prototype.getAnswerKey() // is this method superfluous??
+Question.prototype.getAnswerKey = function() // is this method superfluous??
 {
 	return this.correct_key;
 }
 
-Question.prototype.getQuestionText()
+Question.prototype.getQuestionText = function()
 {
 	var vmk = this.formuala.variable_map.keys();
 
@@ -82,7 +84,7 @@ Question.prototype.getQuestionText()
 	return q;
 }
 
-Question.prototype.getAnswerText()
+Question.prototype.getAnswerText = function()
 {
 	var txt = "Answer: " + this.correct_key;
 	return txt;
@@ -98,13 +100,13 @@ function QuestionGenerator()
 	this.active_formula = null;
 }
 
-QuestionGenerator.prototype.nextFormula()
+QuestionGenerator.prototype.nextFormula = function()
 {
 	this.active_formula = this.formula_list[this.formula_pointer];
 	this.formula_pointer = (this.formula_pointer + 1 ) % this.formula_list.length;
 }
 
-QuestionGenerator.prototype.nextQuestion()
+QuestionGenerator.prototype.nextQuestion = function()
 {
 	this.nextFormula();
 	return new Question(this.active_formula);
