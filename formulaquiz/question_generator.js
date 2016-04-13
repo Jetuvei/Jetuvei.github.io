@@ -9,6 +9,7 @@
 // formula.js
 //
 
+// --------------------------------------------------------------
 // QUESTION OBJECT
 
 function Question(formula)
@@ -85,4 +86,26 @@ Question.prototype.getAnswerText()
 {
 	var txt = "Answer: " + this.correct_key;
 	return txt;
+}
+
+// --------------------------------------------------------------
+// QUESTION GENERATOR OBJECT
+
+function QuestionGenerator()
+{
+	this.formula_list = getShuffledFormulas();
+	this.formula_pointer = 0;
+	this.active_formula = null;
+}
+
+QuestionGenerator.prototype.nextFormula()
+{
+	this.active_formula = this.formula_list[this.formula_pointer];
+	this.formula_pointer = (this.formula_pointer + 1 ) % this.formula_list.length;
+}
+
+QuestionGenerator.prototype.nextQuestion()
+{
+	this.nextFormula();
+	return new Question(this.active_formula);
 }
