@@ -56,7 +56,7 @@ function Formula(var_map, cf, if_list, d)
 	this.explanation=d;
 }
 
-Function.prototype.getShuffledList = function()
+Formula.prototype.getShuffledList = function()
 {
 	f_list = this.incorrect_formula_list.concat([this.correct_formula]);
 	return shuffle(f_list);
