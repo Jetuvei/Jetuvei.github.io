@@ -45,7 +45,7 @@
 
     function onLoad()
     {
-      alert("DEBUG: OnLoad();")
+      alert("DEBUG: OnLoad();");
 
       question_generator = new QuestionGenerator();
       question_text = document.getElementById("question-text");
@@ -53,14 +53,14 @@
       is_correct_text = document.getElementById("is-correct-text");
 
       refreshQuestion();
-    }
+    };
 
     function refreshQuestion()
     {
       is_correct = null;
       current_question = QuestionGenerator.nextQuestion();
       question_text.innerHTML = current_question.getQuestionText();
-    }
+    };
 
     function submitAnswer(ans)
     {
@@ -73,7 +73,7 @@
         is_correct = false;
       }
       
-      if(is_correct)
+      if(is_correct) // redundancy??
       {
         is_correct_text.innerHTML = CORRECT_MSG;
       }
@@ -81,7 +81,7 @@
       {
         is_correct_text.innerHTML = NOT_CORRECT_MSG;
       }
-    }
+    };
   </script>
 
 
