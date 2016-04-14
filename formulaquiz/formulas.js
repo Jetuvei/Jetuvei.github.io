@@ -41,7 +41,7 @@ function shuffle(array) {
   }
 
   return array;
-}
+};
 
 // --------------------------------------------------------------
 // FORMULA CLASS
@@ -54,13 +54,13 @@ function Formula(var_map, cf, if_list, d)
 	this.correct_formula=cf;
 	this.incorrect_formula_list=if_list;
 	this.explanation=d;
-}
+};
 
 Formula.prototype.getShuffledList = function()
 {
 	f_list = this.incorrect_formula_list.concat([this.correct_formula]);
 	return shuffle(f_list);
-}
+};
 
 // --------------------------------------------------------------
 // SPECIFIC FORMULAS
@@ -91,4 +91,4 @@ ACTIVE_FORMULAS = [F_GPE];
 var getShuffledFormulas = function()
 {
 	return shuffle(ACTIVE_FORMULAS);
-}
+};
