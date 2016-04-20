@@ -100,6 +100,11 @@ function QuestionGenerator()
 	this.active_formula = null;
 };
 
+QuestionGenerator.prototype.debugFunction = function()
+{
+	console.log("QuestionGenerator: debugFunction");
+}
+
 QuestionGenerator.prototype.nextFormula = function()
 {
 	this.active_formula = this.formula_list[this.formula_pointer];

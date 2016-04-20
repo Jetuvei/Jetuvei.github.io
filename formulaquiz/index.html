@@ -48,6 +48,13 @@
       alert("DEBUG: OnLoad();");
 
       question_generator = new QuestionGenerator();
+
+      // DEBUG
+      console.log("DEBUG: formula list: " + question_generator.formula_list);
+      console.log("DEBUG: formula pointer: " + question_generator.formula_pointer);
+      console.log("DEBUG: active formula: " + question_generator.active_formula);
+      question_generator.debugFunction();
+
       question_text = document.getElementById("question-text");
       answer_text = document.getElementById("answer-text");
       is_correct_text = document.getElementById("is-correct-text");
