@@ -83,10 +83,27 @@ var F_GPE = new Formula
 	 "If you increase m, g or h you increase E<sub>p</sub>.</br>This means that the equation for E<sub>p</sub></br> is: E<sub>p</sub> = m x g x h."
 );
 
+var F_KE = new Formula
+(
+	{"E<sub>k</sub>":"Kinetic Energy",
+	 "m": "mass",
+	 "v": "speed"
+	},
+
+	"E<sub>k</sub> = mv<sup>2</sup>/2",
+
+	["E<sub>k</sub> = 2mv<sup>2</sup>",
+	 "E<sub>k</sub> = vm<sup>2</sup>/2",
+	 "E<sub>k</sub> = 2mv"
+	 ],
+
+	DEFAULT_EXPLANATION
+);
+
 // --------------------------------------------------------------
 // ACTIVE FORMULA LIST
 
-ACTIVE_FORMULAS = [F_GPE];
+ACTIVE_FORMULAS = [F_GPE, F_KE];
 
 var getShuffledFormulas = function()
 {
