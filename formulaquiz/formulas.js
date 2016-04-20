@@ -80,7 +80,7 @@ var F_GPE = new Formula
 	 "E<sub>p</sub> = m/(gh)",
 	 "E<sub>p</sub> = (m/g)h"],
 	 
-	 DEFAULT_EXPLANATION
+	 "If you increase m, g or h you increase E<sub>p</sub>.</br>This means that the equation for E<sub>p</sub></br> is: E<sub>p</sub> = m x g x h."
 );
 
 // --------------------------------------------------------------
