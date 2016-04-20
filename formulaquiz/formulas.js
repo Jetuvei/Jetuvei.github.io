@@ -116,12 +116,30 @@ var F_WEIGHT = new Formula
 	 DEFAULT_EXPLANATION
 );
 
+var F_NEWTON_2 = new Formula
+(
+	{"F":"Force",
+	 "m":"mass",
+	 "a":"acceleration"
+	},
+
+	"F = ma",
+
+	["F = a/m",
+	 "F = m/a",
+	 "F = m + a",
+	 ],
+
+	DEFAULT_EXPLANATION
+);
+
 // --------------------------------------------------------------
 // ACTIVE FORMULA LIST
 
 ACTIVE_FORMULAS = [F_GPE, 
 				   F_KE,
-				   F_WEIGHT
+				   F_WEIGHT,
+				   F_NEWTON_2
 				   ];
 
 var getShuffledFormulas = function()
