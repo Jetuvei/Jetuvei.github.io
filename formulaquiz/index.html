@@ -18,9 +18,10 @@
  <head>
 
   <!-- LINKS -->
-
+ <!--
   <link href='https://fonts.googleapis.com/css?family=Source+Serif+Pro' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
+ -->
   <link type="text/css" rel="stylesheet" href="../jwstyle.css"/>
   
   <!-- IMPORTED SCRIPTS -->
@@ -65,7 +66,7 @@
     function refreshQuestion()
     {
       is_correct = null;
-      current_question = QuestionGenerator.nextQuestion();
+      current_question = question_generator.nextQuestion();
       question_text.innerHTML = current_question.getQuestionText();
     };
 
