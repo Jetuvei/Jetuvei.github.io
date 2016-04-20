@@ -80,6 +80,11 @@ Question.prototype.getQuestionText = function()
 	return q;
 };
 
+Question.prototype.getAnswerOptionByIndex = function(i)
+{
+	return this.answer_choices[i];
+};
+
 Question.prototype.getAnswerText = function()
 {
 	var txt = "Answer: " + this.correct_key;
