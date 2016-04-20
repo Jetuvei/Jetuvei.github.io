@@ -100,10 +100,29 @@ var F_KE = new Formula
 	DEFAULT_EXPLANATION
 );
 
+var F_WEIGHT = new Formula
+(
+	{"W":"weight",
+	 "m":"mass",
+	 "g":"gravitational acceleration"
+	},
+
+	"W = mg",
+
+	["W = g/m",
+	 "W = m/g",
+	 "W = m + g"],
+
+	 DEFAULT_EXPLANATION
+);
+
 // --------------------------------------------------------------
 // ACTIVE FORMULA LIST
 
-ACTIVE_FORMULAS = [F_GPE, F_KE];
+ACTIVE_FORMULAS = [F_GPE, 
+				   F_KE,
+				   F_WEIGHT
+				   ];
 
 var getShuffledFormulas = function()
 {
