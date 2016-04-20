@@ -91,6 +91,11 @@ Question.prototype.getAnswerText = function()
 	return txt;
 };
 
+Question.prototype.getExplanationText = function()
+{
+	return this.formula.explanation;
+}
+
 // --------------------------------------------------------------
 // QUESTION GENERATOR OBJECT
 

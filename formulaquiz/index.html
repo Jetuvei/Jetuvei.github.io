@@ -51,8 +51,6 @@
 
     function onLoad()
     {
-      alert("DEBUG: OnLoad();");
-
       question_generator = new QuestionGenerator();
 
       // DEBUG
@@ -62,8 +60,10 @@
       question_generator.debugFunction();
 
       question_text = document.getElementById("question-text");
-      answer_text = document.getElementById("answer-text");
       is_correct_text = document.getElementById("is-correct-text");
+      answer_text = document.getElementById("answer-text");
+      explanation_text = document.getElementById("explanation-text");
+
 
       option_A_text = document.getElementById("option-A-text");
       option_B_text = document.getElementById("option-B-text");
@@ -86,6 +86,7 @@
 
       is_correct_text.innerHTML = "";
       answer_text.innerHTML = "";
+      explanation_text.innerHTML = "";
 
     };
 
@@ -113,6 +114,7 @@
     function showAnswer()
     {
       answer_text.innerHTML = current_question.getAnswerText();
+      explanation_text.innerHTML = current_question.getExplanationText();
     }
   </script>
 
@@ -179,6 +181,7 @@
   <div id="answer-area">
     <p id="is-correct-text">IS CORRECT?</p>
     <p id="answer-text">ANSWER GOES HERE</p>
+    <p id="explanation-text">EXPLANATION GOES HERE</p>
   </div>
 
  </div>
