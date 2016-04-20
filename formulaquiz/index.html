@@ -105,6 +105,11 @@
         is_correct_text.innerHTML = NOT_CORRECT_MSG;
       }
     };
+
+    function showAnswer()
+    {
+      answer_text.innerHTML = current_question.getAnswerText();
+    }
   </script>
 
 
@@ -158,6 +163,9 @@
       </tr>
       <tr>
         <td colspan="4"><button onclick="refreshQuestion();">New Question</button></td>
+      </tr>
+      <tr>
+        <td colspan="4"><button onclick="showAnswer();">See answer</button></td>
       </tr>
     </table>
   </div> 
