@@ -71,32 +71,11 @@ Question.prototype.getAnswerKey = function() // is this method superfluous??
 
 Question.prototype.getQuestionText = function()
 {
-	console.log("DEBUG: list add: " + ([1] + [2]));
-
-	console.log("DEBUG: this.formula: " + this.formula);
-	console.log("DEBUG: this.formula.variable_map: " + this.formula.variable_map);
-	console.log("DEBUG: this.formula.variable_map.size: " + this.formula.variable_map.size);
-	console.log("DEBUG: this.formula.variable_map.length: " + this.formula.variable_map.length);
-	console.log("DEBUG: this.formula.variable_map.keys: " + this.formula.variable_map.keys);
-	console.log("DEBUG: this.formula.variable_map.keys(): " + this.formula.variable_map.keys());
-	var vmk = [];
+	var q = "What is the formula which links: ";
 	for(item in this.formula.variable_map)
 	{
-		console.log("DEBUG: vm items: " + item);
-		vmk.append(item);
+		q += item + " (" + this.formula.variable_map[item] + "), ";
 	}
-	//var vmk = this.formula.variable_map.keys;
-	console.log("DEBUG: vmk: " + vmk);
-	console.log("DEBUG: vmk.length: " + vmk.length);
-
-	throw Error;
-
-	var q = "What is the formula which links ";
-	for( k=0; k < vmk.length-1; k++)
-	{
-		q += this.formula.variable_map[vmk[k]] + " (" + vmk[k] + "), ";
-	}
-	q += "and " + this.formula.variable_map[vmk[vmk.length-1]] + " (" + vmk[vmk.length-1] + ").";
 
 	return q;
 };
