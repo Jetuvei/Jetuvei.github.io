@@ -41,6 +41,11 @@
     var answer_text;
     var is_correct_text;
 
+    var option_A_text;
+    var option_B_text;
+    var option_C_text;
+    var option_D_text;
+
     var CORRECT_MSG = "Correct!";
     var NOT_CORRECT_MSG = "Woops! That's incorrect.";
 
@@ -60,6 +65,11 @@
       answer_text = document.getElementById("answer-text");
       is_correct_text = document.getElementById("is-correct-text");
 
+      option_A_text = document.getElementById("option-A-text");
+      option_B_text = document.getElementById("option-B-text");
+      option_C_text = document.getElementById("option-C-text");
+      option_D_text = document.getElementById("option-D-text");
+
       refreshQuestion();
     };
 
@@ -68,6 +78,11 @@
       is_correct = null;
       current_question = question_generator.nextQuestion();
       question_text.innerHTML = current_question.getQuestionText();
+
+      option_A_text.innerHTML = current_question.getAnswerOptionByIndex(0);
+      option_B_text.innerHTML = current_question.getAnswerOptionByIndex(1);
+      option_C_text.innerHTML = current_question.getAnswerOptionByIndex(2);
+      option_D_text.innerHTML = current_question.getAnswerOptionByIndex(3);
     };
 
     function submitAnswer(ans)
@@ -113,6 +128,24 @@
 
    <div id="question-area">
     <p id="question-text">QUESTION GOES HERE</p></br>
+    <table>
+      <tr>
+        <td>A:</td>
+        <td id="option-A-text">OPTION A</td>
+      </tr>
+      <tr>
+        <td>B:</td>
+        <td id="option-B-text">OPTION B</td>
+      </tr>
+      <tr>
+        <td>C:</td>
+        <td id="option-C-text">OPTION C</td>
+      </tr>
+      <tr>
+        <td>D:</td>
+        <td id="option-D-text">OPTION D</td>
+      </tr>
+    </table>
    </div>
 
    <div id="button-row">
