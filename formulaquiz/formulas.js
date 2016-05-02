@@ -133,13 +133,122 @@ var F_NEWTON_2 = new Formula
 	DEFAULT_EXPLANATION
 );
 
+var F_QIt = new Formula
+(
+	{"Q":"Charge",
+	 "I":"Current",
+	 "t":"Time (duration)"
+	},
+
+	"Q = It",
+
+	["Q = I/t",
+	 "Q = t/I",
+	 "Q = I + t"
+	 ],
+
+	 DEFAULT_EXPLANATION
+);
+
+var F_OHM_LAW = new Formula
+(
+	{"V":"Voltage",
+	 "I":"Current",
+	 "R":"Resistance"
+	},
+
+	"V = IR",
+
+	["V = I/R",
+	 "V = R/I",
+	 "V = I+R"
+	 ],
+
+	 DEFAULT_EXPLANATION
+);
+
+var F_PEt = new Formula
+(
+	{"P":"Power",
+	 "E":"Energy",
+	 "t":"Time (duration)"
+	},
+
+	"P = E/t",
+
+	["P = Et",
+	 "P = t/E",
+	 "P = E + t"
+	 ],
+
+	 DEFAULT_EXPLANATION
+);
+
+var F_PIV = new Formula
+(
+	{"P":"Power",
+	 "I":"Current",
+	 "V":"Voltage"
+	},
+
+	"P = IV",
+
+	["P = I/V",
+	 "P = V/I",
+	 "P = I + t"
+	 ],
+
+	DEFAULT_EXPLANATION
+);
+
+var F_PI2R = new Formula
+(
+	{"P":"Power",
+	 "I":"Current",
+	 "R":"Resistance"
+	},
+
+	"P = I<sup>2</sup>R",
+
+	["P = IR",
+	 "P = IR<sup>2</sup>",
+	 "P = (IR)<sup>2</sup>"
+	 ],
+
+	DEFAULT_EXPLANATION
+);
+
+var F_PV2R = new Formula
+(
+	{"P":"Power",
+	 "V":"Voltage",
+	 "R":"Resistance"
+	},
+
+	"P = V<sup>2</sup>/R",
+
+	["P = V/R",
+	 "P = VR",
+	 "P = V/R<sup>2</sup>",
+	 "P = (V/R)<sup>2</sup>"],
+
+	DEFAULT_EXPLANATION
+);
+
+
 // --------------------------------------------------------------
 // ACTIVE FORMULA LIST
 
 ACTIVE_FORMULAS = [F_GPE, 
 				   F_KE,
 				   F_WEIGHT,
-				   F_NEWTON_2
+				   F_NEWTON_2,
+				   F_QIt,
+				   F_OHM_LAW,
+				   F_PEt,
+				   F_PIV,
+				   F_PI2R,
+				   F_PV2R
 				   ];
 
 var getShuffledFormulas = function()
