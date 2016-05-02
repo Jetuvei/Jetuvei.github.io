@@ -58,7 +58,9 @@
     var option_D_text;
 
     var CORRECT_MSG = "Correct! (Press the button for the next question.)";
-    var NOT_CORRECT_MSG = "Woops! That's incorrect. Press 'see answer' to see the answer, or try another question.";
+    var NOT_CORRECT_MSG = "Woops! That's incorrect. Press 'see answer' or try another question.";
+
+    var GAME_OVER_MSG = "Game Over! Try again by pressing 'New Quiz'";
 
     function onLoad()
     {
@@ -114,6 +116,10 @@
         answer_text.innerHTML = "";
         explanation_text.innerHTML = "";
       }
+      else
+      {
+        gameOver();
+      }
     };
 
     function submitAnswer(ans)
@@ -154,6 +160,13 @@
     {
       answer_text.innerHTML = current_question.getAnswerText();
       explanation_text.innerHTML = current_question.getExplanationText();
+    }
+
+    function gameOver()
+    {
+      is_correct_text.innerHTML = GAME_OVER_MSG;
+      answer_text.innerHTML = ""
+      explanation_text.innerHTML = ""
     }
   </script>
 
