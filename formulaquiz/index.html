@@ -35,7 +35,18 @@
     var current_question;
     var question_generator;
 
+    var is_unanswered;
     var is_correct;
+
+    var total_no_questions;
+    var question_number;
+    var no_questions_answered;
+    var score;
+
+    var total_no_questions_text;
+    var question_number_text;
+    var no_questions_answered_text;
+    var score_text;
 
     var question_text;
     var answer_text;
@@ -51,6 +62,10 @@
 
     function onLoad()
     {
+      question_number = 0;
+      no_questions_answered = 0;
+      score = 0;
+
       question_generator = new QuestionGenerator();
 
       question_text = document.getElementById("question-text");
@@ -58,6 +73,16 @@
       answer_text = document.getElementById("answer-text");
       explanation_text = document.getElementById("explanation-text");
 
+      total_no_questions_text = document.getElementById("total-no-questions");
+      question_number_text = document.getElementById("question-number");
+      no_questions_answered_text = document.getElementById("no-questions-answered");
+      score_text = document.getElementById("score");
+
+      total_no_questions = question_generator.formula_list.length;
+      total_no_questions_text.innerHTML = total_no_questions;
+
+      no_questions_answered_text.innerHTML = no_questions_answered;
+      score_text.innerHTML = score;
 
       option_A_text = document.getElementById("option-A-text");
       option_B_text = document.getElementById("option-B-text");
@@ -69,39 +94,59 @@
 
     function refreshQuestion()
     {
-      is_correct = null;
-      current_question = question_generator.nextQuestion();
-      question_text.innerHTML = current_question.getQuestionText();
+      if(question_number < total_no_questions)
+      {
+        is_correct = null;
+        is_unanswered = true;
 
-      option_A_text.innerHTML = current_question.getAnswerOptionByIndex(0);
-      option_B_text.innerHTML = current_question.getAnswerOptionByIndex(1);
-      option_C_text.innerHTML = current_question.getAnswerOptionByIndex(2);
-      option_D_text.innerHTML = current_question.getAnswerOptionByIndex(3);
+        current_question = question_generator.nextQuestion();
+        question_text.innerHTML = current_question.getQuestionText();
 
-      is_correct_text.innerHTML = "";
-      answer_text.innerHTML = "";
-      explanation_text.innerHTML = "";
+        question_number += 1;
+        question_number_text.innerHTML = question_number;
 
+        option_A_text.innerHTML = current_question.getAnswerOptionByIndex(0);
+        option_B_text.innerHTML = current_question.getAnswerOptionByIndex(1);
+        option_C_text.innerHTML = current_question.getAnswerOptionByIndex(2);
+        option_D_text.innerHTML = current_question.getAnswerOptionByIndex(3);
+
+        is_correct_text.innerHTML = "";
+        answer_text.innerHTML = "";
+        explanation_text.innerHTML = "";
+      }
     };
 
     function submitAnswer(ans)
     {
-      if (ans === current_question.getAnswerKey())
+
+      if(is_unanswered)
       {
-        is_correct = true;
-      }
-      else
-      {
-        is_correct = false;
-      }
+
+        no_questions_answered += 1;
+        no_questions_answered_text.innerHTML = no_questions_answered;
+
+        if (ans === current_question.getAnswerKey())
+        {
+          is_correct = true;
+        }
+        else
+        {
+          is_correct = false;
+        }
       
-      if(is_correct) // redundancy??
-      {
-        is_correct_text.innerHTML = CORRECT_MSG;
-      }
-      else
-      {
-        is_correct_text.innerHTML = NOT_CORRECT_MSG;
+        is_unanswered = false;
+
+        if(is_correct) // redundancy??
+        {
+          score += 1;
+          is_correct_text.innerHTML = CORRECT_MSG;
+        }
+        else
+        {
+          is_correct_text.innerHTML = NOT_CORRECT_MSG;
+        }
+
+        score_text.innerHTML = score;
       }
     };
 
@@ -167,7 +212,7 @@
         <td><button onclick="submitAnswer('D');">D</button></td>
       </tr>
       <tr id-"score-row">
-       <td colspan="4">Score: <span id="score">0</span>/<span id="no-answered-questions">0</span></td>
+       <td colspan="4">Score: <span id="score">0</span>/<span id="no-questions-answered">0</span></td>
       </tr>
       <tr>
         <td colspan="4"><button onclick="refreshQuestion();">New Question</button></td>
