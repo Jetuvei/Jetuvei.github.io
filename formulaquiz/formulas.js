@@ -313,11 +313,11 @@ var F_vflambda = new Formula
 	 "&lambda;":"wavelength"
 	},
 
-	"v = f&lamda;",
+	"v = f&lambda;",
 
-	["v = f/&lamda;",
-	 "v = &lamda;/f",
-	 "v = f+&lamda;"
+	["v = f/&lambda;",
+	 "v = &lambda;/f",
+	 "v = f+&lambda;"
 	],
 
 	DEFAULT_EXPLANATION
