@@ -137,7 +137,12 @@
 <!-- MAIN -->
   <div class="main">
 
+   <h1>National 5 Physics Formula Quiz</h1>
+
    <div id="question-area">
+
+    <h2>Question <span id="question-number">0</span> of <span id="total-no-questions">0</span></h2>
+
     <p id="question-text">QUESTION GOES HERE</p></br>
     <table>
       <tr>
@@ -166,6 +171,9 @@
         <td><button onclick="submitAnswer('B');">B</button></td>
         <td><button onclick="submitAnswer('C');">C</button></td>
         <td><button onclick="submitAnswer('D');">D</button></td>
+      </tr>
+      <tr id-"score-row">
+       <td colspan="4">Score: <span id="score">0</span>/<span id="no-answered-questions">0</span></td>
       </tr>
       <tr>
         <td colspan="4"><button onclick="refreshQuestion();">New Question</button></td>
