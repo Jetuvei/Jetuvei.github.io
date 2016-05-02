@@ -229,12 +229,115 @@ var F_PV2R = new Formula
 
 	["P = V/R",
 	 "P = VR",
-	 "P = V/R<sup>2</sup>",
-	 "P = (V/R)<sup>2</sup>"],
+	 "P = V/R<sup>2</sup>"
+	 ],
 
 	DEFAULT_EXPLANATION
 );
 
+var F_EmcDT = new Formula
+(
+	{"E<sub>h</sub>":"Heat Energy",
+	 "m":"mass",
+	 "c":"specific heat capacity",
+	 "&Delta;T":"Temperature change"
+	},
+
+	"E<sub>h</sub> = mc&Delta;T",
+
+	["E<sub>h</sub> = mc/&Delta;T",
+	 "E<sub>h</sub> = &Delta;T/mc",
+	 "E<sub>h</sub> = (m+c)&Delta;T"
+	],
+
+	DEFAULT_EXPLANATION
+);
+
+var F_pFA = new Formula
+(
+	{"p":"Pressure",
+	 "F":"Force",
+	 "A":"Area"
+	},
+
+	"p = F/A",
+
+	["p = FA",
+	 "p = A/F",
+	 "p = F + A"
+	],
+
+	DEFAULT_EXPLANATION
+);
+
+var F_pVT = new Formula
+(
+	{"p":"Pressure",
+	 "V":"Volume",
+	 "T":"Temperature"
+	},
+
+	"pV/T = constant",
+
+	["pVT = constant",
+	 "p/(VT) = constant",
+	 "VT/p = constant"
+	],
+
+	DEFAULT_EXPLANATION
+);
+
+  // some other p,V,T ones can go here...
+
+var F_dvt = new Formula
+(
+	{"d":"distance",
+	 "v":"speed",
+	 "t":"time"
+	},
+
+	"d = vt",
+
+	["d = v/t",
+	 "d = t/v",
+	 "d = v + t"
+	 ],
+
+	 DEFAULT_EXPLANATION
+);
+
+var F_vflambda = new Formula
+(
+	{"v":"speed",
+	 "f":"frequency",
+	 "&lambda;":"wavelength"
+	},
+
+	"v = f&lamda;",
+
+	["v = f/&lamda;",
+	 "v = &lamda;/f",
+	 "v = f+&lamda;"
+	],
+
+	DEFAULT_EXPLANATION
+);
+
+var F_Tf = new Formula
+(
+	{"T":"Period",
+	 "f":"frequency"
+	},
+
+	"T = 1/f",
+
+	["T = f",
+	 "T = 1-f",
+	 "T = f<sup>2</sup>"
+	],
+
+	DEFAULT_EXPLANATION
+);
 
 // --------------------------------------------------------------
 // ACTIVE FORMULA LIST
@@ -248,7 +351,13 @@ ACTIVE_FORMULAS = [F_GPE,
 				   F_PEt,
 				   F_PIV,
 				   F_PI2R,
-				   F_PV2R
+				   F_PV2R,
+				   F_EmcDT,
+				   F_pFA,
+				   F_pVT,
+				   F_dvt,
+				   F_vflambda,
+				   F_Tf
 				   ];
 
 var getShuffledFormulas = function()
