@@ -93,7 +93,7 @@ V_1/T_1 = V_2/T_2
 
 d = vt
 
-v = f\lambda
+v = f.lambda
 T = 1/f
 
 A = N/t
