@@ -342,7 +342,7 @@ var F_Tf = new Formula
 var F_ANt = new Formula
 (
 	{"A":"Activity",
-	 "N":"Number of counts/decays/ionisations"
+	 "N":"Number of counts/decays/ionisations",
 	 "t":"Time (taken to measure counts)"
 	},
 
@@ -387,7 +387,7 @@ var F_HDw = new Formula
 	 "H = w<sub>R</sub>/D"
 	 ],
 
-	 DEFAULT_EXPLANATION,
+	 DEFAULT_EXPLANATION
 );
 
 // --------------------------------------------------------------
