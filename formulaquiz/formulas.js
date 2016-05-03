@@ -133,6 +133,23 @@ var F_NEWTON_2 = new Formula
 	DEFAULT_EXPLANATION
 );
 
+var F_Work = new Formula
+(
+	{"E_<sub>W</sub>":"Work done",
+	 "F":"Force",
+	 "d":"distance"
+	},
+
+	"E_<sub>W</sub> = Fd",
+
+	["E_<sub>W</sub> = F/d",
+	 "E_<sub>W</sub> = F+d",
+	 "E_<sub>W</sub> = d/F"
+	 ],
+
+	 DEFAULT_EXPLANATION
+);
+
 var F_QIt = new Formula
 (
 	{"Q":"Charge",
