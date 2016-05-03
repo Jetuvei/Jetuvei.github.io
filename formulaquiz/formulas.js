@@ -339,6 +339,57 @@ var F_Tf = new Formula
 	DEFAULT_EXPLANATION
 );
 
+var F_ANt = new Formula
+(
+	{"A":"Activity",
+	 "N":"Number of counts/decays/ionisations"
+	 "t":"Time (taken to measure counts)"
+	},
+
+	"A = N/t",
+
+	["A = Nt",
+	 "A = t/N",
+	 "A = N+t"
+	 ],
+
+	 DEFAULT_EXPLANATION
+);
+
+var F_DEm = new Formula
+(
+	{"D":"Absorbed Dose",
+	 "E":"Energy Absorbed",
+	 "m":"Mass"
+	},
+
+	"D = E/m",
+
+	["D = Em",
+	 "D = m/E",
+	 "D = E + m"
+	 ],
+
+	DEFAULT_EXPLANATION
+);
+
+var F_HDw = new Formula
+(
+	{"H":"Equivalent Dose",
+	 "D":"Absorbed Dose",
+	 "w<sub>R</sub>":"Radiation weighting factor",
+	},
+
+	"H = Dw<sub>R</sub>",
+
+	["H = D+w<sub>R</sub>",
+	 "H = D/w<sub>R</sub>",
+	 "H = w<sub>R</sub>/D"
+	 ],
+
+	 DEFAULT_EXPLANATION,
+);
+
 // --------------------------------------------------------------
 // ACTIVE FORMULA LIST
 
@@ -357,7 +408,10 @@ ACTIVE_FORMULAS = [F_GPE,
 				   F_pVT,
 				   F_dvt,
 				   F_vflambda,
-				   F_Tf
+				   F_Tf,
+				   F_ANt,
+				   F_DEm,
+				   F_HDw
 				   ];
 
 var getShuffledFormulas = function()
