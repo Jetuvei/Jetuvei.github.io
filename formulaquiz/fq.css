@@ -7,6 +7,12 @@
  }
  #fq-instructions ul{
  	list-style-type: initial;
+ 	list-style-position: outside;
+ 	margin: 5pt;
+ 	padding: 5pt;
+ }
+ #fq-instructions ul li{
+ 	padding-bottom: 5pt;
  }
 /* ************************************************************
  * Question Area 
