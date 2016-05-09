@@ -1,0 +1,111 @@
+FORMULA QUIZ
+
+Formulas Source:
+http://www.sqa.org.uk/files_ccc/PhysicsSQPN5RelationSheet.pdf
+
+Variables:
+
+E_p       Gravitational Potential Energy
+E_k       Kinetic Energy
+m         Mass
+h         Height
+v         Speed
+
+Q         Charge
+I         Current
+t         Time
+V         Voltage
+R         Resistance
+E         Energy (e.g. electrical)
+
+E_h       Heat Energy
+c         (Specific) Heat capacity
+m         Mass
+\DeltaT   Temperature *change*
+
+p         Pressure
+F         Force
+A         Area
+V         Volume
+T         Temperature
+
+d         Distance
+v         Speed
+t         Time
+
+v         Speed
+f         Frequency
+\lambda   Wavelength
+T         Period
+
+A         Activity
+N         Number of decays
+t         Time
+D         Absorbed Dose (Grays, Gy)
+E         Energy
+m         Mass
+H         Dose Equivalent (Sieverts, Sv)
+w_R       Radiatoin weighting factor
+H^{\dot}  Rate of change of dose equivalent H.
+
+s         Distance
+v         Speed
+t         Time
+d         Distance
+\bar{v}   Average speed
+a         Acceleration
+v         Final speed
+u         Initial speed
+
+W         Weight
+m         Mass
+g         Gravitational Acceleration
+F         Force
+a         Acceleration
+E_W       Work done
+d         Distance
+E_h       ??? - some kind of energy?
+l         ??? 
+
+Formulas:
+
+E_p = mgh
+E_k = (1/2)mv^2
+
+Q = It
+V = IR
+R_T = R_1 + R_2 + ...
+(1/R_T) = (1/R_1) + (1/R_2) + ...
+V_2 = (R_2 / (R_1 + R_2))V_s
+(V_1/V_2) = (R_1/R_2)
+P = E/t
+P = IV
+P = I^{2}R
+P=V^{2}/R
+
+E_h = cm\DeltaT
+
+p = F/A
+pV/T = constant
+p_1V_1 = p_2V_2
+p_1/T_1 = p_2/T_2
+V_1/T_1 = V_2/T_2
+
+d = vt
+
+v = f.lambda
+T = 1/f
+
+A = N/t
+D = E/m
+H = D w_R
+H^{\dot} = H/t
+s = vt
+d = \bar{v}t
+s = \bar{v}t
+a = (v-u)/t
+
+W = mg
+F = ma
+E_W = Fd
+E_h = ml

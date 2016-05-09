@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+
+<!--
+  Welcome to my page source! You can see it/fork it on github:
+
+      https://github.com/Jetuvei/Jetuvei.github.io
+
+  (Although, there are probably better examples of html out there
+  that you could fork...)
+
+  I also owe a lot to www.codecademy.com, which is where I've 
+  been learning html/css.
+-->
+
+<html>
+ 
+ <!-- HEAD -->
+ <head>
+
+  <!-- LINKS -->
+ <!--
+  <link href='https://fonts.googleapis.com/css?family=Source+Serif+Pro' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
+ -->
+  <link type="text/css" rel="stylesheet" href="../jwstyle.css"/>
+  
+  <!-- IMPORTED SCRIPTS -->
+  
+  <script type="text/javascript" src="../formulaquiz/formulas.js"> </script>
+  <script type="text/javascript" src="../formulaquiz/question_generator.js"> </script>
+
+  <!-- MAIN SCRIPT -->
+  <script>
+
+    var current_question;
+    var question_generator;
+
+    var is_unanswered;
+    var is_correct;
+
+    var total_no_questions;
+    var question_number;
+    var no_questions_answered;
+    var score;
+
+    var total_no_questions_text;
+    var question_number_text;
+    var no_questions_answered_text;
+    var score_text;
+
+    var question_text;
+    var answer_text;
+    var is_correct_text;
+
+    var option_A_text;
+    var option_B_text;
+    var option_C_text;
+    var option_D_text;
+
+    var CORRECT_MSG = "Correct! (Press the button for the next question.)";
+    var NOT_CORRECT_MSG = "Woops! That's incorrect. Press 'see answer' or try another question.";
+
+    var GAME_OVER_MSG = "Game Over! Try again by pressing 'New Quiz'";
+
+    function onLoad()
+    {
+      question_number = 0;
+      no_questions_answered = 0;
+      score = 0;
+
+      question_generator = new QuestionGenerator();
+
+      question_text = document.getElementById("question-text");
+      is_correct_text = document.getElementById("is-correct-text");
+      answer_text = document.getElementById("answer-text");
+      explanation_text = document.getElementById("explanation-text");
+
+      total_no_questions_text = document.getElementById("total-no-questions");
+      question_number_text = document.getElementById("question-number");
+      no_questions_answered_text = document.getElementById("no-questions-answered");
+      score_text = document.getElementById("score");
+
+      total_no_questions = question_generator.formula_list.length;
+      total_no_questions_text.innerHTML = total_no_questions;
+
+      no_questions_answered_text.innerHTML = no_questions_answered;
+      score_text.innerHTML = score;
+
+      option_A_text = document.getElementById("option-A-text");
+      option_B_text = document.getElementById("option-B-text");
+      option_C_text = document.getElementById("option-C-text");
+      option_D_text = document.getElementById("option-D-text");
+
+      refreshQuestion();
+    };
+
+    function refreshQuestion()
+    {
+      if(question_number < total_no_questions)
+      {
+        is_correct = null;
+        is_unanswered = true;
+
+        current_question = question_generator.nextQuestion();
+        question_text.innerHTML = current_question.getQuestionText();
+
+        question_number += 1;
+        question_number_text.innerHTML = question_number;
+
+        option_A_text.innerHTML = current_question.getAnswerOptionByIndex(0);
+        option_B_text.innerHTML = current_question.getAnswerOptionByIndex(1);
+        option_C_text.innerHTML = current_question.getAnswerOptionByIndex(2);
+        option_D_text.innerHTML = current_question.getAnswerOptionByIndex(3);
+
+        is_correct_text.innerHTML = "";
+        answer_text.innerHTML = "";
+        explanation_text.innerHTML = "";
+      }
+      else
+      {
+        gameOver();
+      }
+    };
+
+    function submitAnswer(ans)
+    {
+
+      if(is_unanswered)
+      {
+
+        no_questions_answered += 1;
+        no_questions_answered_text.innerHTML = no_questions_answered;
+
+        if (ans === current_question.getAnswerKey())
+        {
+          is_correct = true;
+        }
+        else
+        {
+          is_correct = false;
+        }
+      
+        is_unanswered = false;
+
+        if(is_correct) // redundancy??
+        {
+          score += 1;
+          is_correct_text.innerHTML = CORRECT_MSG;
+        }
+        else
+        {
+          is_correct_text.innerHTML = NOT_CORRECT_MSG;
+        }
+
+        score_text.innerHTML = score;
+      }
+    };
+
+    function showAnswer()
+    {
+      answer_text.innerHTML = current_question.getAnswerText();
+      explanation_text.innerHTML = current_question.getExplanationText();
+    }
+
+    function gameOver()
+    {
+      is_correct_text.innerHTML = GAME_OVER_MSG;
+      answer_text.innerHTML = ""
+      explanation_text.innerHTML = ""
+    }
+  </script>
+
+
+  <title>Physics Formula Quiz</title>
+ </head>
+
+ <body onload="onLoad();">
+
+ <!-- content div wraps sidebar and main to control positioning of the two -->
+ <div class="content">
+
+<!-- SIDEBAR -->
+<!-- - ->
+  <div class="sidebar">
+
+  </div>
+<!- - -->
+
+<!-- MAIN -->
+  <div class="main">
+
+   <h1>National 5 Physics Formula Quiz</h1>
+
+   <div id="question-area">
+
+    <h2>Question <span id="question-number">0</span> of <span id="total-no-questions">0</span></h2>
+
+    <p id="question-text">QUESTION GOES HERE</p></br>
+    <table>
+      <tr>
+        <td>A:</td>
+        <td id="option-A-text">OPTION A</td>
+      </tr>
+      <tr>
+        <td>B:</td>
+        <td id="option-B-text">OPTION B</td>
+      </tr>
+      <tr>
+        <td>C:</td>
+        <td id="option-C-text">OPTION C</td>
+      </tr>
+      <tr>
+        <td>D:</td>
+        <td id="option-D-text">OPTION D</td>
+      </tr>
+    </table>
+   </div>
+
+   <div id="button-row">
+    <table>
+      <tr>
+        <td><button onclick="submitAnswer('A');">A</button></td>
+        <td><button onclick="submitAnswer('B');">B</button></td>
+        <td><button onclick="submitAnswer('C');">C</button></td>
+        <td><button onclick="submitAnswer('D');">D</button></td>
+      </tr>
+      <tr id-"score-row">
+       <td colspan="4">Score: <span id="score">0</span>/<span id="no-questions-answered">0</span></td>
+      </tr>
+      <tr>
+        <td colspan="4"><button onclick="refreshQuestion();">Next Question</button></td>
+      </tr>
+      <tr>
+        <td colspan="4"><button onclick="showAnswer();">See answer</button></td>
+      </tr>
+      <tr>
+        <td colspan="4"><button onclick="onLoad();">New Quiz</button></td>
+      </tr>
+    </table>
+  </div> 
+
+  </br>
+
+  <div id="answer-area">
+    <p id="is-correct-text">IS CORRECT?</p>
+    <p id="answer-text">ANSWER GOES HERE</p>
+    <p id="explanation-text">EXPLANATION GOES HERE</p>
+  </div>
+
+ </div>
+
+ </body>
+</html>
