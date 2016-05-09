@@ -184,6 +184,10 @@ a:visited{
     background-color: white;
     width: 65%;
     padding: 10pt;
+
+    border-left-style: dashed;
+    border-left-width: 2px;
+    border-left-color: #eeeeee;
 }
 
 
