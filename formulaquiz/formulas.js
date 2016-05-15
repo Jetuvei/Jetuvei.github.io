@@ -80,7 +80,7 @@ var F_GPE = new Formula
 	 "E<sub>p</sub> = m/(gh)",
 	 "E<sub>p</sub> = (m/g)h"],
 	 
-	 " (<a href=\"http://www.bbc.co.uk/education/guides/z4yj6sg/revision/2\" target=\"_blank\">bbc bitesize</a>) If you increase m, g or h you increase E<sub>p</sub>.</br>This means that the equation for E<sub>p</sub></br> is: E<sub>p</sub> = m x g x h."
+	 " (<a href=\"http://www.bbc.co.uk/education/guides/z4yj6sg/revision/2\" target=\"_blank\">bbc bitesize</a>) If you increase m, g or h you increase E<sub>p</sub>. This means that the equation for E<sub>p</sub> is: E<sub>p</sub> = m x g x h."
 );
 
 var F_KE = new Formula
@@ -113,7 +113,7 @@ var F_WEIGHT = new Formula
 	 "W = m/g",
 	 "W = m + g"],
 
-	 "(bb bitesize: <a href=\"http://www.bbc.co.uk/education/guides/z4yj6sg/revision/2\" target=\"_blank\">here</a> and <a href=\"http://www.bbc.co.uk/education/guides/zgn82hv/revision/6\" target=\"_blank\">here</a>) The weight <i>W</i> of an object is a downward force of size <i>mg</i>. In lifting the object, you would have to pull upwards on it with a force equal in size to its weight: <i>mg</i>."
+	 "(bbc bitesize: <a href=\"http://www.bbc.co.uk/education/guides/z4yj6sg/revision/2\" target=\"_blank\">here</a> and <a href=\"http://www.bbc.co.uk/education/guides/zgn82hv/revision/6\" target=\"_blank\">here</a>) The weight <i>W</i> of an object is a downward force of size <i>mg</i>. In lifting the object, you would have to pull upwards on it with a force equal in size to its weight: <i>mg</i>."
 );
 
 var F_NEWTON_2 = new Formula
@@ -130,7 +130,7 @@ var F_NEWTON_2 = new Formula
 	 "F = m + a",
 	 ],
 
-	"(a href=\"http://www.bbc.co.uk/education/guides/zgn82hv/revision/4\" target=\"_blank\">bbc bitesize</a>) Newton's Second Law is concerned with unbalanced forces. Unbalanced forces produce acceleration. The greater the unbalanced force the greater the acceleration. This law is usually written as an equation: <i>F=ma</i>"
+	"(<a href=\"http://www.bbc.co.uk/education/guides/zgn82hv/revision/4\" target=\"_blank\">bbc bitesize</a>) Newton's Second Law is concerned with unbalanced forces. Unbalanced forces produce acceleration. The greater the unbalanced force the greater the acceleration. This law is usually written as an equation: <i>F=ma</i>"
 );
 
 var F_Work = new Formula
@@ -147,7 +147,7 @@ var F_Work = new Formula
 	 "E_<sub>W</sub> = d/F"
 	 ],
 
-	 "(bbc bitesize: <a href=\"http://www.bbc.co.uk/education/guides/zgn82hv/revision/2\" target=\"_blank\">here</a> and <a href=\"http://www.bbc.co.uk/education/guides/z4yj6sg/revision/2\" target=\"_blank\">here</a>) When you move an object, some distance, the amount of energy used is called the \"Work done\" and is the force used times the distance moved."
+	 "(bbc bitesize: <a href=\"http://www.bbc.co.uk/education/guides/zgn82hv/revision/2\" target=\"_blank\">here</a> and <a href=\"http://www.bbc.co.uk/education/guides/z4yj6sg/revision/2\" target=\"_blank\">here</a>) When you move an object some distance, the amount of energy used is called the \"Work done\" and is the force used times the distance moved."
 );
 
 var F_QIt = new Formula
@@ -181,7 +181,7 @@ var F_OHM_LAW = new Formula
 	 "V = I+R"
 	 ],
 
-	 "(<a href=\"http://www.bbc.co.uk/education/guides/z8b2pv4/revision/1\" target=\"_blank\") This known as Ohm's Law, and there is a nice explanation on the bbc bitesize page."
+	 "(<a href=\"http://www.bbc.co.uk/education/guides/z8b2pv4/revision/1\" target=\"_blank\">bbc bitesize</a>) This known as Ohm's Law, and there is a nice explanation on the bbc bitesize page."
 );
 
 var F_PEt = new Formula
@@ -198,7 +198,7 @@ var F_PEt = new Formula
 	 "P = E + t"
 	 ],
 
-	 "(<a href=\"http://www.bbc.co.uk/education/guides/zdgmn39/revision/1\" target=\"_blank\">bbc bitesize</a>) The rate at which energy is transferred (or changed) is called Power – how much energy is used per second."
+	 "(<a href=\"http://www.bbc.co.uk/education/guides/zdgmn39/revision/1\" target=\"_blank\">bbc bitesize</a>) The rate at which energy is transferred (or changed) is called Power: how much energy is used per second."
 );
 
 var F_PIV = new Formula
@@ -267,7 +267,7 @@ var F_EmcDT = new Formula
 	 "E<sub>h</sub> = (m+c)&Delta;T"
 	],
 
-	"(<a href=\"http://www.bbc.co.uk/education/guides/zwrxsbk/revision/1\" target=\"_blank\") When an object is heated or cooled, its temperature change depends on the mass of the object and the material it is made from. Heavier objects need more energy to raise their temperature, and the specific heat capacity tells us how difficult it is to raise the temperature of the material."
+	"(<a href=\"http://www.bbc.co.uk/education/guides/zwrxsbk/revision/1\" target=\"_blank\">bbc bitesize</a>) When an object is heated or cooled, its temperature change depends on the mass of the object and the material it is made from. Heavier objects need more energy to raise their temperature, and the specific heat capacity tells us how difficult it is to raise the temperature of the material."
 );
 
 var F_pFA = new Formula
@@ -284,7 +284,7 @@ var F_pFA = new Formula
 	 "p = F + A"
 	],
 
-	"(<a href=\"http://www.bbc.co.uk/education/guides/zjc6fg8/revision/1\" target=\"+_blank\") Pressure is the force per unit area. This means that the pressure a solid object exerts on another solid surface is its weight in newtons divided by its area in square metres."
+	"(<a href=\"http://www.bbc.co.uk/education/guides/zjc6fg8/revision/1\" target=\"+_blank\">bbc bitesize</a>) Pressure is the force per unit area. This means that the pressure a solid object exerts on another solid surface is its weight in newtons divided by its area in square metres."
 );
 
 var F_pVT = new Formula
@@ -320,7 +320,7 @@ var F_dvt = new Formula
 	 "d = v + t"
 	 ],
 
-	 "(<a href=\"http://www.bbc.co.uk/education/guides/zbpk7ty/revision/1\" target=\"_blank\">bbc bitesize</a>) The distance you travel is how fast you travel time how long you travel for. If you travel for a longer time, you will go a greater distance, and if you travel faster you will also go a greater distance."
+	 "(<a href=\"http://www.bbc.co.uk/education/guides/zbpk7ty/revision/1\" target=\"_blank\">bbc bitesize</a>) The distance you travel is how fast you travel time how long you travel for. If you travel for a longer time you will go a greater distance, and if you travel faster you will also go a greater distance."
 );
 
 var F_vflambda = new Formula
