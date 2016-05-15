@@ -69,43 +69,48 @@ l         ???
 
 Formulas:
 
-E_p = mgh
-E_k = (1/2)mv^2
+(note: 
+   (y) - implemented
+   (n) - not implemented
+)
 
-Q = It
-V = IR
-R_T = R_1 + R_2 + ...
-(1/R_T) = (1/R_1) + (1/R_2) + ...
-V_2 = (R_2 / (R_1 + R_2))V_s
-(V_1/V_2) = (R_1/R_2)
-P = E/t
-P = IV
-P = I^{2}R
-P=V^{2}/R
+(y) E_p = mgh
+(y) E_k = (1/2)mv^2
 
-E_h = cm\DeltaT
+(y) Q = It
+(y) V = IR
+(n) R_T = R_1 + R_2 + ...
+(n) (1/R_T) = (1/R_1) + (1/R_2) + ...
+(n) V_2 = (R_2 / (R_1 + R_2))V_s
+(n) (V_1/V_2) = (R_1/R_2)
+(y) P = E/t
+(y) P = IV
+(y) P = I^{2}R
+(y) P=V^{2}/R
 
-p = F/A
-pV/T = constant
-p_1V_1 = p_2V_2
-p_1/T_1 = p_2/T_2
-V_1/T_1 = V_2/T_2
+(y) E_h = cm\DeltaT
 
-d = vt
+(y) p = F/A
+(y) pV/T = constant
+(n) p_1V_1 = p_2V_2
+(n) p_1/T_1 = p_2/T_2
+(n) V_1/T_1 = V_2/T_2
 
-v = f.lambda
-T = 1/f
+(n) d = vt
 
-A = N/t
-D = E/m
-H = D w_R
-H^{\dot} = H/t
-s = vt
-d = \bar{v}t
-s = \bar{v}t
-a = (v-u)/t
+(y) v = f.lambda
+(y) T = 1/f
 
-W = mg
-F = ma
-E_W = Fd
-E_h = ml
+(y) A = N/t
+(y) D = E/m
+(y) H = D w_R
+(n) H^{\dot} = H/t
+(n) s = vt
+(n) d = \bar{v}t
+(n) s = \bar{v}t
+(n) a = (v-u)/t
+
+(y) W = mg
+(y) F = ma
+(y) E_W = Fd
+(n) E_h = ml
