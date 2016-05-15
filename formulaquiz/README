@@ -96,7 +96,7 @@ Formulas:
 (n) p_1/T_1 = p_2/T_2
 (n) V_1/T_1 = V_2/T_2
 
-(n) d = vt
+(y) d = vt
 
 (y) v = f.lambda
 (y) T = 1/f
