@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+ <link type="text/css" rel="stylesheet" href="pL.css">
+</head>
+
+<body>
+
+<!-- SECTION 0-->
+
+<h1><i>pL</i> Scaling of the Width, <i>W</i></h2>
+
+<ol>
+ <li><a href="./index.html#p0">Scaling near <i>p=0</i></a></li>
+ <li><a href="./index.html#p_half">Scaling near <i>p=1/2</i></a></li>
+ <li><a href="./index.html#at_p_half">Scaling at <i>p=1/2</i></a></li>
+</ol>
+
+<!-- SECTION 1-->
+
+<h2 id="p0">Scaling near <i>p=0</i></h2>
+<p>(<a href="./index.html">back to top</a>)</p>
+
+<p>David Mukamel says that we expect <i>W</i> to obey a scaling relation like <i>W(p,L)=L<sup>1/2</sup> g(pL<sup>&gamma;</sup>).</i></p>
+
+<p>I have data for <i>W</i> measured at various different values of <i>L</i>, <i>p</i> (<i>p<1/2</i>). As a simple first attempt at identifying the value of <i>&gamma;</i> I have plot the data with different guesses for its value, with the hope of seeing which choice causes all the data to collapse onto a single curve.</p>
+
+<p>Below are plots done in this way with <i>&gamma;</i> from <i>0.4</i> to <i>0.5</i>. (<b>Click to see full size.</b>) The best collapse occurs within this range, and by eye my judegement is that the best collapse happens at <i>&gamma; = 0.44</i>.</p>
+
+<p><b><u>Actually</u></b>, if we think this is the correct scaling <u>for small <i>p</i></u> then we want to collapse the data best for the smaller <i>p</i> values. I've added plots with a log <i>x</i> (<i>pL<sup>&gamma;</sup></i>) axis. From these we can see that the small <i>p</i> data fits  better closer to <i>&gamma;=1</i>.
+
+<p>The points for <i>p = 0.5</i> don't seem to collapse well. I think it's likely that <i>p = 1/2</i> is a special case anyway. I haven't plot them here, but the data for <i>p > 1/2</i> do not fit this trend at all. (See <a href="#p_half">below</a> for more on the scaling around <i>p=1/2</i>.)</p>
+
+<p>I can use this initial guess as a starting point in some more sophisticated data collapse software that I have. Hopefully results will follow soon!<p> 
+
+<h3>Technical Notes</h3>
+
+<ul>
+ <li>The paramter <i>u = 0.0</i></li>
+ <li>System sizes <i>L</i> are <i>2<sup>&lambda;</sup></i>, where <i>&lambda; = 8, 9, 10, ... 15</i>.</li>
+</ul>
+
+<h3>The Plots</h3>
+
+<table>
+ <tr>
+  <th <i>&gamma;</i></th>
+  <th>link to plot (png)</th>
+  <th>link to plot (png) (log x axis)</th>
+ </tr>
+
+ <tr>
+  <td>0.0</td>
+  <td>
+   <a href="data/u0.0_pLW_data_psets_gamma0.0.png">
+    <img src="data/u0.0_pLW_data_psets_gamma0.0.png">
+   </a>
+  </td>
+  <td>
+   <a href="data/u0.0_pLW_data_psets_gamma0.0_logx.png">
+    <img src="data/u0.0_pLW_data_psets_gamma0.0_logx.png">
+   </a>
+  </td>
+ </tr>
+
+ <tr>
+  <td>0.1</td>
+  <td>
+   <a href="data/u0.0_pLW_data_psets_gamma0.1.png">
+    <img src="data/u0.0_pLW_data_psets_gamma0.1.png">
+   </a>
+  </td>
+  <td>
+   <a href="data/u0.0_pLW_data_psets_gamma0.1_logx.png">
+    <img src="data/u0.0_pLW_data_psets_gamma0.1_logx.png">
+   </a>
+  </td>
+ </tr>
+
+ <tr>
+  <td>0.2</td>
+  <td>
+   <a href="data/u0.0_pLW_data_psets_gamma0.2.png">
+    <img src="data/u0.0_pLW_data_psets_gamma0.2.png">
+   </a>
+  </td>
+  <td>
+   <a href="data/u0.0_pLW_data_psets_gamma0.2_logx.png">
+    <img src="data/u0.0_pLW_data_psets_gamma0.2_logx.png">
+   </a>
+  </td>
+ </tr>
+
+ <tr>
+  <td>0.3</td>
+  <td>
+   <a href="data/u0.0_pLW_data_psets_gamma0.3.png">
+    <img src="data/u0.0_pLW_data_psets_gamma0.3.png">
+   </a>
+  </td>
+  <td>
+   <a href="data/u0.0_pLW_data_psets_gamma0.3_logx.png">
+    <img src="data/u0.0_pLW_data_psets_gamma0.3_logx.png">
+   </a>
+  </td>
+ </tr>
+
+ <tr>
+  <td>0.40</td>
+  <td>
+   <a href="data/u0.0_pLW_data_psets_gamma0.40.png">
+    <img src="data/u0.0_pLW_data_psets_gamma0.40.png">
+   </a>
+  </td>
+  <td>
+   <a href="data/u0.0_pLW_data_psets_gamma0.40_logx.png">
+    <img src="data/u0.0_pLW_data_psets_gamma0.40_logx.png">
+   </a>
+  </td>
+ </tr>
+
+ <tr>
+  <td>0.41</td>
+  <td>
+   <a href="data/u0.0_pLW_data_psets_gamma0.41.png">
+    <img src="data/u0.0_pLW_data_psets_gamma0.41.png">
+   </a>
+  </td>
+  <td>
+   <a href="data/u0.0_pLW_data_psets_gamma0.41_logx.png">
+    <img src="data/u0.0_pLW_data_psets_gamma0.41_logx.png">
+   </a>
+  </td>
+ </tr>
+
+ <tr>
+  <td>0.42</td>
+  <td>
+   <a href="data/u0.0_pLW_data_psets_gamma0.42.png">
+    <img src="data/u0.0_pLW_data_psets_gamma0.42.png">
+   </a>
+  </td>
+  <td>
+   <a href="data/u0.0_pLW_data_psets_gamma0.42_logx.png">
+    <img src="data/u0.0_pLW_data_psets_gamma0.42_logx.png">
+   </a>
+  </td>
+ </tr>
+
+ <tr>
+  <td>0.43</td>
+  <td>
+   <a href="data/u0.0_pLW_data_psets_gamma0.43.png">
+    <img src="data/u0.0_pLW_data_psets_gamma0.43.png">
+   </a>
+  </td>
+  <td>
+   <a href="data/u0.0_pLW_data_psets_gamma0.43_logx.png">
+    <img src="data/u0.0_pLW_data_psets_gamma0.43_logx.png">
+   </a>
+  </td>
+ </tr>
+
+ <tr>
+  <td>0.44</td>
+  <td>
+   <a href="data/u0.0_pLW_data_psets_gamma0.44.png">
+    <img src="data/u0.0_pLW_data_psets_gamma0.44.png">
+   </a>
+  </td>
+  <td>
+   <a href="data/u0.0_pLW_data_psets_gamma0.44_logx.png">
+    <img src="data/u0.0_pLW_data_psets_gamma0.44_logx.png">
+   </a>
+  </td>
+ </tr>
+
+ <tr>
+  <td>0.45</td>
+  <td>
+   <a href="data/u0.0_pLW_data_psets_gamma0.45.png">
+    <img src="data/u0.0_pLW_data_psets_gamma0.45.png">
+   </a>
+  </td>
+  <td>
+   <a href="data/u0.0_pLW_data_psets_gamma0.45_logx.png">
+    <img src="data/u0.0_pLW_data_psets_gamma0.45_logx.png">
+   </a>
+  </td>
+ </tr>
+
+ <tr>
+  <td>0.46</td>
+  <td>
+   <a href="data/u0.0_pLW_data_psets_gamma0.46.png">
+    <img src="data/u0.0_pLW_data_psets_gamma0.46.png">
+   </a>
+  </td>
+  <td>
+   <a href="data/u0.0_pLW_data_psets_gamma0.46_logx.png">
+    <img src="data/u0.0_pLW_data_psets_gamma0.46_logx.png">
+   </a>
+  </td>
+ </tr>
+
+ <tr>
+  <td>0.47</td>
+  <td>
+   <a href="data/u0.0_pLW_data_psets_gamma0.47.png">
+    <img src="data/u0.0_pLW_data_psets_gamma0.47.png">
+   </a>
+  </td>
+  <td>
+   <a href="data/u0.0_pLW_data_psets_gamma0.47_logx.png">
+    <img src="data/u0.0_pLW_data_psets_gamma0.47_logx.png">
+   </a>
+  </td>
+ </tr>
+
+ <tr>
+  <td>0.48</td>
+  <td>
+   <a href="data/u0.0_pLW_data_psets_gamma0.48.png">
+    <img src="data/u0.0_pLW_data_psets_gamma0.48.png">
+   </a>
+  </td>
+  <td>
+   <a href="data/u0.0_pLW_data_psets_gamma0.48_logx.png">
+    <img src="data/u0.0_pLW_data_psets_gamma0.48_logx.png">
+   </a>
+  </td>
+ </tr>
+
+ <tr>
+  <td>0.49</td>
+  <td>
+   <a href="data/u0.0_pLW_data_psets_gamma0.49.png">
+    <img src="data/u0.0_pLW_data_psets_gamma0.49.png">
+   </a>
+  </td>
+  <td>
+   <a href="data/u0.0_pLW_data_psets_gamma0.49_logx.png">
+    <img src="data/u0.0_pLW_data_psets_gamma0.49_logx.png">
+   </a>
+  </td>
+ </tr>
+
+ <tr>
+  <td>0.50</td>
+  <td>
+   <a href="data/u0.0_pLW_data_psets_gamma0.50.png">
+    <img src="data/u0.0_pLW_data_psets_gamma0.50.png">
+   </a>
+  </td>
+  <td>
+   <a href="data/u0.0_pLW_data_psets_gamma0.50_logx.png">
+    <img src="data/u0.0_pLW_data_psets_gamma0.50_logx.png">
+   </a>
+  </td>
+ </tr>
+
+ <tr>
+  <td>0.6</td>
+  <td>
+   <a href="data/u0.0_pLW_data_psets_gamma0.6.png">
+    <img src="data/u0.0_pLW_data_psets_gamma0.6.png">
+   </a>
+  </td>
+  <td>
+   <a href="data/u0.0_pLW_data_psets_gamma0.6_logx.png">
+    <img src="data/u0.0_pLW_data_psets_gamma0.6_logx.png">
+   </a>
+  </td>
+ </tr>
+
+ <tr>
+  <td>0.7</td>
+  <td>
+   <a href="data/u0.0_pLW_data_psets_gamma0.7.png">
+    <img src="data/u0.0_pLW_data_psets_gamma0.7.png">
+   </a>
+  </td>
+  <td>
+   <a href="data/u0.0_pLW_data_psets_gamma0.7_logx.png">
+    <img src="data/u0.0_pLW_data_psets_gamma0.7_logx.png">
+   </a>
+  </td>
+ </tr>
+
+ <tr>
+  <td>0.8</td>
+  <td>
+   <a href="data/u0.0_pLW_data_psets_gamma0.8.png">
+    <img src="data/u0.0_pLW_data_psets_gamma0.8.png">
+   </a>
+  </td>
+  <td>
+   <a href="data/u0.0_pLW_data_psets_gamma0.8_logx.png">
+    <img src="data/u0.0_pLW_data_psets_gamma0.8_logx.png">
+   </a>
+  </td>
+ </tr>
+
+ <tr>
+  <td>0.9</td>
+  <td>
+   <a href="data/u0.0_pLW_data_psets_gamma0.9.png">
+    <img src="data/u0.0_pLW_data_psets_gamma0.9.png">
+   </a>
+  </td>
+  <td>
+   <a href="data/u0.0_pLW_data_psets_gamma0.9_logx.png">
+    <img src="data/u0.0_pLW_data_psets_gamma0.9_logx.png">
+   </a>
+  </td>
+ </tr>
+
+ <tr>
+  <td>1.0</td>
+  <td>
+   <a href="data/u0.0_pLW_data_psets_gamma1.0.png">
+    <img src="data/u0.0_pLW_data_psets_gamma1.0.png">
+   </a>
+  </td>
+  <td>
+   <a href="data/u0.0_pLW_data_psets_gamma1.0_logx.png">
+    <img src="data/u0.0_pLW_data_psets_gamma1.0_logx.png">
+   </a>
+  </td>
+ </tr>
+
+</table>
+
+<!-- SECTION 2 -->
+
+<h2 id="p_half">Scaling near <i>p=1/2</i></h2>
+<p>(<a href="./index.html">back to top</a>)</p>
+<p>(<a href="./index.html#at_p_half">scaling at p=1/2</a>)</p>
+
+<p>David has also proposed that near <i>p=1/2</i> we might see the following scaling relation for the width: <i>W(p,L) = L<sup>1/3</sup> f( L|p-1/2|<sup>&delta;</sup>)</i>.</p>
+
+<p>Below are some plots, created in the same way as those above (by guessing <i>&delta;</i>), to see whether this scaling relationship is obeyed.</p>
+
+<p>In the plots, the points with a downward (linear) trend are from values <i>p > 1/2</i>, whereas those with an upwards trend are from the points with <i>p<1/2</i>. The plots below seem to suggest that this scaling relationship is obeyed for points <i>p > 1/2</i>, but not for points <i>p < 1/2</i>. In particular, a good collapse is obtained for <i>p<1/2</i> with <i>&delta; = 1 </i>.</p>
+
+<p>There are unfortunately only a few data points for each system size for <i>p > 1/2</i>, so I'll have to get some more to increase our confidence. Also, this judegment about the collpase was made by eye. I'll have to run it through the data collapse software to get a more accurate measurement.</p>
+
+<h3>The Plots</h3>
+
+<table>
+ <tr>
+  <th>exponent <i>&delta;</i></th>
+  <th>plot (png) (log x,y axes)</th>
+  <th>p > 1/2, W/L<sup>1/3</sup></th>
+  <th>p > 1/2, W</th>
+  <th>2/5 &le; p < 1/2</th>
+  <th>p > 1/2, W/|p-1/2|<sup>-&delta;/3</sup></th>
+ </tr>
+
+ <tr>
+  <td>0.5</td>
+  <td>
+   <a href="data/u0.0_pLW_data_Lsets_p0.5_delta0.50_logxy.png">
+    <img src="data/u0.0_pLW_data_Lsets_p0.5_delta0.50_logxy.png">
+   </a>
+  </td>
+  <td>
+   <a href="data/u0.0_pLW_data_Lsets_p0.5g_delta0.50_a0.33_logxy.png">
+    <img src="data/u0.0_pLW_data_Lsets_p0.5g_delta0.50_a0.33_logxy.png">
+   </a>
+  </td>
+  <td>
+   <a href="data/u0.0_pLW_data_Lsets_p0.5g_delta0.50_a0.00_logxy.png">
+    <img src="data/u0.0_pLW_data_Lsets_p0.5g_delta0.50_a0.00_logxy.png">
+   </a>
+  </td>
+  <td>
+   <a href="data/u0.0_pLW_data_Lsets_p0.5l_delta0.50_close_logxy.png">
+    <img src="data/u0.0_pLW_data_Lsets_p0.5l_delta0.50_close_logxy.png">
+   </a>
+  </td>
+  <td>
+   <a href="data/u0.0_pLW_data_Lsets_p0.5g_delta0.50_Wp_logxy.png">
+    <img src="data/u0.0_pLW_data_Lsets_p0.5g_delta0.50_Wp_logxy.png">
+   </a>
+  </td>
+ </tr>
+
+ <tr>
+  <td>0.6</td>
+  <td>
+   <a href="data/u0.0_pLW_data_Lsets_p0.5_delta0.60_logxy.png">
+    <img src="data/u0.0_pLW_data_Lsets_p0.5_delta0.60_logxy.png">
+   </a>
+  </td>
+  <td>
+   <a href="data/u0.0_pLW_data_Lsets_p0.5g_delta0.60_a0.33_logxy.png">
+    <img src="data/u0.0_pLW_data_Lsets_p0.5g_delta0.60_a0.33_logxy.png">
+   </a>
+  </td>
+  <td>
+   <a href="data/u0.0_pLW_data_Lsets_p0.5g_delta0.60_a0.00_logxy.png">
+    <img src="data/u0.0_pLW_data_Lsets_p0.5g_delta0.60_a0.00_logxy.png">
+   </a>
+  </td>
+  <td>
+   <a href="data/u0.0_pLW_data_Lsets_p0.5l_delta0.60_close_logxy.png">
+    <img src="data/u0.0_pLW_data_Lsets_p0.5l_delta0.60_close_logxy.png">
+   </a>
+  </td>
+  <td>
+   <a href="data/u0.0_pLW_data_Lsets_p0.5g_delta0.60_Wp_logxy.png">
+    <img src="data/u0.0_pLW_data_Lsets_p0.5g_delta0.60_Wp_logxy.png">
+   </a>
+  </td>
+ </tr>
+
+ <tr>
+  <td>0.7</td>
+  <td>
+   <a href="data/u0.0_pLW_data_Lsets_p0.5_delta0.70_logxy.png">
+    <img src="data/u0.0_pLW_data_Lsets_p0.5_delta0.70_logxy.png">
+   </a>
+  </td>
+  <td>
+   <a href="data/u0.0_pLW_data_Lsets_p0.5g_delta0.70_a0.33_logxy.png">
+    <img src="data/u0.0_pLW_data_Lsets_p0.5g_delta0.70_a0.33_logxy.png">
+   </a>
+  </td>
+  <td>
+   <a href="data/u0.0_pLW_data_Lsets_p0.5g_delta0.70_a0.00_logxy.png">
+    <img src="data/u0.0_pLW_data_Lsets_p0.5g_delta0.70_a0.00_logxy.png">
+   </a>
+  </td>
+  <td>
+   <a href="data/u0.0_pLW_data_Lsets_p0.5l_delta0.70_close_logxy.png">
+    <img src="data/u0.0_pLW_data_Lsets_p0.5l_delta0.70_close_logxy.png">
+   </a>
+  </td>
+  <td>
+   <a href="data/u0.0_pLW_data_Lsets_p0.5g_delta0.70_Wp_logxy.png">
+    <img src="data/u0.0_pLW_data_Lsets_p0.5g_delta0.70_Wp_logxy.png">
+   </a>
+  </td>
+ </tr>
+
+ <tr>
+  <td>0.8</td>
+  <td>
+   <a href="data/u0.0_pLW_data_Lsets_p0.5_delta0.80_logxy.png">
+    <img src="data/u0.0_pLW_data_Lsets_p0.5_delta0.80_logxy.png">
+   </a>
+  </td>
+  <td>
+   <a href="data/u0.0_pLW_data_Lsets_p0.5g_delta0.80_a0.33_logxy.png">
+    <img src="data/u0.0_pLW_data_Lsets_p0.5g_delta0.80_a0.33_logxy.png">
+   </a>
+  </td>
+  <td>
+   <a href="data/u0.0_pLW_data_Lsets_p0.5g_delta0.80_a0.00_logxy.png">
+    <img src="data/u0.0_pLW_data_Lsets_p0.5g_delta0.80_a0.00_logxy.png">
+   </a>
+  </td>
+  <td>
+   <a href="data/u0.0_pLW_data_Lsets_p0.5l_delta0.80_close_logxy.png">
+    <img src="data/u0.0_pLW_data_Lsets_p0.5l_delta0.80_close_logxy.png">
+   </a>
+  </td>
+  <td>
+   <a href="data/u0.0_pLW_data_Lsets_p0.5g_delta0.80_Wp_logxy.png">
+    <img src="data/u0.0_pLW_data_Lsets_p0.5g_delta0.80_Wp_logxy.png">
+   </a>
+  </td>
+ </tr>
+
+ <tr>
+  <td>0.9</td>
+  <td>
+   <a href="data/u0.0_pLW_data_Lsets_p0.5_delta0.90_logxy.png">
+    <img src="data/u0.0_pLW_data_Lsets_p0.5_delta0.90_logxy.png">
+   </a>
+  </td>
+  <td>
+   <a href="data/u0.0_pLW_data_Lsets_p0.5g_delta0.90_a0.33_logxy.png">
+    <img src="data/u0.0_pLW_data_Lsets_p0.5g_delta0.90_a0.33_logxy.png">
+   </a>
+  </td>
+  <td>
+   <a href="data/u0.0_pLW_data_Lsets_p0.5g_delta0.90_a0.00_logxy.png">
+    <img src="data/u0.0_pLW_data_Lsets_p0.5g_delta0.90_a0.00_logxy.png">
+   </a>
+  </td>
+  <td>
+   <a href="data/u0.0_pLW_data_Lsets_p0.5l_delta0.90_close_logxy.png">
+    <img src="data/u0.0_pLW_data_Lsets_p0.5l_delta0.90_close_logxy.png">
+   </a>
+  </td>
+  <td>
+   <a href="data/u0.0_pLW_data_Lsets_p0.5g_delta0.90_Wp_logxy.png">
+    <img src="data/u0.0_pLW_data_Lsets_p0.5g_delta0.90_Wp_logxy.png">
+   </a>
+  </td>
+ </tr>
+
+ <tr>
+  <td>1.0</td>
+  <td>
+   <a href="data/u0.0_pLW_data_Lsets_p0.5_delta1.00_logxy.png">
+    <img src="data/u0.0_pLW_data_Lsets_p0.5_delta1.00_logxy.png">
+   </a>
+  </td>
+  <td>
+   <a href="data/u0.0_pLW_data_Lsets_p0.5g_delta1.00_a0.33_logxy.png">
+    <img src="data/u0.0_pLW_data_Lsets_p0.5g_delta1.00_a0.33_logxy.png">
+   </a>
+  </td>
+  <td>
+   <a href="data/u0.0_pLW_data_Lsets_p0.5g_delta1.00_a0.00_logxy.png">
+    <img src="data/u0.0_pLW_data_Lsets_p0.5g_delta1.00_a0.00_logxy.png">
+   </a>
+  </td>
+  <td>
+   <a href="data/u0.0_pLW_data_Lsets_p0.5l_delta1.00_close_logxy.png">
+    <img src="data/u0.0_pLW_data_Lsets_p0.5l_delta1.00_close_logxy.png">
+   </a>
+  </td>
+  <td>
+   <a href="data/u0.0_pLW_data_Lsets_p0.5g_delta1.00_Wp_logxy.png">
+    <img src="data/u0.0_pLW_data_Lsets_p0.5g_delta1.00_Wp_logxy.png">
+   </a>
+  </td>
+ </tr>
+
+ <tr>
+  <td>1.1</td>
+  <td>
+   <a href="data/u0.0_pLW_data_Lsets_p0.5_delta1.10_logxy.png">
+    <img src="data/u0.0_pLW_data_Lsets_p0.5_delta1.10_logxy.png">
+   </a>
+  </td>
+  <td>
+   <a href="data/u0.0_pLW_data_Lsets_p0.5g_delta1.10_a0.33_logxy.png">
+    <img src="data/u0.0_pLW_data_Lsets_p0.5g_delta1.10_a0.33_logxy.png">
+   </a>
+  </td>
+  <td>
+   <a href="data/u0.0_pLW_data_Lsets_p0.5g_delta1.10_a0.00_logxy.png">
+    <img src="data/u0.0_pLW_data_Lsets_p0.5g_delta1.10_a0.00_logxy.png">
+   </a>
+  </td>
+  <td>
+   <a href="data/u0.0_pLW_data_Lsets_p0.5l_delta1.10_close_logxy.png">
+    <img src="data/u0.0_pLW_data_Lsets_p0.5l_delta1.10_close_logxy.png">
+   </a>
+  </td>
+  <td>
+   <a href="data/u0.0_pLW_data_Lsets_p0.5g_delta1.10_Wp_logxy.png">
+    <img src="data/u0.0_pLW_data_Lsets_p0.5g_delta1.10_Wp_logxy.png">
+   </a>
+  </td>
+ </tr>
+
+ <tr>
+  <td>1.2</td>
+  <td>
+   <a href="data/u0.0_pLW_data_Lsets_p0.5_delta1.20_logxy.png">
+    <img src="data/u0.0_pLW_data_Lsets_p0.5_delta1.20_logxy.png">
+   </a>
+  </td>
+  <td>
+   <a href="data/u0.0_pLW_data_Lsets_p0.5g_delta1.20_a0.33_logxy.png">
+    <img src="data/u0.0_pLW_data_Lsets_p0.5g_delta1.20_a0.33_logxy.png">
+   </a>
+  </td>
+  <td>
+   <a href="data/u0.0_pLW_data_Lsets_p0.5g_delta1.20_a0.00_logxy.png">
+    <img src="data/u0.0_pLW_data_Lsets_p0.5g_delta1.20_a0.00_logxy.png">
+   </a>
+  </td>
+  <td>
+   <a href="data/u0.0_pLW_data_Lsets_p0.5l_delta1.20_close_logxy.png">
+    <img src="data/u0.0_pLW_data_Lsets_p0.5l_delta1.20_close_logxy.png">
+   </a>
+  </td>
+  <td>
+   <a href="data/u0.0_pLW_data_Lsets_p0.5g_delta1.20_Wp_logxy.png">
+    <img src="data/u0.0_pLW_data_Lsets_p0.5g_delta1.20_Wp_logxy.png">
+   </a>
+  </td>
+ </tr>
+
+ <tr>
+  <td>1.3</td>
+  <td>
+   <a href="data/u0.0_pLW_data_Lsets_p0.5_delta1.30_logxy.png">
+    <img src="data/u0.0_pLW_data_Lsets_p0.5_delta1.30_logxy.png">
+   </a>
+  </td>
+  <td>
+   <a href="data/u0.0_pLW_data_Lsets_p0.5g_delta1.30_a0.33_logxy.png">
+    <img src="data/u0.0_pLW_data_Lsets_p0.5g_delta1.30_a0.33_logxy.png">
+   </a>
+  </td>
+  <td>
+   <a href="data/u0.0_pLW_data_Lsets_p0.5g_delta1.30_a0.00_logxy.png">
+    <img src="data/u0.0_pLW_data_Lsets_p0.5g_delta1.30_a0.00_logxy.png">
+   </a>
+  </td>
+  <td>
+   <a href="data/u0.0_pLW_data_Lsets_p0.5l_delta1.30_close_logxy.png">
+    <img src="data/u0.0_pLW_data_Lsets_p0.5l_delta1.30_close_logxy.png">
+   </a>
+  </td>
+  <td>
+   <a href="data/u0.0_pLW_data_Lsets_p0.5g_delta1.30_Wp_logxy.png">
+    <img src="data/u0.0_pLW_data_Lsets_p0.5g_delta1.30_Wp_logxy.png">
+   </a>
+  </td>
+ </tr>
+
+ <tr>
+  <td>1.4</td>
+  <td>
+   <a href="data/u0.0_pLW_data_Lsets_p0.5_delta1.40_logxy.png">
+    <img src="data/u0.0_pLW_data_Lsets_p0.5_delta1.40_logxy.png">
+   </a>
+  </td>
+  <td>
+   <a href="data/u0.0_pLW_data_Lsets_p0.5g_delta1.40_a0.33_logxy.png">
+    <img src="data/u0.0_pLW_data_Lsets_p0.5g_delta1.40_a0.33_logxy.png">
+   </a>
+  </td>
+  <td>
+   <a href="data/u0.0_pLW_data_Lsets_p0.5g_delta1.40_a0.00_logxy.png">
+    <img src="data/u0.0_pLW_data_Lsets_p0.5g_delta1.40_a0.00_logxy.png">
+   </a>
+  </td>
+  <td>
+   <a href="data/u0.0_pLW_data_Lsets_p0.5l_delta1.40_close_logxy.png">
+    <img src="data/u0.0_pLW_data_Lsets_p0.5l_delta1.40_close_logxy.png">
+   </a>
+  </td>
+  <td>
+   <a href="data/u0.0_pLW_data_Lsets_p0.5g_delta1.40_Wp_logxy.png">
+    <img src="data/u0.0_pLW_data_Lsets_p0.5g_delta1.40_Wp_logxy.png">
+   </a>
+  </td>
+ </tr>
+
+ <tr>
+  <td>1.5</td>
+  <td>
+   <a href="data/u0.0_pLW_data_Lsets_p0.5_delta1.50_logxy.png">
+    <img src="data/u0.0_pLW_data_Lsets_p0.5_delta1.50_logxy.png">
+   </a>
+  </td>
+  <td>
+   <a href="data/u0.0_pLW_data_Lsets_p0.5g_delta1.50_a0.33_logxy.png">
+    <img src="data/u0.0_pLW_data_Lsets_p0.5g_delta1.50_a0.33_logxy.png">
+   </a>
+  </td>
+  <td>
+   <a href="data/u0.0_pLW_data_Lsets_p0.5g_delta1.50_a0.00_logxy.png">
+    <img src="data/u0.0_pLW_data_Lsets_p0.5g_delta1.50_a0.00_logxy.png">
+   </a>
+  </td>
+  <td>
+   <a href="data/u0.0_pLW_data_Lsets_p0.5l_delta1.50_close_logxy.png">
+    <img src="data/u0.0_pLW_data_Lsets_p0.5l_delta1.50_close_logxy.png">
+   </a>
+  </td>
+  <td>
+   <a href="data/u0.0_pLW_data_Lsets_p0.5g_delta1.50_Wp_logxy.png">
+    <img src="data/u0.0_pLW_data_Lsets_p0.5g_delta1.50_Wp_logxy.png">
+   </a>
+  </td>
+ </tr>
+
+</table>
+
+<h3 id="at_p_half">How does f(x) behave for small x?</h3>
+<p>(<a href="./index.html">back to top</a>)</p>
+<p>(<a href="./index.html#p_half">back to near p=1/2</a>)</p>
+
+<p>David:</p>
+
+<q>The question is how does f(x) behave for small x? For that I suggest to look at the width for p=0.5 and fit it to L<sup>&theta;</sup>? Is &theta; equal to 1/3 or does one get a different exponent. It is not clear to me
+which should be the case but it would be interesting to see what comes out.</q>
+
+<p>So I've performed a simple linear regression on ln(W) against ln(L) to find the exponent &theta;. The result is shown in the plot below</p>
+
+<p>
+ <a href="data/u0.0_pLW_data_phalf_lnWlnL.png">
+  <img src="data/u0.0_pLW_data_phalf_lnWlnL.png">
+ </a>
+</p>
+
+<p>I find that the exponent &theta; = 0.29. This is consistent with the plot in Figure 15 of the <a href="../MI_overview.pdf">overview notes</a>, where I have plotted the width exponent &alpha; against the parameter p. In this case we expected &alpha; to go from 1/2 at p = 0 to 1/3 at p = 0.5. What I found is that &alpha; undershoots 1/3 a little bit, going to approximately 0.3 at p = 0.5.</p>
+
+</body>
+</html>

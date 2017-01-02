@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<body>
+<h3>Width plotted against L, for u = 0.0</h3>
+<h4>Non-linear fit: W(L) = a L**alpha (1 + b L **(-c))</h4>
+
+ <b>Notes:</b> (2015-12-2)
+ <ul>
+  <li>Used Python. Specifically: <a href="http://docs.scipy.org/doc/scipy-0.15.1/reference/generated/scipy.optimize.curve_fit.html">scipy.optimize.curve_fit</a></li>
+  <li>Fits are a lot worse for p greater than 0.5. I guess this is because in this regime the interface is basically pressed flat against the membrane and the width is very narrow (and possibly has no L dependence any more). Numerically the errors in the fit are probably very large in this regime.</li>
+ </ul>
+</p>
+
+<table>
+ <tr>
+   <th>p</th>
+   <th>linear fit</th>
+   <th>non-linear fit</th>
+ </tr>
+
+ <tr>
+  <td>0.0</td>
+  <td><a href="img/W-L_p0.0u0.0s50.pdf">plot</a></td>
+  <td><a href="img/W-L_p0.0u0.0s50.png">plot</a></td>
+ </tr>
+
+ <tr>
+  <td>0.1</td>
+  <td><a href="img/W-L_p0.1u0.0s50.pdf">plot</a></td>
+  <td><a href="img/W-L_p0.1u0.0s50.png">plot</a></td>
+ </tr>
+
+ <tr>
+  <td>0.2</td>
+  <td><a href="img/W-L_p0.2u0.0s50.pdf">plot</a></td>
+  <td><a href="img/W-L_p0.2u0.0s50.png">plot</a></td>
+ </tr>
+
+ <tr>
+  <td>0.3</td>
+  <td><a href="img/W-L_p0.3u0.0s50.pdf">plot</a></td>
+  <td><a href="img/W-L_p0.3u0.0s50.png">plot</a></td>
+ </tr>
+
+ <tr>
+  <td>0.4</td>
+  <td><a href="img/W-L_p0.4u0.0s50.pdf">plot</a></td>
+  <td><a href="img/W-L_p0.4u0.0s50.png">plot</a></td>
+ </tr>
+
+ <tr>
+  <td>0.5</td>
+  <td><a href="img/W-L_p0.5u0.0s50.pdf">plot</a></td>
+  <td><a href="img/W-L_p0.5u0.0s50.png">plot</a></td>
+ </tr>
+
+ <tr>
+  <td>0.6</td>
+  <td><a href="img/W-L_p0.6u0.0s50.pdf">plot</a></td>
+  <td><a href="img/W-L_p0.6u0.0s50.png">plot</a></td>
+ </tr>
+
+ <tr>
+  <td>0.7</td>
+  <td><a href="img/W-L_p0.7u0.0s50.pdf">plot</a></td>
+  <td><a href="img/W-L_p0.7u0.0s50.png">plot</a></td>
+ </tr>
+
+ <tr>
+  <td>0.8</td>
+  <td><a href="img/W-L_p0.8u0.0s50.pdf">plot</a></td>
+  <td><a href="img/W-L_p0.8u0.0s50.png">plot</a></td>
+ </tr>
+
+ <tr>
+  <td>0.9</td>
+  <td><a href="img/W-L_p0.9u0.0s50.pdf">plot</a></td>
+  <td><a href="img/W-L_p0.9u0.0s50.png">plot</a></td>
+ </tr>
+
+</table>
+
+</br>
+
+<p>
+ <a href="img/alpha-p.ps">Basic alpha-p plot</a>
+</p>
+
+</body>
+</html>
