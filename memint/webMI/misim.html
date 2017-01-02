@@ -1,0 +1,362 @@
+<html>
+<head>
+<meta name="Author" content="Justin Whitehouse">
+
+<script type="text/javascript" src="mi.js"> </script>
+
+<!-- empty style. use stylesheet later. -->
+<style></style>
+
+<!-- here is script to run simulation and animate -->
+<script>
+
+    var MI;
+
+    var drawing;
+    var timer;
+    
+    // Input boxes
+
+    var new_p = 1.0;
+    var new_u = 0.5;
+    var new_L = 256; //initial values
+    var new_iters_per_sec;
+
+    // Display 
+
+    var stat_membrane_shift;
+    var stat_mean_y;
+    var stat_sd;
+    var stat_contacts;
+
+    var current_p;
+    var current_u;
+    var current_L;
+
+    var current_iters_per_sec;
+    var current_update_interval;
+    var current_updates_per_sec;
+    var current_iters_per_tick;
+
+    var current_sweeps_per_tick;
+    var current_sweeps_per_sec;
+
+    // numbers
+
+    var update_interval = 200; // millis -> 200 = 0.2 seconds.
+    var iters_per_tick = (new_L*0.5 + 1)*10;
+    var updates_per_sec = 1000/update_interval;
+    var L_value;
+    var SIZE; // (1 + L/2)
+
+    var current_sweeps_per_tick;
+    var current_sweeps_per_sec;
+
+    // -----------------------------------------------------------------------
+    // START
+    // -----------------------------------------------------------------------
+    function OnStart()
+    {
+        // debug
+        //alert( "Arrived at: OnStart()");
+        //alert(DEBUG_MSG);
+
+        // drawing
+        drawing = document.getElementById("drawing");
+        //alert(drawing.innerHTML);
+
+        // stats
+        stat_membrane_shift = document.getElementById("stat_membrane_shift");
+        stat_mean_y = document.getElementById("stat_mean_y");
+        stat_sd = document.getElementById("stat_sd");
+        stat_contacts = document.getElementById("stat_contacts");
+
+        // input boxes
+        new_p = document.getElementById("new_p");
+        new_u = document.getElementById("new_u");
+        new_L = document.getElementById("new_L");
+        new_iters_per_sec = document.getElementById("new_iters_per_sec");
+
+        // display params
+        current_p = document.getElementById("current_p");
+        current_u = document.getElementById("current_u");
+        current_L = document.getElementById("current_L");
+        current_iters_per_sec = document.getElementById("current_iters_per_sec");
+
+        // timing
+        current_update_interval = document.getElementById("current_update_interval");
+        current_updates_per_sec = document.getElementById("current_updates_per_sec");
+        current_iters_per_tick = document.getElementById("current_iters_per_tick");
+        current_sweeps_per_tick = document.getElementById("current_sweeps_per_tick");
+        current_sweeps_per_sec = document.getElementById("current_sweeps_per_sec");
+
+        current_sweeps_per_tick = document.getElementById("current_sweeps_per_tick");
+        current_sweeps_per_sec = document.getElementById("current_sweeps_per_sec");
+
+        // animate
+        StartAnimation();
+    }
+    // -----------------------------------------------------------------------
+    // ANIMATE
+    // -----------------------------------------------------------------------
+    function Animate() 
+    {
+        // debug
+        //alert( "Arrived at: Animate()");
+
+        try
+        {
+            MI.DoIterations(iters_per_tick);
+            MI.Draw(drawing);
+
+            stat_membrane_shift.innerHTML = MI.membrane_shift;
+            stat_mean_y.innerHTML = MI.avg_y;
+            stat_sd.innerHTML = MI.sd;
+            stat_contacts.innerHTML = MI.getTrueHeightCount(0);
+        }
+        catch(ex)
+        {
+            StopAnimation();
+            alert ("Exception " + ex.stack);
+        }
+    }
+    // -----------------------------------------------------------------------
+    // Start
+    // -----------------------------------------------------------------------
+    function StartAnimation()
+    {
+        // debug
+        //alert( "Arrived at: StartAnimation()");
+
+        StopAnimation()
+
+        var initial_L = parseInt(new_L.value);
+        var initial_p = parseFloat(new_p.value);
+        var initial_u = parseFloat(new_u.value);
+        var initial_ips = parseInt(new_iters_per_sec.value);
+        
+        L_value = initial_L;
+        SIZE = 1 + 0.5 * L_value;
+
+        current_L.innerHTML = initial_L;
+        current_p.innerHTML = initial_p;
+        current_u.innerHTML = initial_u;
+
+        current_iters_per_sec.innerHTML = initial_ips;
+        current_update_interval.innerHTML = update_interval;
+
+        updates_per_sec = 1000/update_interval;
+        current_updates_per_sec.innerHTML = updates_per_sec;
+        
+        iters_per_tick = initial_ips/updates_per_sec;
+        current_iters_per_tick.innerHTML = iters_per_tick;
+
+        current_sweeps_per_sec.innerHTML = (initial_ips*1.0) / SIZE;
+        current_sweeps_per_tick.innerHTML = (iters_per_tick*1.0)/SIZE;
+
+        try
+        {
+            MI = new MIsim(initial_L,initial_p,initial_u); 
+        }
+        catch(ex)
+        {
+            alert("Exception " + ex.stack);
+            raise(ex);
+        }
+        
+        MI.Draw(drawing);
+
+        ApplySettings();
+
+        timer = setInterval(Animate, update_interval);
+    }
+    // -----------------------------------------------------------------------
+    // Stop (or pause)
+    // -----------------------------------------------------------------------
+    function StopAnimation()
+    {
+        // debug
+        //alert( "Arrived at: StopAnimation()");
+
+        clearInterval(timer);
+        timer = null;
+    }
+    // -----------------------------------------------------------------------
+    // Resume
+    // -----------------------------------------------------------------------
+    function ResumeAnimation()
+    {
+        // debug
+        //alert( "Arrived at: ResumeAnimation()");
+
+        if(timer == null)
+        {
+            timer = setInterval(Animate, update_interval);
+        }
+    }
+    // -----------------------------------------------------------------------
+    // Apply Settings
+    // -----------------------------------------------------------------------  
+    function ApplySettings()
+    {
+        // debug
+        //alert( "Arrived at: ApplySettings()");
+
+        var apply_p = parseFloat(new_p.value);
+        var apply_u = parseFloat(new_u.value);
+        var ps = parseInt (new_iters_per_sec.value);
+
+        try // debug
+        {
+            MI.Setp(apply_p);
+            MI.Setu(apply_u);
+        }
+        catch(ex)
+        {
+            alert ("Exception " + ex.stack);
+        }
+
+        current_p.innerHTML = MI.p;
+        current_u.innerHTML = apply_u;
+
+        current_iters_per_sec.innerHTML = ps;
+
+        iters_per_tick = (ps * update_interval) / 1000;
+        if (iters_per_tick < 1)
+        {
+            iters_per_tick = 1;
+        }
+
+        current_iters_per_tick.innerHTML = iters_per_tick;
+
+        current_sweeps_per_tick.innerHTML = (iters_per_tick*1.0)/SIZE;
+        current_sweeps_per_sec.innerHTML = (iters_per_tick * updates_per_sec *1.0)/SIZE;
+    }
+ 
+</script>
+
+<title>Membrane-Interface Simulator</title>
+</head>
+
+<body onload="OnStart();">
+
+<h2>Membrane-Interface Simulator</h2>
+
+<table>
+ <tr>
+  <td id="drawing">MI drawing here</td>
+ </tr>
+</table>
+
+<table>
+ <tr>
+  <td>membrane shift:</td>
+  <td id="stat_membrane_shift">default</td>
+ </tr>
+
+ <tr>
+  <td>Mean separation:</td>
+  <td id="stat_mean_y">default</td>
+ </tr>
+
+ <tr>
+  <td>Standard Deviation:</td>
+  <td id="stat_sd">default</td>
+ </tr>
+
+ <tr>
+  <td>Number of contacts:</td>
+  <td id="stat_contacts">default</td>
+ </tr>
+</table>
+
+<p>
+ <button onclick="StartAnimation();">Start</button> &nbsp
+ <button onclick="StopAnimation();">Stop</button> &nbsp
+ <button onclick="ResumeAnimation();">Resume</button> &nbsp
+ <button onclick="ApplySettings();">Update</button> &nbsp
+</p>
+
+<h3> Settings </h3>
+
+<table>
+ <tr>
+  <td> p </td>
+  <td><span id="current_p"/></td>
+  <td> <input type="text" size="8" value="1.0" id="new_p"> </input>
+ </tr>
+
+ <tr>
+  <td> u </td>
+  <td><span id="current_u"/></td>
+  <td> <input type="text" size="8" value="0.1" id="new_u"> </input>
+ </tr>
+
+ <tr>
+  <td> L </td>
+  <td id="current_L">default</td>
+  <td> <input type="text" size="8" value="256" id="new_L"> </input>
+ </tr>
+
+ <tr>
+  <td> Iterations per second:  </td>
+  <td id="current_iters_per_sec">default</td>
+  <td> <input type="text" size="8" value="1290" id="new_iters_per_sec"> </input>
+ </tr>
+
+ <tr>
+  <td> Update interval (ms):  </td>
+  <td id="current_update_interval">default</td>
+  <td></td>
+ </tr>
+
+ <tr>
+  <td> Updates (ticks) per sec:  </td>
+  <td id="current_updates_per_sec">default</td>
+  <td></td>
+ </tr>
+
+ <tr>
+  <td> Iterations per tick:  </td>
+  <td id="current_iters_per_tick">default</td>
+  <td></td>
+ </tr>
+
+ <tr>
+  <td> Sweeps per tick:  </td>
+  <td id="current_sweeps_per_tick">default</td>
+  <td></td>
+ </tr>
+
+ <tr>
+  <td> Sweeps per sec:  </td>
+  <td id="current_sweeps_per_sec">default</td>
+  <td></td>
+ </tr>
+</table>
+
+<h3>Paramters</h3>
+
+<table>
+ <tr>
+  <td>p</td>
+  <td>Interface hop probability</td>
+  <td>Particles in ASEP (slopes) hop to the right (growth towards the membrane) with probability p, and hop to the left with probability 1-p.</td>
+ </tr>
+ <tr>
+  <td>u</td>
+  <td>Membrane hop probability</td>
+  <td>The membrane hops away from the interface with probability u, and towards it with probability 1-u.</td>
+ </tr>
+ <tr>
+  <td>L</td>
+  <td>System size</td>
+  <td>Size of the interface - the number of segments in the interface.</td>
+ </tr>
+</table>
+
+
+
+</body>
+
+</html>
