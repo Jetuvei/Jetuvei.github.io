@@ -236,12 +236,24 @@ BCsim.prototype.updateOccupiedSitesArray = function(updatePos, isBackchip)
 {
 	if (! isBackchip)
 	{
-		this.occupiedSites[updatePos] += 1;
+		if(this.occupiedSites[updatePos] + 1 != this.occupiedSites[updatePos+1])
+		{
+			this.occupiedSites[updatePos] += 1;	
+		}
+		else
+		{
+			this.occupiedSites.pop(updatePos); // check this is right when you next have internet access!
+		}
 	}
 	else
 	{
-		this.occupiedSites.splice(updatePos + 1, 0, this.occupiedSites[updatePos] + 1);
+		if(this.occupiedSites[updatePos] + 1 != this.occupiedSites[updatePos+1])
+		{
+			this.occupiedSites.splice(updatePos + 1, 0, this.occupiedSites[updatePos] + 1);
+		}
+		//else: pass
 	}
+
 }
 
 // ----------------------------------------------------------------------------
