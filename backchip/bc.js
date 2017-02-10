@@ -286,6 +286,19 @@ BCsim.prototype.DoIterations = function(num_iters)
 {
 	for (var i = 0; i < num_iters; i++)
 	{
+		/* NOTE 2017.02.10
+		 * 
+		 * This update method is wrong. Shouldn't sample from only occupied 
+		 * sites as this will artificially enhance the rate of events from sites
+		 * when there are fewer total sites.
+		 *
+		 * Should either:
+		 * - choose uniformly from all sites (including empty ones)
+		 * - find a cleverer way of sampling (e.g. continuous time Monte
+		 *   Carlo or Gillespie algorithm) to avoid wasting time checking for 
+		 *   jumps from empty sites.
+		 */
+
 		// 1. find an occupied site
 		var updateSite = Math.floor(Math.random() * this.occupiedSites.length);
 
