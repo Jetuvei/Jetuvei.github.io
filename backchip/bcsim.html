@@ -11,14 +11,99 @@
 
 <script>
 
+	var BC;
+
+	var drawing;
+	var timer;
+
+	// input boxes
+
+	var new_L = 256;
+	var new_N = new_L/2;
+	var new_b = 1.0;
+
 </script>
 
 <title>Back-chip simulator</title>
 
 </head>
 
-<body>
-	
+<body onload="OnStart()">
+
+<h2>Membrane-Interface Simulator</h2>
+
+ <!-- DRAWING -->
+ <table>
+  <tr>
+   <td id="drawing">MI drawing here</td>
+  </tr>
+ </table>
+ 
+ <!-- BUTTONS -->
+ <p>
+ <button onclick="StartAnimation();">Start</button> &nbsp
+ <button onclick="StopAnimation();">Stop</button> &nbsp
+ <button onclick="ResumeAnimation();">Resume</button> &nbsp
+ <button onclick="ApplySettings();">Update</button> &nbsp
+ </p>
+
+ <!-- SETTINGS -->
+ <table>
+ <tr>
+  <td> p </td>
+  <td><span id="current_b"/></td>
+  <td> <input type="text" size="8" value="1.0" id="new_p"> </input>
+ </tr>
+
+ <tr>
+  <td> u </td>
+  <td><span id="current_N"/></td>
+  <td> <input type="text" size="8" value="128" id="new_u"> </input>
+ </tr>
+
+ <tr>
+  <td> L </td>
+  <td><span id="current_L"/>default</td>
+  <td> <input type="text" size="8" value="256" id="new_L"> </input>
+ </tr>
+
+ <tr>
+  <td> Iterations per second:  </td>
+  <td><span id="current_iters_per_sec"/>default</td>
+  <td> <input type="text" size="8" value="1290" id="new_iters_per_sec"> </input>
+ </tr>
+
+ <tr>
+  <td> Update interval (ms):  </td>
+  <td><span id="current_update_interval"/>default</td>
+  <td></td>
+ </tr>
+
+ <tr>
+  <td> Updates (ticks) per sec:  </td>
+  <td><span id="current_updates_per_sec"/>default</td>
+  <td></td>
+ </tr>
+
+ <tr>
+  <td> Iterations per tick:  </td>
+  <td><span id="current_iters_per_tick"/>default</td>
+  <td></td>
+ </tr>
+
+ <tr>
+  <td> Sweeps per tick:  </td>
+  <td><span id="current_sweeps_per_tick"/>default</td>
+  <td></td>
+ </tr>
+
+ <tr>
+  <td> Sweeps per sec:  </td>
+  <td><span id="current_sweeps_per_sec"/>default</td>
+  <td></td>
+ </tr>
+</table>
+
 </body>
 
 </html>
