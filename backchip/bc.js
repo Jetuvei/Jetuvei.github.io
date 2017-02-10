@@ -44,7 +44,7 @@ var MIN_DRAW_HEIGHT = 10;
 //    u(1) = 1
 //
 // ----------------------------------------------------------------------------
-function BCsim (L, N, b, a)
+function BCsim (L, N, b, a, alpha)
 {
 	// check parameters allowed
 
