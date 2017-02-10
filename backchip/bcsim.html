@@ -16,11 +16,168 @@
 	var drawing;
 	var timer;
 
+	// constants
+
+	var DEFAULT_a = 1;
+	var DEFAULT_alpha = 1.0;
+
 	// input boxes
 
 	var new_L = 256;
 	var new_N = new_L/2;
 	var new_b = 1.0;
+	var new_iters_per_sec;
+
+	// current values
+
+	var current_L;
+	var current_N;
+	var current_b;
+
+	var current_iters_per_sec;
+    var current_update_interval;
+    var current_updates_per_sec;
+    var current_iters_per_tick;
+
+    var current_sweeps_per_tick;
+    var current_sweeps_per_sec;
+
+    // numbers
+
+    var update_interval = 200; // millis -> 200 = 0.2 seconds.
+    var updates_per_sec = 1000/update_interval;
+
+	// -----------------------------------------------------------------------
+    // START
+    // -----------------------------------------------------------------------
+    function OnStart()
+    {
+    	// GET ELEMENTS
+
+    	// -- drawing --
+    	drawing = document.getElementByID("drawing");
+
+    	// -- input --
+    	new_L = document.getElementByID("new_L");
+    	new_N = document.getElementByID("new_N");
+    	new_b = document.getElementByID("new_b");
+    	new_iters_per_sec = document.getElementByID("new_iters_per_sec");
+
+    	// -- display --
+    	current_L = document.getElementByID("current_L");
+    	current_N = document.getElementByID("current_N");
+    	current_b = document.getElementByID("current_b");
+    	current_iters_per_sec = document.getElementByID("current_iters_per_sec");
+
+
+    	// ANIMATE
+    	StartAnimation();
+    }
+    // -----------------------------------------------------------------------
+    // START
+    // -----------------------------------------------------------------------
+    function StartAnimation()
+    {
+    	// reset the timer
+    	StopAnimation();
+
+    	// parse parameters
+    	var initial_L = parseInt(new_L.value);
+        var initial_N = parseFloat(new_N.value);
+        var initial_b = parseFloat(new_b.value);
+        var initial_ips = parseInt(new_iters_per_sec.value);
+
+        // update display
+        current_L.innerHTML = initial_L;
+        current_N.innerHTML = initial_N;
+        current_b.innerHTML = initial_b;
+
+        current_iters_per_sec.innerHTML = initial_ips;
+
+        // initialise simulation
+        try
+        {
+        	BC = new BCsim(initial_L, initial_L, initial_b, DEFAULT_a, DEFAULT_alpha);
+        }
+        catch(ex)
+        {
+            alert("Exception " + ex.stack);
+            raise(ex);
+        }
+
+        // draw
+        BC.Draw(drawing);
+
+        ApplySettings();
+
+        timer = setInterval(Animate, update_interval);
+    }
+    // -----------------------------------------------------------------------
+    // Stop (or pause)
+    // -----------------------------------------------------------------------
+    function StopAnimation()
+    {
+        clearInterval(timer);
+        timer = null;
+    }
+    // -----------------------------------------------------------------------
+    // Resume
+    // -----------------------------------------------------------------------
+    function ResumeAnimation()
+    {
+        if(timer == null)
+        {
+            timer = setInterval(Animate, update_interval);
+        }
+    }
+    // -----------------------------------------------------------------------
+    // Apply Settings
+    // -----------------------------------------------------------------------  
+    function ApplySettings()
+    {
+    	var apply_b = parseFloat(new_b.value);
+        var apply_ips = parseInt (new_iters_per_sec.value);
+
+        try
+        {
+        	BC.setb(apply_b);
+        }
+        catch(ex)
+        {
+        	alert("Exception " + ex.stack);
+            raise(ex);
+        }
+
+        current_B.innerHTML = BC.getb();
+        current_iters_per_sec.innerHTML = apply_ips;
+
+        iters_per_tick = apply_ips / updates_per_sec;
+        if(iters_per_tick < 1)
+        {
+        	iters_per_tick = 1;
+        }
+
+        current_iters_per_tick.innerHTML = iters_per_tick;
+
+    }
+    // -----------------------------------------------------------------------
+    // ANIMATE
+    // -----------------------------------------------------------------------
+    function Animate() 
+    {
+    	try
+    	{
+    		BC.DoIterations(iters_per_tick);
+    		BC.Draw(drawing);
+    	}
+        catch(ex)
+        {
+            StopAnimation();
+            alert ("Exception " + ex.stack);
+        }
+    }
+
+
 
 </script>
 
@@ -50,13 +207,13 @@
  <!-- SETTINGS -->
  <table>
  <tr>
-  <td> p </td>
+  <td> b </td>
   <td><span id="current_b"/></td>
   <td> <input type="text" size="8" value="1.0" id="new_p"> </input>
  </tr>
 
  <tr>
-  <td> u </td>
+  <td> N </td>
   <td><span id="current_N"/></td>
   <td> <input type="text" size="8" value="128" id="new_u"> </input>
  </tr>
