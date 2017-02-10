@@ -293,7 +293,7 @@ BCsim.prototype.DoIterations = function(num_iters)
 		var n = tryHop(updateSite);
 
 		// 3. if hop, update occupied sites list.
-		if (n == 1)
+		if (n == 1) // extension: n <= a
 		{
 			this.updateOccupiedSitesArray(updateSite, false);
 		}
