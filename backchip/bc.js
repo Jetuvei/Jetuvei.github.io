@@ -232,6 +232,9 @@ BCsim.getOccupiedSitesArray = function(sites_array)
 	return occupiedSites;
 }
 
+
+/** what is the function of the occupiedSites array?
+ */	
 BCsim.prototype.updateOccupiedSitesArray = function(updatePos, isBackchip)
 {
 	if (! isBackchip)
@@ -253,29 +256,6 @@ BCsim.prototype.updateOccupiedSitesArray = function(updatePos, isBackchip)
 		}
 		//else: pass
 	}
-
-}
-
-// ----------------------------------------------------------------------------
-// Hop
-// ----------------------------------------------------------------------------
-
-BCims.prototype.tryHop = function(site)
-{
-	var n = this.heights[site];
-
-	if (n == 1){
-		// remember: u(1) = 1
-		this.heights[site] -= 1;
-		this.heights[site + 1] += 1;
-	}
-	else{
-		if (Math.random() < this.u(n)){
-			this.heights[site] -= (n-1);
-			this.heights[site] += (n-1);
-		}
-	}
-	return n
 }
 
 // ----------------------------------------------------------------------------
@@ -286,36 +266,31 @@ BCsim.prototype.DoIterations = function(num_iters)
 {
 	for (var i = 0; i < num_iters; i++)
 	{
-		/* NOTE 2017.02.10
-		 * 
-		 * This update method is wrong. Shouldn't sample from only occupied 
-		 * sites as this will artificially enhance the rate of events from sites
-		 * when there are fewer total sites.
-		 *
-		 * Should either:
-		 * - choose uniformly from all sites (including empty ones)
-		 * - find a cleverer way of sampling (e.g. continuous time Monte
-		 *   Carlo or Gillespie algorithm) to avoid wasting time checking for 
-		 *   jumps from empty sites.
-		 */
+		// 1. pick a site at random 
+		var updateSite = Math.floor(Math.random() * this.heights.length);
+		var n = this.heights[site];
 
-		// 1. find an occupied site
-		var updateSite = Math.floor(Math.random() * this.occupiedSites.length);
-
-		// 2. try a hop from an occupied site
-		var n = tryHop(updateSite);
-
+		// 2. try a hop from this site
 		// 3. if hop, update occupied sites list.
-		if (n == 1) // extension: n <= a
-		{
-			this.updateOccupiedSitesArray(updateSite, false);
-		}
-		else if (n > 1)
-		{
-			this.updateOccupiedSitesArray(updateSite, true);
-		}
-		else{
-			// pass
+		if(n > 0){
+			if (n == 1) // extension: n <= a
+			{	
+				// remember: u(1) = 1
+				this.heights[site] -= 1;
+				this.heights[site + 1] += 1;
+				
+				this.updateOccupiedSitesArray(updateSite, false);
+			}
+			else
+			{	
+				if (Math.random() < this.u(n))
+				{
+					this.heights[site] -= (n-1);
+					this.heights[site] += (n-1);
+				
+					this.updateOccupiedSitesArray(updateSite, true);
+				}
+			}	
 		}
 	}
 }
