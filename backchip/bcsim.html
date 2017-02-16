@@ -2,7 +2,7 @@
 <head>
 <meta name="Author" content="Justin Whitehouse">
 
-<script type="text/javascript" src="bc.js"></script>
+<script type="text/javascript" src="bc.js"> </script>
 
 <!-- empty style. use stylesheet later. -->
 <style></style>
@@ -21,11 +21,15 @@
 	var DEFAULT_a = 1;
 	var DEFAULT_alpha = 1.0;
 
+  var DEFAULT_L = 256;
+  var DEFAULT_N = 128;
+  var DEFAULT_b = 1.0;
+
 	// input boxes
 
-	var new_L = 256;
-	var new_N = new_L/2;
-	var new_b = 1.0;
+	var new_L;
+	var new_N;
+	var new_b;
 	var new_iters_per_sec;
 
 	// current values
@@ -47,28 +51,42 @@
     var update_interval = 200; // millis -> 200 = 0.2 seconds.
     var updates_per_sec = 1000/update_interval;
 
-	// -----------------------------------------------------------------------
+	  // -----------------------------------------------------------------------
     // START
     // -----------------------------------------------------------------------
     function OnStart()
     {
+      // debug:
+      console.log("DEBUG: hit OnStart()");
+      var debugBC = new BCsim(256,128,1.0,1,1);
+
     	// GET ELEMENTS
 
     	// -- drawing --
-    	drawing = document.getElementByID("drawing");
+    	drawing = document.getElementById("drawing");
 
     	// -- input --
-    	new_L = document.getElementByID("new_L");
-    	new_N = document.getElementByID("new_N");
-    	new_b = document.getElementByID("new_b");
-    	new_iters_per_sec = document.getElementByID("new_iters_per_sec");
+    	new_L = document.getElementById("new_L");
+    	new_N = document.getElementById("new_N");
+    	new_b = document.getElementById("new_b");
+    	new_iters_per_sec = document.getElementById("new_iters_per_sec");
 
     	// -- display --
-    	current_L = document.getElementByID("current_L");
-    	current_N = document.getElementByID("current_N");
-    	current_b = document.getElementByID("current_b");
-    	current_iters_per_sec = document.getElementByID("current_iters_per_sec");
+    	current_L = document.getElementById("current_L");
+    	current_N = document.getElementById("current_N");
+    	current_b = document.getElementById("current_b");
+    	current_iters_per_sec = document.getElementById("current_iters_per_sec");
 
+      // -- initialise values --
+      new_L.innerHTML = DEFAULT_L;
+      new_N.innerHTML = DEFAULT_N;
+      new_b.innerHTML = DEFAULT_b;
+      current_L.innerHTML = DEFAULT_L;
+      current_N.innerHTML = DEFAULT_N;
+      current_b.innerHTML = DEFAULT_b;
+
+      // debug
+      BC = null;
 
     	// ANIMATE
     	StartAnimation();
@@ -78,93 +96,107 @@
     // -----------------------------------------------------------------------
     function StartAnimation()
     {
+      // debug:
+      console.log("DEBUG: hit StartAnimation()");
+
     	// reset the timer
     	StopAnimation();
 
     	// parse parameters
     	var initial_L = parseInt(new_L.value);
-        var initial_N = parseFloat(new_N.value);
-        var initial_b = parseFloat(new_b.value);
-        var initial_ips = parseInt(new_iters_per_sec.value);
+      var initial_N = parseFloat(new_N.value);
+      var initial_b = parseFloat(new_b.value);
+      var initial_ips = parseInt(new_iters_per_sec.value);
 
-        // update display
-        current_L.innerHTML = initial_L;
-        current_N.innerHTML = initial_N;
-        current_b.innerHTML = initial_b;
+      // update display
+      current_L.innerHTML = initial_L;
+      current_N.innerHTML = initial_N;
+      current_b.innerHTML = initial_b;
 
-        current_iters_per_sec.innerHTML = initial_ips;
+      current_iters_per_sec.innerHTML = initial_ips;
 
-        // initialise simulation
-        try
-        {
-        	BC = new BCsim(initial_L, initial_L, initial_b, DEFAULT_a, DEFAULT_alpha);
-        }
-        catch(ex)
-        {
-            alert("Exception " + ex.stack);
-            raise(ex);
-        }
+      // initialise simulation
+      try
+      {
+       	BC = new BCsim(initial_L, initial_L, initial_b, DEFAULT_a, DEFAULT_alpha);
+      }
+      catch(ex)
+      {
+          alert("Exception " + ex.stack);
+          throw ex;
+      }
 
-        // draw
-        BC.Draw(drawing);
+      // draw
+      BC.Draw(drawing);
 
-        ApplySettings();
+      ApplySettings();
 
-        timer = setInterval(Animate, update_interval);
+      timer = setInterval(Animate, update_interval);
     }
     // -----------------------------------------------------------------------
     // Stop (or pause)
     // -----------------------------------------------------------------------
     function StopAnimation()
     {
-        clearInterval(timer);
-        timer = null;
+      // debug:
+      console.log("DEBUG: hit StopAnimation()");
+
+      clearInterval(timer);
+      timer = null;
     }
     // -----------------------------------------------------------------------
     // Resume
     // -----------------------------------------------------------------------
     function ResumeAnimation()
     {
-        if(timer == null)
-        {
-            timer = setInterval(Animate, update_interval);
-        }
+      // debug:
+      console.log("DEBUG: hit ResumeAnimation()");
+
+      if(timer == null)
+      {
+        timer = setInterval(Animate, update_interval);
+      }
     }
     // -----------------------------------------------------------------------
     // Apply Settings
     // -----------------------------------------------------------------------  
     function ApplySettings()
     {
+      // debug:
+      console.log("DEBUG: hit ApplySettings()");
+
     	var apply_b = parseFloat(new_b.value);
-        var apply_ips = parseInt (new_iters_per_sec.value);
+      var apply_ips = parseInt (new_iters_per_sec.value);
 
-        try
-        {
-        	BC.setb(apply_b);
-        }
-        catch(ex)
-        {
-        	alert("Exception " + ex.stack);
-            raise(ex);
-        }
+      try
+      {
+       	BC.setb(apply_b);
+      }
+      catch(ex)
+      {
+       	alert("Exception " + ex.stack);
+        raise(ex);
+      }
 
-        current_B.innerHTML = BC.getb();
-        current_iters_per_sec.innerHTML = apply_ips;
+      current_B.innerHTML = BC.getb();
+      current_iters_per_sec.innerHTML = apply_ips;
 
-        iters_per_tick = apply_ips / updates_per_sec;
-        if(iters_per_tick < 1)
-        {
-        	iters_per_tick = 1;
-        }
+      iters_per_tick = apply_ips / updates_per_sec;
+      if(iters_per_tick < 1)
+      {
+       	iters_per_tick = 1;
+      }
 
-        current_iters_per_tick.innerHTML = iters_per_tick;
-
+      current_iters_per_tick.innerHTML = iters_per_tick;
     }
     // -----------------------------------------------------------------------
     // ANIMATE
     // -----------------------------------------------------------------------
     function Animate() 
     {
+      // debug:
+      console.log("DEBUG: hit Animate()");
+
     	try
     	{
     		BC.DoIterations(iters_per_tick);
@@ -176,8 +208,6 @@
             alert ("Exception " + ex.stack);
         }
     }
-
-
 
 </script>
 
@@ -206,22 +236,23 @@
 
  <!-- SETTINGS -->
  <table>
- <tr>
-  <td> b </td>
-  <td><span id="current_b"/></td>
-  <td> <input type="text" size="8" value="1.0" id="new_p"> </input>
- </tr>
 
  <tr>
   <td> N </td>
   <td><span id="current_N"/></td>
-  <td> <input type="text" size="8" value="128" id="new_u"> </input>
+  <td> <input type="text" size="8" value="128" id="new_N"> </input>
  </tr>
 
  <tr>
   <td> L </td>
   <td><span id="current_L"/>default</td>
   <td> <input type="text" size="8" value="256" id="new_L"> </input>
+ </tr>
+
+ <tr>
+  <td> b </td>
+  <td><span id="current_b"/></td>
+  <td> <input type="text" size="8" value="1.0" id="new_b"> </input>
  </tr>
 
  <tr>
