@@ -180,6 +180,17 @@ BCsim.prototype.setalpha = function(A)
 	return false;
 }
 
+BCsim.prototype.setHeight = function(site, h)
+{
+	this.heights[site%this.heights.length] = h;
+}
+
+BCsim.prototype.incrementHeight = function(site, incr)
+{
+	var index = site%this.heights.length;
+	this.heights[index] += incr;
+}
+
 // -- get --
 
 BCsim.prototype.getL = function()
@@ -205,6 +216,11 @@ BCsim.prototype.geta = function()
 BCsim.prototype.getalpha = function()
 {
 	return this.alpha;
+}
+
+BCsim.prototype.getHeight = function(site)
+{
+	return this.heights[site];
 }
 
 BCsim.prototype.getMaxOccupancy = function()
@@ -299,8 +315,8 @@ BCsim.prototype.DoIterations = function(num_iters)
 			if (n == 1) // extension: n <= a
 			{	
 				// remember: u(1) = 1
-				this.heights[updateSite] -= 1;
-				this.heights[updateSite + 1] += 1;
+				this.incrementHeight(updateSite, -1);
+				this.incrementHeight(updateSite + 1, 1);
 				
 				this.updateOccupiedSitesArray(updateSite, false);
 			}
@@ -313,8 +329,8 @@ BCsim.prototype.DoIterations = function(num_iters)
 
 				if (hopRand < this.u(n))
 				{
-					this.heights[updateSite] -= (n-1);
-					this.heights[updateSite+1] += (n-1);
+					this.incrementHeight(updateSite, -(n-1));
+					this.incrementHeight(updateSite + 1, (n-1));
 				
 					this.updateOccupiedSitesArray(updateSite, true);
 				}
