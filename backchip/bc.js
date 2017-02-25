@@ -13,10 +13,15 @@ var L_MAX = 1024;
 var N_MIN = 2;
 var N_MAX = 512;
 var a_MIN = 1;
-// a_max = N
+// a_max = N;
 var b_MIN = 0;
 
 var MIN_DRAW_HEIGHT = 10;
+
+function myTestClass()
+{
+	this.data = "Hello World!";
+}
 
 // ----------------------------------------------------------------------------
 // Initialise Simulation
@@ -46,23 +51,30 @@ var MIN_DRAW_HEIGHT = 10;
 // ----------------------------------------------------------------------------
 function BCsim (L, N, b, a, alpha)
 {
+	// debug
+	console.log("DEBUG: BCsim initialisation");
+
 	// check parameters allowed
 
 	if ( L < L_MIN || L > L_MAX )
 	{
+		console.log("Invalid parameter: L");
 		throw "Invald parameter: L";
 	}
 	if ( N < N_MIN || N > N_MAX )
 	{
 		throw "Invalid parameter: N";
+		console.log("Invalid parameter: N");
 	}
 	if ( a < a_MIN || a > N )
 	{
 		throw "Invalid parameter: a";
+		conosle.log("Invalid parameter: a");
 	}
 	if ( b < b_MIN )
 	{
 		throw "Invalid parameter: b";
+		console.log("Invalid parameter: b");
 	}
 
 	// properties
@@ -210,7 +222,16 @@ BCsim.prototype.updateMaxOccupancy = function()
 			this.maxOccupancy = this.heights[this.occupiedSites[i]];
 		}
 	}
-	this.maxOccupancy == 0 ? return false : return true;
+	var success = false;
+	if(this.maxOccupancy > 0)
+	{
+		success = true;
+	}
+	else
+	{
+		success = false;
+	}
+	return success;
 }
 
 // ----------------------------------------------------------------------------
