@@ -21,8 +21,8 @@
 	var DEFAULT_a = 1;
 	var DEFAULT_alpha = 1.0;
 
-  var DEFAULT_L = 256;
-  var DEFAULT_N = 128;
+  var DEFAULT_L = 64;
+  var DEFAULT_N = 32;
   var DEFAULT_b = 1.0;
 
 	// input boxes
@@ -77,6 +77,7 @@
    	current_N = document.getElementById("current_N");
    	current_b = document.getElementById("current_b");
    	current_iters_per_sec = document.getElementById("current_iters_per_sec");
+    current_iters_per_tick = document.getElementById("current_iters_per_tick");
 
     // -- initialise values --
     new_L.innerHTML = DEFAULT_L;
@@ -183,7 +184,7 @@
       raise(ex);
     }
 
-    current_B.innerHTML = BC.getb();
+    current_b.innerHTML = BC.getb();
     current_iters_per_sec.innerHTML = apply_ips;
 
     iters_per_tick = apply_ips / updates_per_sec;
@@ -223,7 +224,7 @@
 
 <body onload="OnStart()">
 
-<h2>Membrane-Interface Simulator</h2>
+<h2>Back-chip simulator</h2>
 
  <!-- DRAWING -->
  <table>
@@ -243,16 +244,19 @@
  <!-- SETTINGS -->
  <table>
 
+ <!-- NOTE TO SELF:
+      default values when page is loaded are set from here and not from the javascript above
+ -->
  <tr>
   <td> N </td>
   <td><span id="current_N"/></td>
-  <td> <input type="text" size="8" value="128" id="new_N"> </input>
+  <td> <input type="text" size="8" value="32" id="new_N"> </input>
  </tr>
 
  <tr>
   <td> L </td>
   <td><span id="current_L"/>default</td>
-  <td> <input type="text" size="8" value="256" id="new_L"> </input>
+  <td> <input type="text" size="8" value="64" id="new_L"> </input>
  </tr>
 
  <tr>

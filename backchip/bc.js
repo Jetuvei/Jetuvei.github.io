@@ -105,7 +105,7 @@ function BCsim (L, N, b, a, alpha)
 
 	// more properties
 
-	this.occupiedSites = this.getOccupiedSitesArray(heights);
+	this.occupiedSites = this.getOccupiedSitesArray(this.heights);
 	this.updateMaxOccupancy();
 }
 
@@ -238,7 +238,7 @@ BCsim.prototype.updateMaxOccupancy = function()
 // Occupied sites array
 // ----------------------------------------------------------------------------
 
-BCsim.getOccupiedSitesArray = function(sites_array)
+BCsim.prototype.getOccupiedSitesArray = function(sites_array)
 {
 	var num_sites = sites_array.length;
 	var occupiedSites = [];
@@ -285,11 +285,13 @@ BCsim.prototype.updateOccupiedSitesArray = function(updatePos, isBackchip)
 
 BCsim.prototype.DoIterations = function(num_iters)
 {
+	console.log("DEBUG: hit BCsim.DoIterations!");
+
 	for (var i = 0; i < num_iters; i++)
 	{
 		// 1. pick a site at random 
 		var updateSite = Math.floor(Math.random() * this.heights.length);
-		var n = this.heights[site];
+		var n = this.heights[updateSite];
 
 		// 2. try a hop from this site
 		// 3. if hop, update occupied sites list.
@@ -297,23 +299,38 @@ BCsim.prototype.DoIterations = function(num_iters)
 			if (n == 1) // extension: n <= a
 			{	
 				// remember: u(1) = 1
-				this.heights[site] -= 1;
-				this.heights[site + 1] += 1;
+				this.heights[updateSite] -= 1;
+				this.heights[updateSite + 1] += 1;
 				
 				this.updateOccupiedSitesArray(updateSite, false);
 			}
 			else
 			{	
-				if (Math.random() < this.u(n))
+				var hopRand = Math.random();
+				console.log("DEBUG: n = " + n.toString());
+				console.log("DEBUG: u(n) = " + this.u(n).toString());
+				console.log("DEBUG: hopRand = " + hopRand.toString());
+
+				if (hopRand < this.u(n))
 				{
-					this.heights[site] -= (n-1);
-					this.heights[site] += (n-1);
+					this.heights[updateSite] -= (n-1);
+					this.heights[updateSite+1] += (n-1);
 				
 					this.updateOccupiedSitesArray(updateSite, true);
+				}
+				else
+				{
+					console.log("DEBUG: occupied but no hop.");
 				}
 			}	
 		}
 	}
+	var debug_str = "";
+	for(var i =0; i < this.heights.length; i++)
+	{
+		debug_str += this.heights[i].toString() + ".";
+	}
+	console.log(debug_str);
 }
 
 // ============================================================================
@@ -322,6 +339,7 @@ BCsim.prototype.DoIterations = function(num_iters)
 
 BCsim.prototype.Draw = function(picture)
 {
+	console.log("DEBUG: hit BCsim.Draw!")
     picture.innerHTML = this.BCtoSVG();
 }
 
@@ -336,14 +354,14 @@ BCsim.prototype.BCtoSVG = function()
 
     // Data range: x y width height
 
-    svg += "viewBox=\"0," + draw_ymin + "," + this.L + "," + draw_y_max + "\" preserveAspectRatio=\"none\">";
+    svg += "viewBox=\"0," + draw_ymin + "," + this.L + "," + draw_ymax + "\" preserveAspectRatio=\"none\">";
     svg += BCsim.RectToSVG (0, draw_ymin, this.L, draw_ymax, "none", "black");
 
     // Draw occupancies of sites
 
     for(var i = 0; i < this.L; i++)
     {
-    	svg += BCsim.RectTotSVG (i, draw_ymin, 1, this.heights[i], "blue", "black");	
+    	svg += BCsim.RectToSVG (i, draw_ymin, 1, this.heights[i], "blue", "black");	
     }
     
     svg += "</svg>";
