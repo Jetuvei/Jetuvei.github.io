@@ -164,6 +164,7 @@ BCsim.prototype.setb = function(b)
 	else
 	{
 		this.b = b;
+		this.U1 = 1 + this.b;
 		return true;
 	}
 }
