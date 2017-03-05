@@ -25,6 +25,13 @@
   var DEFAULT_N = 32;
   var DEFAULT_b = 1.0;
 
+  var DEFAULT_iters_per_second = DEFAULT_L*5;
+  
+  // numbers
+
+  var update_interval = 200; // millis -> 200 = 0.2 seconds.
+  var updates_per_sec = 1000/update_interval;
+
 	// input boxes
 
 	var new_L;
@@ -46,10 +53,6 @@
   var current_sweeps_per_tick; // sweeps = iters/L
   var current_sweeps_per_sec;
 
-  // numbers
-
-  var update_interval = 200; // millis -> 200 = 0.2 seconds.
-  var updates_per_sec = 1000/update_interval;
 
 	// -----------------------------------------------------------------------
   // START
@@ -82,6 +85,7 @@
     new_L.innerHTML = DEFAULT_L;
     new_N.innerHTML = DEFAULT_N;
     new_b.innerHTML = DEFAULT_b;
+    new_iters_per_sec.innerHTML = DEFAULT_iters_per_second;
     current_L.innerHTML = DEFAULT_L;
     current_N.innerHTML = DEFAULT_N;
     current_b.innerHTML = DEFAULT_b;
@@ -257,7 +261,7 @@
  <tr>
   <td> Iterations per second:  </td>
   <td><span id="current_iters_per_sec"/>default</td>
-  <td> <input type="text" size="8" value="1290" id="new_iters_per_sec"> </input>
+  <td> <input type="text" size="8" value="320" id="new_iters_per_sec"> </input>
  </tr>
 
  <tr>
