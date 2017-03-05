@@ -377,7 +377,7 @@ BCsim.prototype.BCtoSVG = function()
 
     for(var i = 0; i < this.L; i++)
     {
-    	svg += BCsim.RectToSVG (i, draw_ymin, 1, this.heights[i], "blue", "black");	
+    	svg += BCsim.RectToSVG (i, draw_ymax-this.heights[i], 1, this.heights[i], "blue", "black");	
     }
     
     svg += "</svg>";
