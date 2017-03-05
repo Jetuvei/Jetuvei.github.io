@@ -18,11 +18,6 @@ var b_MIN = 0;
 
 var MIN_DRAW_HEIGHT = 10;
 
-function myTestClass()
-{
-	this.data = "Hello World!";
-}
-
 // ----------------------------------------------------------------------------
 // Initialise Simulation
 //
@@ -51,9 +46,6 @@ function myTestClass()
 // ----------------------------------------------------------------------------
 function BCsim (L, N, b, a, alpha)
 {
-	// debug
-	console.log("DEBUG: BCsim initialisation");
-
 	// check parameters allowed
 
 	if ( L < L_MIN || L > L_MAX )
@@ -302,8 +294,6 @@ BCsim.prototype.updateOccupiedSitesArray = function(updatePos, isBackchip)
 
 BCsim.prototype.DoIterations = function(num_iters)
 {
-	console.log("DEBUG: hit BCsim.DoIterations!");
-
 	for (var i = 0; i < num_iters; i++)
 	{
 		// 1. pick a site at random 
@@ -324,10 +314,6 @@ BCsim.prototype.DoIterations = function(num_iters)
 			else
 			{	
 				var hopRand = Math.random();
-				console.log("DEBUG: n = " + n.toString());
-				console.log("DEBUG: u(n) = " + this.u(n).toString());
-				console.log("DEBUG: hopRand = " + hopRand.toString());
-
 				if (hopRand < this.u(n))
 				{
 					this.incrementHeight(updateSite, -(n-1));
@@ -335,19 +321,10 @@ BCsim.prototype.DoIterations = function(num_iters)
 				
 					this.updateOccupiedSitesArray(updateSite, true);
 				}
-				else
-				{
-					console.log("DEBUG: occupied but no hop.");
-				}
+				else{} // no hop
 			}	
 		}
 	}
-	var debug_str = "";
-	for(var i =0; i < this.heights.length; i++)
-	{
-		debug_str += this.heights[i].toString() + ".";
-	}
-	console.log(debug_str);
 }
 
 // ============================================================================
@@ -356,7 +333,6 @@ BCsim.prototype.DoIterations = function(num_iters)
 
 BCsim.prototype.Draw = function(picture)
 {
-	console.log("DEBUG: hit BCsim.Draw!")
     picture.innerHTML = this.BCtoSVG();
 }
 

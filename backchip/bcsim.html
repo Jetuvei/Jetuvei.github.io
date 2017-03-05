@@ -56,11 +56,6 @@
   // -----------------------------------------------------------------------
   function OnStart()
   {
-    // debug:
-    console.log("DEBUG: hit OnStart()");
-    var debugClass = new myTestClass();
-    var debugBC = new BCsim(256,128,1.0,1,1);
-
   	// GET ELEMENTS
 
    	// -- drawing --
@@ -105,9 +100,6 @@
   // -----------------------------------------------------------------------
   function StartAnimation()
   {
-    // debug:
-    console.log("DEBUG: hit StartAnimation()");
-
   	// reset the timer
   	StopAnimation();
 
@@ -148,9 +140,6 @@
   // -----------------------------------------------------------------------
   function StopAnimation()
   {
-    // debug:
-    console.log("DEBUG: hit StopAnimation()");
-
     clearInterval(timer);
     timer = null;
   }
@@ -160,9 +149,6 @@
   // -----------------------------------------------------------------------
   function ResumeAnimation()
   {
-    // debug:
-    console.log("DEBUG: hit ResumeAnimation()");
-
     if(timer == null)
     {
       timer = setInterval(Animate, update_interval);
@@ -174,9 +160,6 @@
   // -----------------------------------------------------------------------  
   function ApplySettings()
   {
-    // debug:
-    console.log("DEBUG: hit ApplySettings()");
-
   	var apply_b = parseFloat(new_b.value);
     var apply_ips = parseInt (new_iters_per_sec.value);
 
@@ -200,7 +183,6 @@
     }
 
     current_iters_per_tick.innerHTML = iters_per_tick;
-    console.log("DEBUG: i/t, u/s, L: " + iters_per_tick + ", " + updates_per_sec + ", " + BC.getL());
     current_sweeps_per_tick.innerHTML = iters_per_tick/BC.getL();
     current_sweeps_per_sec.innerHTML = iters_per_tick*updates_per_sec/BC.getL();
   }
@@ -210,8 +192,6 @@
   // -----------------------------------------------------------------------
   function Animate() 
   {
-    // debug:
-    console.log("DEBUG: hit Animate()");
 
   	try
    	{
