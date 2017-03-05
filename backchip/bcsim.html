@@ -43,7 +43,7 @@
   var current_updates_per_sec;
   var current_iters_per_tick;
 
-  var current_sweeps_per_tick;
+  var current_sweeps_per_tick; // sweeps = iters/L
   var current_sweeps_per_sec;
 
   // numbers
@@ -77,7 +77,11 @@
    	current_N = document.getElementById("current_N");
    	current_b = document.getElementById("current_b");
    	current_iters_per_sec = document.getElementById("current_iters_per_sec");
+    current_update_interval = document.getElementById("current_update_interval");
+    current_updates_per_sec = document.getElementById("current_updates_per_sec");
     current_iters_per_tick = document.getElementById("current_iters_per_tick");
+    current_sweeps_per_tick = document.getElementById("current_sweeps_per_tick");
+    current_sweeps_per_sec = document.getElementById("current_sweeps_per_sec");
 
     // -- initialise values --
     new_L.innerHTML = DEFAULT_L;
@@ -86,6 +90,8 @@
     current_L.innerHTML = DEFAULT_L;
     current_N.innerHTML = DEFAULT_N;
     current_b.innerHTML = DEFAULT_b;
+    current_update_interval.innerHTML = update_interval;
+    current_updates_per_sec.innerHTML = updates_per_sec;
 
     // debug
     BC = null;
@@ -194,6 +200,9 @@
     }
 
     current_iters_per_tick.innerHTML = iters_per_tick;
+    console.log("DEBUG: i/t, u/s, L: " + iters_per_tick + ", " + updates_per_sec + ", " + BC.getL());
+    current_sweeps_per_tick.innerHTML = iters_per_tick/BC.getL();
+    current_sweeps_per_sec.innerHTML = iters_per_tick*updates_per_sec/BC.getL();
   }
   
   // -----------------------------------------------------------------------
