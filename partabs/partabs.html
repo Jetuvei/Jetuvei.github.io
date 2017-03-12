@@ -39,33 +39,45 @@
 
   	// html interface
 
-  	var new_dt = document.getElementById("new_dt");
-  	var new_N  = document.getElementById("new_N");
-  	var new_A  = document.getElementById("new_A");
-  	var new_R  = document.getElementById("new_R");
-  	var new_X0 = document.getElementById("new_X0");
+  	var new_dt;
+  	var new_N;
+  	var new_A;
+  	var new_R;
+  	var new_X0;
 
-  	var current_dt = document.getElementById("current_dt");
-  	var current_N  = document.getElementById("current_N");
-  	var current_A  = document.getElementById("current_A");
-  	var current_R  = document.getElementById("current_R");
-  	var current_X0 = document.getElementById("current_X0");
+  	var current_dt;
+  	var current_N;
+  	var current_A;
+  	var current_R;
+  	var current_X0;
 
-  	var drawing = document.getElementById("drawing");
+  	var drawing;
   	
   	// -----------------------------------------------------------------------
  	// Initialisation
   	// -----------------------------------------------------------------------
   	function initialiseInterface()
   	{
-  		
+  		new_dt = document.getElementById("new_dt");
+  		new_N  = document.getElementById("new_N");
+	  	new_A  = document.getElementById("new_A");
+  		new_R  = document.getElementById("new_R");
+  		new_X0 = document.getElementById("new_X0");
+
+  		current_dt = document.getElementById("current_dt");
+  		current_N  = document.getElementById("current_N");
+  		current_A  = document.getElementById("current_A");
+  		current_R  = document.getElementById("current_R");
+  		current_X0 = document.getElementById("current_X0");
+
+  		drawing = document.getElementById("drawing");
   	}
 	// -----------------------------------------------------------------------
  	// SET/GET: Special Cases
   	// -----------------------------------------------------------------------
   	function setdt(dt_new)
   	{
-  		if(new_dt > 0)
+  		if(dt_new > 0.0)
   		{
   			dt = dt_new;
   			root_dt = Math.sqrt(dt);
@@ -296,10 +308,12 @@
   	// -----------------------------------------------------------------------
   	function OnStart()
   	{
+
+  		initialiseInterface();
+
   		// debug
   		console.log("DEBUG: new_dt:" + new_dt.toString());
   		console.log("DEBUG: new_dt.value:" + new_dt.value.toString());
-
 
   		// initialise
 
