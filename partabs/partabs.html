@@ -1,0 +1,129 @@
+<html>
+<head>
+	<meta name="author" content="Justin Whitehouse">
+
+	<!-- empty style. use stylesheet later. -->
+	<style></style>
+
+	<!-- script to run partabs and draw it: -->
+	<script>
+
+	// -----------------------------------------------------------------------
+ 	// VARIABLES
+  	// -----------------------------------------------------------------------
+  	var dt;                      // time interval
+  	var root_dt = Math.sqrt(dt);
+  	var N;                       // number of time steps
+
+  	var sigma = 1;               // standard deviation of the increments
+  	var mu = 0;                  // mean of the increments
+
+  	var R;                       // resetting rate
+  	var A;                       // absorption probability
+  	var X0;                      // initial position
+  	var XR = X0;                 // resetting position (set X0=XR)
+  	var D = sigma * sigma;       // diffusion constant - not going to use this! (for now)
+
+  	var isAbsorbed = false;      // indicate whether absorption occurred
+
+  	var t_coords = new Array(1); // t-coordinate array
+  	var X_coords = new Array(1); // X-coordinate array
+
+	// -----------------------------------------------------------------------
+ 	// SET/GET: Special Cases
+  	// -----------------------------------------------------------------------
+  	function setdt(new_dt)
+  	{
+  		dt = new_dt;
+  		root_dt = Math.sqrt(dt);
+  	}
+  	function setX0(new_X0)
+  	{
+  		X0 = new_X0;
+  		XR = X0;
+  	}
+  	function setXR(new_XR)
+  	{
+  		XR = new_XR;
+  		X0 = XR;
+  	}
+  	function setsigma(new_sigma)
+  	{
+  		sigma = new_sigma;
+  		D = sigma * sigma;
+  	}
+  	// -----------------------------------------------------------------------
+ 	// UTILITY FUNCTIONS
+  	// -----------------------------------------------------------------------
+  	function nextTwoNormRands()
+  	{
+  		var randPair = new Array(2);
+  		
+  		var urand1 = Math.Random();
+  		var urand2 = Math.Random();
+
+  		randPair[0] = Math.sqrt(-2*Math.log(urand1))*Math.cos(2*Math.PI*urand2);
+  		randPair[1] = Math.sqrt(-2*Math.log(urand1))*Math.sin(2*Math.PI*urand2);
+
+  		return randPair;
+  	}
+  	function dX(normrand)
+  	{
+  		return mu * dt + sigma * root_dt * normrand; 
+  	}
+  	function update_tX(t,X)
+  	{
+  		t_coords.push(t);
+  		X_coords.push(X);
+  	}
+  	// -----------------------------------------------------------------------
+ 	// GENERATE STOCHASTIC PROCESS TRAJECTORY
+  	// -----------------------------------------------------------------------
+  	function generateTrajectory()
+  	{
+  		var t = 0;
+  		var X = X0;
+
+  		t_coords[0] = t;
+  		X_coords[0] = X;
+
+  		var sign_old = Math.sign(X);
+  		var sign_new = sign_old;
+
+  		var normrands;
+  		var i = 1;
+
+  		for(var i = 1; i < N+1; i++)
+  		while( !isAbsorbed && i < N+1 )
+  		{
+  			if(i%2 === 1)
+  			{
+  				normrands = nextTwoNormRands();
+  			}
+
+  			if(Math.Random() < R)
+  			{
+  				X = Math.sign(X)*XR;
+  				update_tX(t,X);
+  			}
+
+  			sign_old = Math.sign(X);
+
+  			t += dt;
+  			X += dX(normrands[i%2]);
+  			update_tX(t,X);
+
+  			sign_new = Math.sign(X);
+
+  			if(sign_old === -1 * sign_new)
+  			{
+  				if(Math.Random() < A)
+  				{
+  					isAbsorbed = true;
+  				}
+  			}
+  			
+  			i += 1;
+  		}
+  	}
+	</script>
