@@ -14,6 +14,7 @@
   	var dt;                      // time interval
   	var root_dt = Math.sqrt(dt);
   	var N;                       // number of time steps
+  	var T = dt * N;
 
   	var sigma = 1;               // standard deviation of the increments
   	var mu = 0;                  // mean of the increments
@@ -29,13 +30,40 @@
   	var t_coords = new Array(1); // t-coordinate array
   	var X_coords = new Array(1); // X-coordinate array
 
+  	// html interface
+
+  	var new_dt = document.getElementById("new_dt");
+  	var new_N  = document.getElementById("new_N");
+  	var new_A  = document.getElementById("new_A");
+  	var new_R  = document.getElementById("new_R");
+  	var new_X0 = document.getElementById("new_X0");
+
+  	var current_dt = document.getElementById("current_dt");
+  	var current_N  = document.getElementById("current_N");
+  	var current_A  = document.getElementById("current_A");
+  	var current_R  = document.getElementById("current_R");
+  	var current_X0 = document.getElementById("current_X0");
+  	// -----------------------------------------------------------------------
+ 	// Initialisation
+  	// -----------------------------------------------------------------------
+  	function initialiseCurrents()
+  	{
+  		// ?
+  	}
 	// -----------------------------------------------------------------------
  	// SET/GET: Special Cases
   	// -----------------------------------------------------------------------
   	function setdt(new_dt)
   	{
-  		dt = new_dt;
-  		root_dt = Math.sqrt(dt);
+  		if(new_dt > 0)
+  		{
+  			dt = new_dt;
+  			root_dt = Math.sqrt(dt);
+  		}
+  		else
+  		{
+  			badParam("dt", new_dt);
+  		}
   	}
   	function setX0(new_X0)
   	{
@@ -49,8 +77,40 @@
   	}
   	function setsigma(new_sigma)
   	{
-  		sigma = new_sigma;
-  		D = sigma * sigma;
+  		if(sigma > 0)
+  		{
+  			sigma = new_sigma;
+  			D = sigma * sigma;
+  		}
+  		else
+  		{
+  			badParam("sigma", sigma);
+  		}
+  	}
+  	function setA(A_new)
+  	{
+  		if(A_new < 0 || A_new > 1)
+  		{
+  			badParam("A", A_new);
+  		}
+  		else
+  		{
+  			A = A_new;
+  		}
+  	}
+  	function setR(R_new)
+  	{
+  		if(R_new < 0 || R_new > 1)
+  		{
+  			badParam("R", R_new);
+  		}
+  	}
+  	// -- UTILITY --
+  	function badParam(param_name, param_val)
+  	{
+  		var s = "Invalid parameter " + param_name + " (" + param_val.toString() + ")";
+  		throw s;
+  		console.log(s);
   	}
   	// -----------------------------------------------------------------------
  	// UTILITY FUNCTIONS
@@ -127,3 +187,67 @@
   		}
   	}
 	</script>
+
+<title>Partial Absorption Simulator</title>
+
+</head>
+
+<body onload="OnStart()">
+
+<h2>Partial Absorption Simulator (Single Trajectory)</h2>
+
+ <!-- DRAWING -->
+ <table>
+  <tr>
+   <td id="drawing">Partial absorption drawing here</td>
+  </tr>
+ </table>
+ 
+ <!-- BUTTONS -->
+ <p>
+ <button onclick="StartAnimation();">Start</button> &nbsp
+ <button onclick="StopAnimation();">Stop</button> &nbsp
+ <button onclick="ResumeAnimation();">Resume</button> &nbsp
+ <button onclick="ApplySettings();">Update</button> &nbsp
+ </p>
+
+ <!-- SETTINGS -->
+ <table>
+
+ <!-- NOTE TO SELF:
+      default values when page is loaded are set from here and not from the javascript above
+ -->
+ <tr>
+  <td> N </td>
+  <td><span id="current_N"/></td>
+  <td><input type="text" size="8" value="32" id="new_N"></input></td>
+ </tr>
+
+ <tr>
+  <td> dt </td>
+  <td><span id="current_dt"/>default</td>
+  <td><input type="text" size="8" value="64" id="new_dt"></input></td>
+ </tr>
+
+ <tr>
+  <td> R </td>
+  <td><span id="current_R"/></td>
+  <td><input type="text" size="8" value="1.0" id="new_R"></input></td>
+ </tr>
+
+ <tr>
+  <td> A </td>
+  <td><span id="current_A"/>default</td>
+  <td><input type="text" size="8" value="320" id="new_A"></input></td>
+ </tr>
+
+ <tr>
+  <td> X0 </td>
+  <td><span id="current_X0"/>default</td>
+  <td><input type="text" size="8" value="320" id="new_X0"></input></td>
+ </tr>
+</table>
+
+</body>
+
+</html>
