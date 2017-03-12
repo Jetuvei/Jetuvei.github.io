@@ -33,6 +33,10 @@
   	var X_max;
   	var X_min;
 
+  	var EMPTY_T = 100;
+  	var EMPTY_X_min = -40;
+  	var EMPTY_X_max = 40;
+
   	// html interface
 
   	var new_dt = document.getElementById("new_dt");
@@ -46,36 +50,52 @@
   	var current_A  = document.getElementById("current_A");
   	var current_R  = document.getElementById("current_R");
   	var current_X0 = document.getElementById("current_X0");
+
+  	var drawing = document.getElementById("drawing");
+  	
   	// -----------------------------------------------------------------------
  	// Initialisation
   	// -----------------------------------------------------------------------
-  	function initialiseCurrents()
+  	function initialiseInterface()
   	{
-  		// ?
+  		
   	}
 	// -----------------------------------------------------------------------
  	// SET/GET: Special Cases
   	// -----------------------------------------------------------------------
-  	function setdt(new_dt)
+  	function setdt(dt_new)
   	{
   		if(new_dt > 0)
   		{
-  			dt = new_dt;
+  			dt = dt_new;
   			root_dt = Math.sqrt(dt);
+  			T = N * dt;
   		}
   		else
   		{
-  			badParam("dt", new_dt);
+  			badParam("dt", dt_new);
   		}
   	}
-  	function setX0(new_X0)
+  	function setN(N_new)
   	{
-  		X0 = new_X0;
+  		if(N_new >= 1)
+  		{
+  			N = N_new;
+  			T = N * dt;
+  		}
+  		else
+  		{
+  			barParam("N", N_new);
+  		}
+  	}
+  	function setX0(X0_new)
+  	{
+  		X0 = X0_new;
   		XR = X0;
   	}
-  	function setXR(new_XR)
+  	function setXR(XR_new)
   	{
-  		XR = new_XR;
+  		XR = XR_new;
   		X0 = XR;
   	}
   	function setsigma(new_sigma)
@@ -130,7 +150,22 @@
 
     	return svg;
 	}
-	Draw = function()
+	function EmptyDrawing()
+	{
+		var svg = "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" width=\"640\" height=\"256\"";
+		svg += "viewBox=\"0," + EMPTY_X_min + "," + EMPTY_T + "," + EMPTY_X_max - EMPTY_X_min + "\" preserveAspectRatio=\"none\">";
+
+		// -- draw axes --
+
+		// x-axis (t)
+		svg += LineToSVG(0, 0, EMPTY_T, 0);
+		// y-axis (X)
+		svg += LineToSVG(0, EMPTY_X_min, 0, EMPTY_X_max);
+
+		svg += "</svg>"
+		return svg;
+	}
+	function Drawing()
 	{
 		var svg = "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" width=\"640\" height=\"256\"";
 		svg += "viewBox=\"0," + X_min + "," + T + "," + X_max - X_min + "\" preserveAspectRatio=\"none\">";
@@ -150,6 +185,7 @@
 		}
 
 		svg += "</svg>"
+		return svg;
 	}
   	// -----------------------------------------------------------------------
  	// STOCHASTTIC PROCESS UTILITY
@@ -174,6 +210,14 @@
   	{
   		t_coords.push(t);
   		X_coords.push(X);
+  	}
+  	function resetCoordinates()
+  	{
+  		delete t_coords;
+  		delete X_coords;
+
+  		t_coords = new Array(1);
+  		X_coords = new Array(1);
   	}
   	// -----------------------------------------------------------------------
  	// GENERATE STOCHASTIC PROCESS TRAJECTORY
@@ -247,6 +291,41 @@
   		}
 
   	}
+  	// -----------------------------------------------------------------------
+ 	// START
+  	// -----------------------------------------------------------------------
+  	function OnStart()
+  	{
+  		// debug
+  		console.log("DEBUG: new_dt:" + new_dt.toString());
+  		console.log("DEBUG: new_dt.value:" + new_dt.value.toString());
+
+
+  		// initialise
+
+  		setdt(parseFloat(new_dt.value));
+  		current_dt.innerHTML = dt;
+
+  		setN(N = parseInt(new_N.value));
+  		current_N.innerHTML = N;
+
+  		setR(parseFloat(new_R.value));
+  		current_R.innerHTML = R;
+
+  		setA(parseFloat(new_A.value));
+  		current_A.innerHTML = A;
+
+  		setX0(parseFloat(new_X0.value));
+  		current_X0.innerHTML = X0;
+
+  		// set up view window
+  		drawing.innerHTML = EmptyDrawing();
+  	}
+  	function NewTrajectory()
+  	{
+  		generateTrajectory();
+  		drawing.innerHTML = Drawing();
+  	}
 	</script>
 
 <title>Partial Absorption Simulator</title>
@@ -266,46 +345,39 @@
  
  <!-- BUTTONS -->
  <p>
- <button onclick="StartAnimation();">Start</button> &nbsp
- <button onclick="StopAnimation();">Stop</button> &nbsp
- <button onclick="ResumeAnimation();">Resume</button> &nbsp
- <button onclick="ApplySettings();">Update</button> &nbsp
+ 	<button onclick="NewTrajectory();">New Trajectory</button> &nbsp
  </p>
 
  <!-- SETTINGS -->
  <table>
-
- <!-- NOTE TO SELF:
-      default values when page is loaded are set from here and not from the javascript above
- -->
  <tr>
   <td> N </td>
   <td><span id="current_N"/></td>
-  <td><input type="text" size="8" value="32" id="new_N"></input></td>
+  <td><input type="text" size="8" value="100" id="new_N"></input></td>
  </tr>
 
  <tr>
   <td> dt </td>
   <td><span id="current_dt"/>default</td>
-  <td><input type="text" size="8" value="64" id="new_dt"></input></td>
+  <td><input type="text" size="8" value="0.1" id="new_dt"></input></td>
  </tr>
 
  <tr>
   <td> R </td>
   <td><span id="current_R"/></td>
-  <td><input type="text" size="8" value="1.0" id="new_R"></input></td>
+  <td><input type="text" size="8" value="0.1" id="new_R"></input></td>
  </tr>
 
  <tr>
   <td> A </td>
   <td><span id="current_A"/>default</td>
-  <td><input type="text" size="8" value="320" id="new_A"></input></td>
+  <td><input type="text" size="8" value="0.1" id="new_A"></input></td>
  </tr>
 
  <tr>
   <td> X0 </td>
   <td><span id="current_X0"/>default</td>
-  <td><input type="text" size="8" value="320" id="new_X0"></input></td>
+  <td><input type="text" size="8" value="10" id="new_X0"></input></td>
  </tr>
 </table>
 
