@@ -30,6 +30,9 @@
   	var t_coords = new Array(1); // t-coordinate array
   	var X_coords = new Array(1); // X-coordinate array
 
+  	var X_max;
+  	var X_min;
+
   	// html interface
 
   	var new_dt = document.getElementById("new_dt");
@@ -113,7 +116,43 @@
   		console.log(s);
   	}
   	// -----------------------------------------------------------------------
- 	// UTILITY FUNCTIONS
+ 	// DRAW UTILITY
+  	// -----------------------------------------------------------------------
+  	LineToSVG = function (x1, y1, x2, y2, stroke)
+	{
+   		var svg = "<line ";
+    	svg += " x1=\"" + x1 + "\"";
+    	svg += " y1=\"" + y1 + "\"";
+    	svg += " x2=\"" + x2 + "\"";
+    	svg += " y2=\"" + y2 + "\"";
+  		svg += " stroke=\"" + stroke + "\" stroke-width=\"1\" vector-effect=\"non-scaling-stroke\"";
+    	svg += "/>\n";
+
+    	return svg;
+	}
+	Draw = function()
+	{
+		var svg = "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" width=\"640\" height=\"256\"";
+		svg += "viewBox=\"0," + X_min + "," + T + "," + X_max - X_min + "\" preserveAspectRatio=\"none\">";
+
+		// -- draw axes --
+
+		// x-axis (t)
+		svg += LineToSVG(0, 0, T, 0);
+		// y-axis (X)
+		svg += LineToSVG(0, X_min, 0, X_max);
+
+		// -- draw trajectory -- 
+
+		for(var i = 0; i < t_coords.length-1; i++)
+		{
+			svg += LineToSVG(t_coords[i], X_coords[i], t_coords[i+1], X_coords[i+1], "red");
+		}
+
+		svg += "</svg>"
+	}
+  	// -----------------------------------------------------------------------
+ 	// STOCHASTTIC PROCESS UTILITY
   	// -----------------------------------------------------------------------
   	function nextTwoNormRands()
   	{
@@ -144,6 +183,9 @@
   		var t = 0;
   		var X = X0;
 
+  		X_max = X;
+  		X_min = X;
+
   		t_coords[0] = t;
   		X_coords[0] = X;
 
@@ -165,6 +207,15 @@
   			{
   				X = Math.sign(X)*XR;
   				update_tX(t,X);
+
+  				if(X > X_max)
+  				{
+  					X_max = X;
+  				}
+  				else if(X < X_min)
+  				{
+  					X_min = X;
+  				}
   			}
 
   			sign_old = Math.sign(X);
@@ -172,6 +223,15 @@
   			t += dt;
   			X += dX(normrands[i%2]);
   			update_tX(t,X);
+
+  			if(X > X_max)
+  			{
+  				X_max = X;
+  			}
+  			else if(X < X_min)
+  			{
+  				X_min = X;
+  			}
 
   			sign_new = Math.sign(X);
 
@@ -185,6 +245,7 @@
   			
   			i += 1;
   		}
+
   	}
 	</script>
 
