@@ -8,6 +8,8 @@
 	<!-- script to run partabs and draw it: -->
 	<script>
 
+	console.log("DEBUG: 1st! Math.random(): " + Math.random());
+
 	// -----------------------------------------------------------------------
  	// VARIABLES
   	// -----------------------------------------------------------------------
@@ -206,8 +208,8 @@
   	{
   		var randPair = new Array(2);
   		
-  		var urand1 = Math.Random();
-  		var urand2 = Math.Random();
+  		var urand1 = Math.random();
+  		var urand2 = Math.random();
 
   		randPair[0] = Math.sqrt(-2*Math.log(urand1))*Math.cos(2*Math.PI*urand2);
   		randPair[1] = Math.sqrt(-2*Math.log(urand1))*Math.sin(2*Math.PI*urand2);
@@ -259,7 +261,7 @@
   				normrands = nextTwoNormRands();
   			}
 
-  			if(Math.Random() < R)
+  			if(Math.random() < R)
   			{
   				X = Math.sign(X)*XR;
   				update_tX(t,X);
@@ -293,7 +295,7 @@
 
   			if(sign_old === -1 * sign_new)
   			{
-  				if(Math.Random() < A)
+  				if(Math.random() < A)
   				{
   					isAbsorbed = true;
   				}
@@ -334,6 +336,9 @@
 
   		// set up view window
   		drawing.innerHTML = EmptyDrawing();
+
+  		// debug:
+  		console.log("DEBUG: Math.random(): " + Math.random());
   	}
   	function NewTrajectory()
   	{
