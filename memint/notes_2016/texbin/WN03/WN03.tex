@@ -1,0 +1,638 @@
+\documentclass[a4paper,10pt]{article}
+%\documentclass[a4paper,10pt]{scrartcl}
+
+% PACKAGES
+
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+% SETTINGS
+
+\setlength{\parindent}{1em}
+\setlength{\parskip}{1em}
+
+\hoffset=-50pt
+\voffset=-20pt
+\textwidth=440pt
+\textheight=650pt
+
+%defaults:
+%\textheight = 592pt
+%\textwidth = 390pt
+
+% COMMANDS
+
+\newcommand{\fref}[1]{Figure \ref{#1}}
+\newcommand{\sref}[1]{Section \ref{#1}}
+
+\newcommand{\bra}[1]{\langle #1 |}
+\newcommand{\ket}[1]{| #1 \rangle}
+\newcommand{\braket}[2]{\langle #1 | #2 \rangle}
+\newcommand{\ketbra}[2]{| #1 \rangle \langle #2 |}
+
+\newcommand{\Ai}{\mathrm{Ai}}
+
+% TITLE
+
+\title{Update From Weizmann \#3}
+\author{Justin Whitehouse}
+\date{\today}
+
+\pdfinfo{%
+  /Title    ()
+  /Author   ()
+  /Creator  ()
+  /Producer ()
+  /Subject  ()
+  /Keywords ()
+}
+
+\begin{document}
+\maketitle
+
+\abstract{Research in collaboration with: David Mukamel, Weizmann Institute of Science, Israel; Martin Evans and Richard Blythe, University of Edinburgh}
+
+\tableofcontents
+\newpage
+
+
+% INTRODUCTION
+% ===================================================================
+\section{Introduction}
+
+In this document I will lay describe what (I think) we've learnt about the $p$-$u$ phase diagram for the membrane-interface model.
+
+\newpage
+% SUMMARY 
+% ===================================================================
+\section{Summary}
+
+\begin{figure}
+ \centering
+ \includegraphics[width=0.7\textwidth]{img/pu_space_lines}
+ \caption{Predictions for transition lines in $p$-$u$ space. The red dashed lines represent: going from $p=1/2$,$u=0$ up to the $p=1$ line, where numerical evidence suggests the boundary to the smooth phase may actually be; horizontally from the smooth phase line to the unbound phase line, where numerical evidence suggests the transition between $\alpha=1/2$ and $\alpha=1/3$ occurs (along $p \simeq0.6$).}
+ \label{fig:pu_lines}
+\end{figure}
+\begin{figure}
+ \centering
+ \includegraphics[width=0.7\textwidth]{img/pu_space_alpha_new_wlines}
+ \caption{Illustration of where the different roughness exponents $\alpha=0$, $1/3$ and $1/2$ are found in the phase diagram.}
+ \label{fig:pu_alpha_wlines}
+\end{figure}
+
+% -- Width Exponent -- 
+\subsection{Width Exponent, $\alpha$}
+
+\subsubsection{Unbound Regime}
+
+When $u > (2p+1)/4$ the membrane drifts away from the interface. The interface then obeys KPZ scaling, with $\alpha=1/2$. This behaviour is evident in our simulations. We call this the ``unbound regime'', and we are not really that interested in it. I call the line at the boundary of this regime $u_2$, where $u_2(p) = (2p+1)/4$ (or $p_2$, where $p_2(u) = (4u-1)/2$).
+
+\subsubsection{Smooth Phase}
+
+When $u$ is small and $p$ is large we expect the membrane and interface to move towards each other, resulting in a smooth interface (whose width scales like $L^0$). We call this the ``smooth'' phase. We predict that this happens when $p > (2u+1)/2$. This comes from considering the velocity of the interface, $(2p-1)/2$ and the effective speed  $u$ of the membrane (when being pushed by the interface). I call the line at the boundary of this regime $u_1$, where $u_1(p) = (2p-1)/2$ (or $p_1$, where $p_1(u) = (2u+1)/2$).
+
+Unlike with the unbound regime, measurements from simulations (possibly) indicate that the $u_1$ line is shifted a little way off the line from our prediction.
+
+\subsubsection{Rough Phase}
+
+In between these two regimes is rough phase where the membrane and interface are bound (in that their mean separation is finite).
+
+Within this phase the roughness exponent $\alpha$ is either $1/2$ or $1/3$, depending on where you are.
+
+When $p > 1/2$ the membrane travels ahead of the interface. In this regime we find $\alpha=1/2$.
+
+When $p < 1/2$ the interface travels ahead of the membrane. In this regime we find that $\alpha = 1/3$.
+
+There is actually some evidence to suggest that the switch between $\alpha=1/3$ and $\alpha=1/2$ occurs at some value $p_c > 1/2$ ($p_c \simeq 0.6$?). It also seems that there is only a weak dependence, if any, of $p_c$ on $u$, but the evidence is at a very early/tentative stage.
+
+\subsubsection{Boundary Lines}
+
+In the rough phase, on the line $p=0$ ($0 \le u \le 1/4$), the membrane doesn't interact with the interface, because the interface can only move away from it. Thus we have KPZ scaling along this line, with $\alpha=1/2$.
+
+On the line $p_2$ which separates the unbound regime from the bound regimes, we also find that $\alpha=1/2$. When $p < 1/2$ (or $<p_c$?) there is a crossover in the width from $\alpha=1/2$ on this line to the $\alpha=1/3$ phase.
+
+In the rough phase, on the line $p=1$ ($0.6 \lesssim u \le 3/4$), $\alpha = 1/2$. This is a measurement made from previous work where we focussed on the $p=1$ regime.
+
+Along the line $u=0$, there is a crossover from $\alpha = 1/2$ when $p=0$ to $\alpha = 1/3$ when $0 < p \le1/2$. (The data does leave a little room for doubt though.)
+
+{\bf Along the line $p_1$, I'm not actually sure what $\alpha$ is.} Part of the problem is that I'm not sure exactly where the line is. From our $p=1$ work, I think we found that $\alpha=1/2$ \emph{at} the transition from our finite size scaling analysis (but I'm not confident). The the other end of the $p_1$ line, where $u=0$, I think that similarly we found that $\alpha = 1/3$. This would suggest that somewhere along this line is a transition between $1/2$ and $1/3$. \emph{Possibly at my conjectured $p_c \sim 0.6$?}
+
+% -- Current -- 
+\subsection{Current}
+
+In the rough and smooth bound regions, the current in the interface is found to be $u/2$ in the smooth phase and $(2p-1)/4$ in the rough phase (for both $\alpha = 1/2$ and $\alpha = 1/3$). The interface current $(2p-1)/4$ comes from the ASEP current $(2p-1)\rho(1-\rho)$, with the density $\rho =1/2$.
+
+The velocity of the membrane-interface pair is just twice the velocity of the interface, so we see that in the smooth phase the velocity is $u$ and in the rough phase it is $(2p-1)/2$.
+
+For the smooth phase, this means that the speed of the interface is limited to that of the membrane. 
+
+For the rough phase, this means that the speed of the membrane is determined by the interface. When the interface is biased upwards, towards the membrane, the membrane's velocity is enhanced by the interface (it is pushed). When the interface is biased downwards, away from the interface, the membrane is slowed down by the interface.
+
+David has pointed out that it is difficult to understand why we would see width exponent $\alpha=1/3$ when the current is $(2p-1)/4$, because this current comes from the fact that there are no local (nearest neighbour) correlations between ASEP particles. With no local correlations we would expect to see a width exponent $1/2$. This means there must be some longer range correlations which are not seen by my current measure. Numerically, I measure the current by counting and average over nearest neighbour occupancy correlations (summing over $\tau_i(1-\tau_{i+1})$ in the usual ASEP notation).
+
+We also find that there are some corrections to the current $(2p-1)/4$ of order $1/L$ throughout the rough regime. Perhaps there is some information within these corrections which may tell us something about the different width exponents.
+
+% -- Contacts -- 
+\subsection{Contacts}
+
+In the smooth phase the contact count scales with with system size $L$. 
+
+In the rough phase when $\alpha = 1/3$, the contact count is of order 1, independent of system size.
+
+In the rough phase when $\alpha = 1/2$, the contact count is of order 10, independent of system size. {\bf (NOTE TO SELF:  there is a crossover from order 10 to order $L$, but I haven't actually checked whether there is some other kind of (weak) scaling, like $\ln L$, here.)}
+
+\newpage
+% Numerics
+% ===================================================================
+\section{Numerical Results and Analysis}
+
+\subsection{introduction}
+
+Numerically, I have measured:
+\begin{itemize}
+ 
+ \item the width, $W$, which is the standard deviation of the heights (distances) $y_i$ between the points $i$ on the interface and the membrane
+  \begin{equation}
+   W = \sqrt{ \frac{1}{L} \left( \overline{y^2} - \overline{y}^2 \right) } \;. 
+  \end{equation}
+ 
+ \item the current $J$ in the interface. This is measured by counting and averaging over the nearest-neighbour occupancy correlations in the ASEP
+ \begin{equation}
+  J = \left\langle \sum_i p \tau_i(1-\tau_{i+1} ) - (1-p)(1-\tau_i)\tau_{i+1} \right\rangle \;,
+ \end{equation}
+ where $\tau_i = 1$ is site $i$ is occupied (``down'' slope) and $\tau_i=0$ if it is vacant (``up'' slope).
+ 
+ \item the number of contact points $C$ between the membrane and the interface. This is counted an averaged over time and ensembles. 
+
+\end{itemize}
+
+To understand the phase diagram I have obtained simulation data along lines of certain choices of $p$ and $u$, as shown in \fref{fig:pu_space_plot_info}. Specifically, these are along the lines where $p=0.25, 0.5, 0.75$ and $u = 0.0, 0.15, 0.35$.
+
+These values were chosen in order to give us information about the differences in the measurements $W$, $J$ and $C$ going across the lines $p_1$ and $p_2$ between phases, as well as to try to investigate where the change from $\alpha = 1/3$ to $\alpha = 1/2$ occurs (which may help us understand why it occurs).
+
+\begin{figure}[bh]
+ \centering
+ \includegraphics[width=0.7\textwidth]{img/pu_space_plot_info}
+ \label{fig:pu_space_plot_info}
+ \caption{Figure showing where on the phase diagram the data presented here is taken from (blue, dotted lines).}
+\end{figure}
+
+\subsubsection{Finite Size Scaling}
+
+A common observation amongst the results is that between phases finite size effects make it difficult to identify precisely the properties of the transition. To deal with this we can rescale the data according to a generic scaling function
+\begin{equation}
+ z(x,L) = L^{-b} f((x-x_c)L^a) \;,
+\end{equation}
+where $z$ is one of our measurements (e.g. $W$) and $x$ is one of the independent variables $p$ or $u$. 
+
+The parameters $a$, $b$ and $x_c$ are chosen to fit data from many system sizes onto a single curve\footnote{The definitions of the parameters here is chosen to match the definitions in some autoscaling code I have, and also the definitions I have used subsequently used in my own processing scripts}. This allows us to identify the critical value $x_c$, the (or some) properties of the function $f(x)$, and the exponents $a$ and $b$ which (may) characterise the properties of the phase. For instance for the width ($z\to W$), $-b$ is equivalent to the roughness exponent $\alpha$. 
+
+\newpage
+% WIDTH
+% ===================================================================
+\subsection{Width}
+
+\subsubsection{$u=0$ line}
+
+Looking along the $u=0$ line (\fref{fig:W-p_u00_a033}) we see that $W \sim L^{1/2}$ at $p=0$, and the scaling crosses over to $W\sim L^{1/3}$. We can see this from the data collapse obtained using the scaling relation
+\begin{equation}
+ W(p,L) = L^{\alpha} f(pL^\gamma) \;,
+\end{equation}
+as shown in \fref{fig:W-p_u00_collapse}.
+
+As $x\to0$ we see that $f(x)\to \mbox{constant}$, and so $W\to L^{1/2}$ as $p\to 0$. As $x\to\infty$ we see that $f(x)\to x^\phi$. If we expect $W\sim L^{1/3}$ in this phase then $\phi\gamma = -1/6$. We measure $\gamma = 0.6$, and so $\phi = -5/18$. 
+
+If we think there is some numerical error, and that really $\gamma = 1/2$, this would give $\phi = -1/3$. Actually, in our simulations we measure the width exponent to be $\simeq 0.3$, which means $\gamma\phi = -0.2$. In this case, if $\gamma = 0.6$ then $\phi = -1/3$. I speculate that there is a systematic error in my simulation and/or measurement of the width exponent in this regime which has resulted in the best data collapse being obtained for $\gamma = 0.6$ rather than $\gamma = 0.5$.
+\newline
+
+We can also do a similar finite size scaling analysis near $p = 1/2$, as shown in \fref{fig:u00_p05_scaling}. We use the scaling function
+\begin{equation}
+ W(p,L) = L^{1/3} g(|p-1/2|^{\delta}L) \;,
+\end{equation}
+and find a good collapse for $\delta = 1$. From \fref{fig:u00_p05_scaling} we see that 
+\begin{equation}
+ g(x) \to \begin{cases}
+           \mbox{const.} \;, & x \to 0 \\
+           \mbox{const.} \;, & x \to \infty \;, p < 1/2 \\
+           x^\theta \;, & x \to \infty \;, p > 1/2 \\
+          \end{cases}
+\end{equation}
+Performing a linear fit to the lower portion of the graph in \fref{fig:u00_p05_scaling}, as shown in \fref{fig:u00_pg05_logfit}, tells us that $\theta \simeq -1/3$.
+
+\subsubsection{$u = 0.15$ line}
+
+On the line where $u = 0.15$ we expect find the same phases as along the $u = 0$ line, so we should see similar properties of the width as in the $u=0$ case. Comparing \fref{fig:u015_W} with \fref{fig:W-p_u00_a033} we can see that this appears to be true.
+
+I have performed a similar rescaling to obtain a data collapse near $p=0$ as I did for $u=0$ (see \fref{fig:u015_W_p0_rs}). It looks to me that the same scaling function is valid here, but the fit is not quite as good as that in \fref{fig:W-p_u00_collapse}. One difference is that in \fref{fig:W-p_u00_collapse} I have been able to use data that is exclusively taken near $p = 0$ (values of $p < 0.1$), and that is taken at much larger system sizes (up to $2^{15}$ compared to $2^{11}$).
+\newline
+
+One difference between the data at $u=0.15$ and $u=0$ is that the transition to the smooth phase is less well defined for $u=0.15$. We can see from \fref{fig:W-p_u00_a033} that this occurs pretty unambiguously at $p=0.5$ for $u=0$ (in agreement with our theoretical prediction $p_1(u=0) = 1/2$). For $u=0.15$ however it is not clear exactly where the transition occurs. {\bf I haven't yet done any scaling analysis at this transition for $u=0.15$, so I can't say anymore about it at this stage.}
+
+\subsubsection{$u=0.35$ line}
+
+On the line $u=0.35$, for small $p$ we expect to see the same behaviour as for $u = 0$ and $u=0.15$, except that instead of the $\alpha=1/3$ phase occurring for $p > 0$ we expect that it should occur when $p > p_2(u=0.35) = 0.2$. If we look at \fref{fig:W-p_u035_a033} the $W$ as a function of $p$ is similar to what we found for $u=0$ and $u = 0.15$ when $p < 1/2$. As we approach $p = 1/2$ however and go beyond that, the behaviour is quite different. 
+\newline
+
+First, doing the scaling near $p = 0.2$ (see \fref{fig:W-p_u035_rs}) we see a familiar collapse to that we saw for $u=0$ and $u=0.15$. Just like for $u = 0.15$, the data in the plot is not all from very small $p$ and it doesn't include the largest system sizes. My guess is that if I were to obtain and process this data I would see something similar to \fref{fig:W-p_u00_collapse}.
+\newline
+
+Turning our attention to larger values of $p$, the behaviour here is a bit mysterious. I think what's happening is that $u = 0.35$ is large enough to reach the phase with $\alpha = 1/2$, so at some point $p_c$ we switch from $\alpha = 1/3$ to $\alpha = 1/2$. {\bf (NOTE TO SELF: I think I have some tentative evidence somewhere that this value $p_c$ depends weakly/not at all on $u$. Need to dig this up.)} I think there is some evidence for where this transition value $p_c$ may be in the plot of $W/L^{1/2}$ against $p$ \fref{fig:W-p_u035_a050}). In this plot we see that there is a point $p \simeq 0.6$(?) where all the data sets intersect. Perhaps some more finite size scaling analysis around this point, with sufficiently smart enough guesses for and appropriate scaling function and parameters would reveal something here. {\bf (NOTE TO SELF: I think I started doing this but it proved tricky...)}
+
+To be clear, I am proposing that the width exponent along this line is 
+\begin{equation}
+ \alpha = \begin{cases}
+           1/2 \;, & 0 \le p \le p_2(0.35) \;,\quad p_2(0.35) = 0.2 \\
+           1/3 \;, & p_2 < p < p_c \;,\quad p_c \simeq 0.6 \\
+           1/2 \;, & p_c \le p \le p_1(0.35) \;,\quad p_1(0.35) = 0.85 \\
+           0   \;, & p_1(0.35) < p \le 1 \;, \\
+          \end{cases}
+\end{equation}
+but it still needs some more investigation.
+
+\subsubsection{$p=0.25$ line}
+
+Along the line $p=0.25$ we see in \fref{fig:W-u_p025_a033} that the width crosses over from $L^{1/3}$ scaling at $u=0$ to $L^{1/2}$ scaling at $u = u_2(0.25) = 0.375$.
+
+We propose the scaling relationship
+\begin{equation}
+ W(p,L) = L^{1/2} f(|u-u_2| L^\gamma) \;,
+\end{equation}
+around the point $u=u_2$, where
+\begin{equation}
+ f(x) \to \begin{cases}
+              \mbox{const.} \;, & x\to \infty \;, \quad u > u_2 \; \\
+              \mbox{const.} \;, & x \to 0 \;, \\
+              x^\phi \;, & x\to \infty \; \quad u < u_2 \;,
+             \end{cases}
+\end{equation}
+From the plot in \fref{fig:W-u_p025_rs} we see that a good fit is obtained when $\gamma = 0.8$. We see from \fref{fig:W-u_p025_a033} that the width scales like $L^{1/3}$ away from $u_2$, and so $1/2 + \phi\gamma = 1/3$, or $\phi\gamma = -1/6$. Our measurement tells us that $\phi \simeq -5/24$.
+
+\subsubsection{$p=0.5$ line}
+
+Along the line $p=0.5$, shown in \fref{fig:W-u_p05_a033}, we seem to have the same behaviour of the width as we have for $p=0.25$. 
+
+I haven't done much analysis on this data set though because I'm not that confident in the results displayed. The problem is that the width doesn't seem to collapse well onto a single curve when rescaled by $L^{1/2}$ for $p>1/2$.
+
+\subsubsection{$p=0.75$ line}
+
+Along the line $p=0.75$ we see that the width undergoes a transition from $L^0$ scaling to $L^{1/2}$ scaling in a similar way to that we found in earlier research at $p=1$. The transition appears to occur in a region \emph{above} the predicted transition value $u = u_2(0.75) = 0.25$. This is actually also what we saw at $p=1$, where $u_1(p=1) = 0.5$, but the transition was measured at $u \simeq0.6$.
+
+By rescaling using the scaling function
+\begin{equation}
+ W(p,L) = L^{1/2}f( (u-u_c)L^\gamma ) \;,
+\end{equation}
+we see that a good collapse is obtained with $u_c = 0.35$ and $\gamma = 0.5$. The function
+\begin{equation}
+ f(x) \to \begin{cases}
+              x^\phi \;, & x \to +\infty \;, \\
+              x^\theta \;, & x \to -\infty \;,
+             \end{cases}
+\end{equation}
+with
+\begin{eqnarray}
+ \gamma\phi + 1/2 = 1/2 &\Rightarrow& \phi = 0 \;, \nonumber \\
+ \gamma\theta + 1/2 =  0 &\Rightarrow& \theta = -1 \;.
+\end{eqnarray}
+
+Looking at a log-log plot of $WL^{-1/2}$ plotted against $|u-0.35|L^{1/2}$, as shown in \fref{fig:W-u_p075_rs_loglog}, by eye it looks like 
+\begin{equation}
+ f(x)\to  \mbox{const.}\;\quad x\to0 \;,
+\end{equation}
+but I don't think I have enough data close enough to $|u-0.35|L^{1/2} = 0$ to make that claim without doubt.
+
+% -- width figures --
+
+%  u = 0.0
+\begin{figure}
+ \centering
+ \includegraphics[width=0.7\textwidth]{img/W-p_u000_a033.png}
+ \caption{The width rescaled by $L^{1/3}$ plotted against $p$ for $u=0$.}
+ \label{fig:W-p_u00_a033}
+\end{figure}
+\begin{figure}
+ \centering
+ \includegraphics[width=0.7\textwidth]{img/u00_pLW_data_psmallsets_g06_only_logx}
+ \caption{Width data at $u=0$ rescaled using $W(p,L) = L^{\alpha}f(pL^\gamma)$. This illustrates that there is a crossover from $W \sim L^{1/2}$ at $p=0$ to $W \sim L^{\mbox{something else}}$ (answer: $1/3$) {\bf (NOTE: need to put $1/3$ slope line on here?)}}
+ \label{fig:W-p_u00_collapse}
+\end{figure} 
+\begin{figure}
+ \centering
+ \includegraphics[width=0.7\textwidth]{img/u00_pLW_data_Lsets_p05_delta100_logxy}
+ \caption{Data collapse for the width near $p = 1/2$. The points in the upper portion are from data with $p<1/2$, and those from the lower portion are from points with $p > 1/2$.}
+ \label{fig:u00_p05_scaling}
+\end{figure}
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.7\textwidth]{img/u00_pLW_data_Lsets_p05g_WL0_logfit.png} 
+  \caption{When $p > 1/2$ we see that $W L^{-1/3} \sim L^{-1/3}$.}
+  \label{fig:u00_pg05_logfit}
+\end{figure}
+% u = 0.15
+\begin{figure}
+ \centering
+ \includegraphics[width=0.7\textwidth]{img/W-p_u015_a033.png}
+ \caption{Plot of $WL^{-1/3}$ against $p$, for $u = 0.15$. When $p < 1/2$ the width scales as $L^{1/3}$ (with some system size corrections). We appear to enter the smooth phase when $p$ is smaller than the predicted transition value $p_1 = 0.65$. {\bf (NOTE TO SELF: formatting problem at left: $p_2$ line at $-0.2$!)}}
+ \label{fig:u015_W}
+\end{figure}
+\begin{figure}
+ \centering
+ \includegraphics[width=0.7\textwidth]{img/W-p_u015_xc0a06b-05_logx.png}
+ \caption{Data collapse at $u=015$. For small values of $p$ there seems to be a reasonable collapse, although to be as convincing as \fref{fig:W-p_u00_collapse} we need to get more data for smaller values of $p$ (and larger system sizes). Here, the smallest value of $p$ is 0.01.}
+ \label{fig:u015_W_p0_rs}
+\end{figure}
+% u = 0.35
+\begin{figure}
+ \centering
+ \includegraphics[width=0.7\textwidth]{img/W-p_u035_a033.png}
+ \caption{A plot of $WL^{-1/3}$ against $p$, for $u = 0.35$. When $p  <1/2$, we see a crossover from $W\sim L^{1/2}$ to $W \sim L^{1/3}$. When $p > 1/2$ it is less clear how the width scales with system size.}
+ \label{fig:W-p_u035_a033}
+\end{figure}
+\begin{figure}
+ \centering
+ \includegraphics[width=0.7\textwidth]{img/W-p_u035_a050.png}
+ \caption{A plot of $WL^{-1/2}$ against $p$, for $u = 0.35$. For $p > 1.2$, the point where the data sets intersect (at $p \sim 0.6$), may indicate that there is a region where $W \sim L^{1/2}$. {\bf (NOTE TO SELF: actually, maybe there is another crossover point at $p \sim 0.75$. Might be worth investigating.)}}
+ \label{fig:W-p_u035_a050}
+\end{figure}
+\begin{figure}
+ \centering
+ \includegraphics[width=0.7\textwidth]{img/W-p_u035_xc02a05b-05_logx.png}
+ \caption{Data collapse around $p = p_2(0.35) = 0.2$ for $u=0.35$. This collapse has the same deficiencies as \fref{fig:u015_W_p0_rs}, but with more data I think will confirm our belief about the crossover from $W\sim L^{1/3}$ to $W\sim L^{1/3}$.}
+ \label{fig:W-p_u035_rs}
+\end{figure}
+% <<<< missing some figures here! - for p =0.25 (and subsequent?)
+% p = 0.25
+\begin{figure}
+ \centering 
+ \includegraphics[width=0.7\textwidth]{img/W-u_p025_a033.png}
+ \caption{Plot of $WL^{-1/3}$ against u, for $p=0.25$. There is a simple crossover from $W\sim L^{1/3}$ scaling at $u = 0$ to $W\sim L^{1/2}$ scaling at $u_2(0.25) = 0.375$ {\bf (fix value in plot - rounding?)}. {\bf (NOTE TO SELF: Also fix: remove line out to left of plot.)}}
+ \label{fig:W-u_p025_a033}
+\end{figure}
+\begin{figure}
+ \centering
+ \includegraphics[width=0.7\textwidth]{img/W-u_p025_xc0375a08b-05_logx.png}
+ \caption{Data collapse around $u_c = u_2 = 0.375$ for $p=0.25$. More data obtained for smaller values of $|u-u_2|$ would improve our confidence in the measurement. Currently, the smallest $|u-u_2|$ is $0.01$.}
+ \label{fig:W-u_p025_rs}
+\end{figure}
+% p = 0.5
+\begin{figure}
+ \centering
+ \includegraphics[width=0.7\textwidth]{img/W-u_p05_a033_rescale.png}
+ \caption{Plot of $WL^{-1/3}$ against $u$. The width scales like $L^{1/3}$ at $u=0$ and crosses over to $L^{1/2}$ at $u = 1/2$ {\bf (although the collapse obtained at $u=1/2$ when rescaled by $L^{1/2}$ is not good for some reason)}. {\bf (NOTE TO SELF: change data series colours to be consistent with other plots.)}}
+ \label{fig:W-u_p05_a033}
+\end{figure}
+% p = 0.75
+\begin{figure}
+ \centering
+ \includegraphics[width=0.7\textwidth]{img/W-u_p075.png}
+ \caption{Plot of $W$ against $u$ at $p=0.75$. {\bf (NOTE: incorrect $u_1$ value. $u_1(0.75) = 0.25$.)} {\bf (NOTE TO SELF: change data series colours to be consistent with other plots.)}}
+\end{figure}
+\begin{figure}
+ \centering
+ \includegraphics[width=0.7\textwidth]{img/W-u_p075_superrescale.png}
+ \caption{Collapse of rescaled width data at $p=0.75$. {\bf (NOTE: incorrect $u_1$ value. $u_1(0.75) = 0.25$.)} {\bf (NOTE TO SELF: change data series colours to be consistent with other plots.)}}
+ \label{fig:W-u_p075_rs}
+\end{figure}
+\begin{figure}
+ \centering
+ \includegraphics[width=0.7\textwidth]{img/W-u_p075_xc035a05b-05_logxy}
+ \caption{Plot of $WL^{-1/2}$ against $|u-0.35|L^{1/2}$. }
+ \label{fig:W-u_p075_rs_loglog}
+\end{figure}
+
+\clearpage
+% CURRENT
+% ===================================================================
+\subsection{Current}
+
+I have measured the current $J$ in the interface by measuring the nearest neighbour occupancy correlations. In the rough phase and the smooth phase, the membrane and interface are bound and travel together, so we can use the current as a proxy for the velocity $v$ of the pair, as they are linked through the formula $v = 2J$. The factor of 2 comes from the fact that growth events in the interface change the height at a point on the interface by two units of distance. 
+
+\subsubsection{$u=0.0$ line}
+
+For $u=0$ we expect to see the rough phase when $p < p_1(0) = 1/2$ and the smooth phase for $p > 1/2$. As we can see in \fref{fig:J-p_u00} the current in the interface is $(2p-1)/4$ when $p < 1/2$, and $0$ when $p > 1/2$. The transition between the two phases is quite abrupt. Actually, we will see below that in the smooth phase the current is actually equal to $u/2$, which in this case is $0$.
+
+If we plot $J - (2p-1)/4$ and rescale by $L$, as shown in \fref{fig:J-p_u00_shift}, we see that there is some structure in the current measurement which is of order $1/L^{\epsilon}$. The exponent $\epsilon$ is approximately $1$ at $p = 0$ and $p = 1/2$, but $\epsilon < 1$ when $0 < p < 1/2$.
+
+\subsubsection{$u=0.15$ line}
+
+Going up to $u=0.15$ the behaviour is essentially the same as we found for $u=0$, with $J = (2p-1)/4$ when $p < p_1$ (in this case $p_1 = 0.65$) and $J = u/2 = 0.075$ when $p>p_1$. A significant difference between $J(p)$ here and for $u=0$ is that the transition between the two phases is much more gradual in this case (see \fref{fig:J-p_u015}).
+
+By plotting $J-(2p-1)/$ and rescaling by $L$ (see \fref{fig:J-p_u015_shift}) we see similar `small scale' structure in $J$ as we saw for $u=0$. {\bf (NOTE TO SELF: I forgot to investigate in more detail the area around $p_1$ where the transition is more gradual. Maybe we could pin down some differences here to the $u=0$ behaviour. Maybe plot $J-u/2$ against $p$.)}
+
+\subsubsection{$u=0.35$ line}
+
+At $u = 0.35$ we same the same behaviour again as we saw for $u = 0.15$ (see \fref{fig:J-p_u035}. However, if we look at $J -(2p-1)/4$ in the rough phase we see that actually the order $1/L$ (or $1/L^\epsilon$) corrections to the current have more interesting features than previously seen for $u = 0.15$ (see \fref{fig:J-p_u035_shift}). 
+
+For $p_2 < p < 1/2$ (in the rough phase below $p=1/2$) the system size dependence is similar to that seen for $u = 0$ and $u = 0.15$. When $1/2 < p < p_1$ there is a new, prominent, system-size dependent feature. I guess this may be linked to the onset of the switch from $\alpha = 1/3$ to $\alpha = 1/2$, but I have nothing more useful to say at this point. {\bf (NOTE TO SELF: again, like for $u=0.15$, I seem to have neglected to study the region $1/2 < p \le p_1$ in more detail. Maybe there is something interesting to learn there.)}
+
+\subsubsection{$p=0.25$ line}
+
+A plot of $J$ against $u$ for $p = 0.25$ is shown in \fref{fig:J-u_p025}. Along this line ($p=0.25$) we are in the rough phase for $u < u_2(0.25) = 0.375$ and then in the unbound phase for $u > u_2$. In both cases we expect to see $J = (2p-1)/4$.
+
+The data confirms this, up to some finite size corrections. In both cases we see there are finite size corrections of order $1/L$ (see \fref{fig:J-u_p025_JL}). When the membrane and interface are unbound ($u > u_2$), then
+\begin{equation}
+ J = \frac{2p-1}{4} \left( 1 + \frac{1}{L} \right) \;.
+\end{equation}
+When $u < u_2$, the exponent of $L$ by which the current corrections scale is not equal to 1, and depends on $u$. This is consistent with what we saw for $J$ as a function of $p$ at $u = 0, 0.15, 0.35$.
+
+\subsubsection{$p=0.5$ line}
+
+On the $p=0.5$ line, like for $p=0.25$, the current $J = (2p-1)/4$ with some system size correction (\fref{fig:J-u_p05} and \fref{fig:J-u_p05_JL}). What's different to the $p=0.25$ result is that the exponent of the $L$ dependence of the correction to the current is pretty consistently equal to $1$ throughout the rough phase, independent of $u$ (although there is some evidence in \fref{fig:J-u_p05_JL} that this may not still be the case very close to or at $u=0$).
+
+\subsubsection{$p=0.75$ line}
+
+Along the $p=0.75$ line we now have some current data from the smooth phase. In this phase $J=u/2$, and there is a gradual transition from this to $J = (2p-1)/4$ in the rough phase (\fref{fig:J-u_p075}).
+
+The transition appears to occur over a region around our predicted transition value $u_1(0.75) = 0.25$ but there are no obvious features which indicate a critical value.
+
+Unfortunately I haven't yet obtained enough data to be able to say anything about the system size corrections to the current. A solitary red cross (``$+$'') from $L=256$ data in \fref{fig:J-u_p075} at $u=0.35$ becomes hidden under the data for larger system sizes when we plot $[J-(2p-1)/4]L$ (see \fref{fig:J-u_p075_JL}) as before, so maybe there is something there to look at.
+
+% -- current figures --
+
+% u = 0.0
+\begin{figure}
+ \centering
+ \includegraphics[width=0.7\textwidth]{img/J-p_u00}
+ \caption{Plot of the current $J$ against $p$ for $u=0.0$. For $p < p_1 = 1/2$, $J =(2p-1)/4$. For $p>1/2$, $J = u/2 = 0$.}
+ \label{fig:J-p_u00}
+\end{figure}
+\begin{figure}
+ \centering
+ \includegraphics[width=0.7\textwidth]{img/J-p_u00_shift_JLe100}
+ \caption{A plot of $[J-(2p-1)/4]L$ against $p$ reveals some interesting additional structure in the current in the rough phase, when $p < p_1$.}
+ \label{fig:J-p_u00_shift}
+\end{figure}
+% u = 0.15
+\begin{figure}
+ \centering
+ \includegraphics[width=0.7\textwidth]{img/J-p_u015}
+ \caption{Current $J$ against $p$ for $u=0.15$. When $p < p_1$, $J = (2p-1)/4$, and when $p > p_1$, $J = u/2$. $p_1(u=0.15) = 0.65$.}
+ \label{fig:J-p_u015}
+\end{figure}
+\begin{figure}
+ \centering
+ \includegraphics[width=0.7\textwidth]{img/J-p_u015_shift_JLe100}
+ \caption{A plot of $[J-(2p-1)/4]L$ against $p$ reveals some interesting additional structure in the current in the rough phase, when $p < p_1$.}
+ \label{fig:J-p_u015_shift}
+\end{figure}
+% u = 0.35
+\begin{figure}
+ \centering
+ \includegraphics[width=0.7\textwidth]{img/J-p_u035}
+ \caption{Plot of $J$ against $p$ for $u = 0.35$.}
+ \label{fig:J-p_u035}
+\end{figure}
+\begin{figure}
+ \centering
+ \includegraphics[width=0.7\textwidth]{img/J-p_u035_shift_JLe100}
+ \caption{A plot of $[J-(2p-1)/4]L$ against $p$ reveals a lot of interesting additional structure in the current in the rough phase, when $p < p_1$.}
+ \label{fig:J-p_u035_shift}
+\end{figure}
+% p = 0.25
+\begin{figure}
+ \centering
+ \includegraphics[width=0.7\textwidth]{img/J-u_p025}
+ \caption{Plot of $J$ against $u$ for $p = 0.25.$}
+ \label{fig:J-u_p025}
+\end{figure}
+\begin{figure}
+ \centering
+ \includegraphics[width=0.7\textwidth]{img/J-u_p025_JL}
+ \caption{Plot of $[J - (2p-1)/4]L$ against $u$ for $p = 0.25$.}
+ \label{fig:J-u_p025_JL}
+\end{figure}
+% u = 0.5
+\begin{figure}
+ \centering
+ \includegraphics[width=0.7\textwidth]{img/J-u_p05}
+ \caption{Plot of $J$ as a function of $u$ at $p = 0.5$.}
+ \label{fig:J-u_p05}
+\end{figure}
+\begin{figure}
+ \centering
+ \includegraphics[width=0.7\textwidth]{img/J-u_p05_JL}
+ \caption{Plot of $[J-(2p-1)/4]L$ as a function of $u$ at $p = 0.5$.}
+ \label{fig:J-u_p05_JL}
+\end{figure}
+% u = 0.75
+\begin{figure}
+ \centering
+ \includegraphics[width=0.7\textwidth]{img/J-u_p075}
+ \caption{Plot of $J$ against $u$ for $p = 0.75$.}
+ \label{fig:J-u_p075}
+\end{figure}
+\begin{figure}
+ \centering
+ \includegraphics[width=0.7\textwidth]{img/J-u_p075_JL}
+ \caption{Plot of $[J-(2p-1)/4]L$ against $u$ for $p = 0.75$.}
+ \label{fig:J-u_p075_JL}
+\end{figure}
+
+\clearpage
+% CONTACTS
+% ===================================================================
+\subsection{Contacts}
+
+The number of contacts, $C$ is simply the number of points on the interface which have height $0$ (contacts with the membrane), averaged over copies of the system and time.
+
+\subsubsection{$u=0.0$ line}
+
+Along the line $u=0$ the behaviour of the contact count appears straightforward (see \fref{fig:C-p_u00}). When $p < 1/2$ we are in the rough phase and the number of contacts is of order 1. When $p > 1/2$ we are in the smooth phase and the number of contacts is of order $L$ (I don't actually have a plot to support this claim here).
+
+What happens at the transition (at $p=1/2$)? I don't really know. I haven't done any analysis of this region.
+
+\subsubsection{$u=0.15$ line}
+
+Along the $u = 0.15$ line (\fref{fig:C-p_u015}) $C$ is of order 1 below $p=1/2$. Between $p=1/2$ and $p=p_1$ there seems to be some crossover to a system size dependence of $C$, which I assume is of order $L$ when $p\gtrsim p_1$ in the smooth phase. 
+
+\subsubsection{$u=0.35$ line}
+
+Along the $u=0.35$ line we see similar behaviour to that we saw for $u=0.0$ and $u=0.15$. Below $p_2$ the two membrane and interface decouple, and there are no contact points between them. $C$ is still of order $1$ in the rough phase when $p< 1/2$. Unlike  $u=0.15$ this scaling seems to persist some way above $p=1/2$, until $p \simeq0.65$ where the crossover to some system size scaling occurs. 
+
+I haven't done any more analysis of this.
+
+\subsubsection{$p=0.25$ line}
+
+Looking along the $p=0.25$ line we again see that $C$ is of order $1$ in the rough phase, but there is an sharp transition to $0$ contacts when the membrane and interface decouple at $u=u_2$ (see \fref{fig:C-u_p025} and \fref{fig:C-u_p025_logy}).
+
+\subsubsection{$p=0.5$ line}
+
+Along the $p=0.5$ line we also see that $C \sim 1$ in the smooth phase, when $p < 1/2$, and that there is a sharp transition to $0$ contacts when the system becomes unbound.
+
+One minor observation that I think is interesting is that the curvature of $C(p)$ in the smooth phase is positive of $p=0.5$ but negative for $p =0.25$ and negative for $p = 0.25$ and $p=0.75$ ((possibly)as we will see next).
+
+\subsubsection{$p=0.75$ line}
+
+Along the $p = 0.75$ line we go through the smooth phase for small $u$, where $C \sim L$ (I claim with no evidence here). Then, in the region between $u_1$ and $u_2$ there is a crossover to a phase were $C \sim 1 - 10$, before we reach the unbound regime at $u_2$. This region between $u_1$ and $u_2$ is the rough phase with roughness exponent $\alpha = 1/2$. This is different to the $p=0.25$ and $p=0.5$ cases, where the roughness exponent is $\alpha = 1/3$.
+
+It appears that there may also be a difference in the nature of the transition at the unbound phase. This transition in $C$ was sharp for $p=0.25$ and $p=0.5$, but here it may be continuous. It needs some careful analysis to clarify this though.
+
+We can also see that in the rough phase the curvature of $C(u)$ is (possibly) negative.
+
+% -- contacts figures --
+
+% u = 0
+\begin{figure}
+ \centering
+ \includegraphics[width=0.7\textwidth]{img/C-p_u00}
+ \caption{Plot of $C$ against $p$ for $u=0$.}
+ \label{fig:C-p_u00}
+\end{figure}
+% u = 0.15
+\begin{figure}
+ \centering
+ \includegraphics[width=0.7\textwidth]{img/C-p_u015}
+ \caption{Plot of $C$ against $p$ for $u=0.15$.}
+ \label{fig:C-p_u015}
+\end{figure}
+% u = 0.15
+\begin{figure}
+ \centering
+ \includegraphics[width=0.7\textwidth]{img/C-p_u035}
+ \caption{Plot of $C$ against $p$ for $u=0.35$.}
+ \label{fig:C-p_u035}
+\end{figure}
+
+% p = 0.25
+\begin{figure}
+ \centering
+ \includegraphics[width=0.7\textwidth]{img/C-u_p025}
+ \caption{Plot of $C$ against $u$ for $p=0.25$.}
+ \label{fig:C-u_p025}
+\end{figure}
+\begin{figure}
+ \centering
+ \includegraphics[width=0.7\textwidth]{img/C-u_p025_logy}
+ \caption{Plot of $C$ against $u$ for $p=0.25$.}
+ \label{fig:C-u_p025_logy}
+\end{figure}
+% p = 0.5
+\begin{figure}
+ \centering
+ \includegraphics[width=0.7\textwidth]{img/C-u_p05}
+ \caption{Plot of $C$ against $u$ for $p=0.5$. {\bf (NOTE TO SELF: typo in title. Should say $u=0.5$.)}}
+ \label{fig:C-u_p05}
+\end{figure}
+\begin{figure}
+ \centering
+ \includegraphics[width=0.7\textwidth]{img/C-u_p05_logy}
+ \caption{Plot of $C$ against $u$ for $p=0.5$.}
+ \label{fig:C-u_p05_logy}
+\end{figure}
+% p = 0.75
+\begin{figure}
+ \centering
+ \includegraphics[width=0.7\textwidth]{img/C-u_p075}
+ \caption{Plot of $C$ against $u$ for $p=0.75$.}
+ \label{fig:C-u_p075}
+\end{figure}
+\begin{figure}
+ \centering
+ \includegraphics[width=0.7\textwidth]{img/C-u_p075_logy}
+ \caption{Plot of $C$ against $u$ for $p=0.75$.}
+ \caption{}
+ \label{fig:C-u_p075_logy}
+\end{figure}
+
+\end{document}

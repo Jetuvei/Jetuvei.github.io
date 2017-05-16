@@ -1,0 +1,1138 @@
+\documentclass[a4paper,10pt]{article}
+%\documentclass[a4paper,10pt]{scrartcl}
+
+% PACKAGES
+
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{subfigure}
+\usepackage{amssymb}
+\usepackage{bbm}
+\usepackage{bbold}
+\usepackage{cite}
+
+% SETTINGS
+
+\setlength{\parindent}{1em}
+\setlength{\parskip}{1em}
+
+% \hoffset=-50pt
+% \textwidth=440pt
+
+% COMMANDS
+
+\newcommand{\fref}[1]{Figure \ref{#1}}
+\newcommand{\rref}[1]{Ref. \cite{#1}}
+\newcommand{\sref}[1]{Section \ref{#1}}
+
+\newcommand{\I}{\mathbbm{I}}
+\newcommand{\D}{\mathrm{d}}
+\newcommand{\e}{\mathrm{e}}
+\newcommand{\Or}{\mathcal{O}}
+\newcommand{\dL}{\frac{d}{L}}
+\newcommand{\OL}{\Or\left(\frac{1}{L}\right)}
+\newcommand{\OLL}{\Or\left(\frac{1}{L^2}\right)}
+
+\newcommand{\bra}[1]{\langle #1 \vert}
+\newcommand{\ket}[1]{\vert #1 \rangle}
+\newcommand{\braket}[2]{\langle #1 \vert #2 \rangle}
+
+\newcommand{\pone}{P(1)}
+\newcommand{\pzero}{P(0)}
+\newcommand{\py}{P(y)}
+
+\newcommand{\wone}{w(1)}
+\newcommand{\wzero}{w(0)}
+\newcommand{\wy}{w(y)}
+
+\newcommand{\Ai}{\mathrm{Ai}}
+
+% TITLE
+
+\title{Membrane-Interface Model: Overview}
+\author{Justin Whitehouse}
+\date{\today}
+
+\pdfinfo{%
+  /Title    ()
+  /Author   ()
+  /Creator  ()
+  /Producer ()
+  /Subject  ()
+  /Keywords ()
+}
+
+\begin{document}
+\maketitle
+
+\tableofcontents
+\newpage
+
+%  INTRODUCTION %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Introduction}
+
+\begin{itemize}
+ \item The main body of this work was carried out as part of my PhD thesis, in collaboration with Martin Evans and Richard Blythe (University of Edinburgh)
+ \item The study of bacterial colony growth that we believe may be related to this model is work by Bartek Waclaw (University of Edinburgh)
+ \item I had some useful discussions on this during my PhD viva with Davide Marenduzzo (University of Edinburgh) and Des Johnston (Heriot-Watt University)
+\end{itemize}
+
+\subsection{Lamellipodia Growth Model}
+
+
+The membrane-interface (MI) model is a simple model for the dynamics of the leading edge (the `interface') of the lamellipodia in motile cells, as it pushes against the cell wall/membrane (the `membrane').
+
+\begin{figure}[h!]
+ \centering
+ \includegraphics[width=\textwidth]{img/lamellipodia_img.pdf}
+ \caption{A photo (from a paper by Svitkina et al. \cite{Svitkina1999}) showing the lamellipodium at the leading edge of a motile cell. C is a zoom of the boxed area in B, which is a zoom of the boxed area in A.}
+\end{figure}
+
+\begin{figure}[h!]
+ \centering
+ \includegraphics[width=\textwidth]{img/DIAGRAM_Mem-Int_filaments.png}
+ \caption{How I imagine a messy network/mesh of actin filaments corresponds to the MI model.}
+\end{figure}
+
+%  NUMERICS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\section{Numerical Simulations}
+
+\subsection{Model Definition}
+
+The MI model consists of a flat wall, which undergoes a random walk in the vertical direction, above an interface of length $L$. This interface is described by an ASEP of $L$ sites, where an occupied site represents a `down' slope (away from the interface, reading left to right) and an empty site represents an `up' slope (towards the interface, reading from left to right). 
+
+At each iteration in the numerical simulations, with probability
+\begin{equation}
+ P(M) = \frac{1}{1 + L/2} 
+\end{equation}
+a membrane move/event is generated, and with probability
+\begin{equation}
+ P(I) = \frac{L/2}{1 + L/2} 
+\end{equation}
+an interface move/event is generated. 
+
+When a membrane event is generated, then with probability $u$ the membrane takes a step upwards, away from the interface, and with probability $1-u$ the membrane takes a step downwards, towards the interface.
+
+When an interface event is generated, a particle in the ASEP is selected at random. With probability $p$ the particle hops `forwards', unless there is already a particle ahead, which moves a single point on the interface two units towards the membrane. With probability $1-p$ the particle hops `backwards', unless there is already a particle behind, which moves a single point on the interface away from the membrane. 
+
+\emph{Any move which would cause the membrane to pass through the interface is forbidden.} If there are any points of contact between the membrane and interface then the following moves are rejected if generated:
+\begin{enumerate}
+ \item the downwards membrane move (``$1-u$'')
+ \item any forwards particle hop (``$p$'') which would move an interface point through the membrane. 
+\end{enumerate} 
+
+One (Monte Carlo) timestep is defined as being the generation of $L/2+1$ events.
+
+\subsubsection{Diffusion Constant}
+
+As an aside, we can vary the diffusion constant of the membrane by modifying our choice of $P(M)$ and $P(I)$ such that they are:
+\begin{equation}
+ P(M) = \frac{G}{G + L/2} 
+\end{equation}
+and
+\begin{equation}
+ P(I) = \frac{L/2}{G + L/2} \;, 
+\end{equation}
+where the parameter $G$ controls the diffusion strength. It can be straightforwardly reasoned that the parameter $G = D$, the diffusion constant. In the way we have defined out model, however, the choice of $G$ also affects the membrane drift. For the simulation membrane hop probability $u$, the drift of the membrane is $G(2u-1)$. To keep the drift constant while changing $G$ we must rescale the parameter $u$. If we call $u^*$ the membrane hop probability when $G=1$, then to keep the drift constant while changing $G$ we must choose $u$ to satisfy
+\begin{equation}
+ G(2u-1) = 2u^*-1 \;,
+\end{equation}
+which tells us that we must rescale $u$ as
+\begin{equation}
+  u = \frac{ 2 u^* -1 + G }{2G} \;.
+\end{equation}
+As a quick check, we can see that if there is no drift, when $u^*=1/2$, then $u=u^*=1/2$.
+
+
+
+% From my discussions with Davide, I think we came to the conclusion that $G \sim \Or(L)$ was about right to accurately model the biological process. {\bf EXPAND ON THIS - WHY?}
+
+\subsection{Choice of $p$, $u$}
+
+In this study we were primarily interested in the ratcheting properties of a non-equilibrium (KPZ) interface. For this reason we chose $p=1.0$. This makes analysis and simulations a bit more straightforward than if we had chosen to investigate $1/2<p<1$.
+
+Also in studies of lamellipodia growth and brownian ratchets it is of interest to look at the effect of a load force. This load force influences the bias in the random walk of the membrane, and is parameterised by $u$. In our simulations, we measured the behaviour of the interface for different values of $u$ ranging from $0$ to $1$. A force that is pushing on the membrane corresponds to $u<1/2$ and a force that is pulling on the membrane corresponds to $u>1/2$. For $u=1/2$, there is no bias and it is equivalent to diffusion of the membrane.
+
+\subsection{Measurements}
+
+In our simulations we measured the following quantities over the range of $u$ values.
+
+\subsubsection*{Mean Separation, $\overline{y}$}
+
+The separation distance between point $i$ on the interface and the membrane is labelled $y_i$. The mean separation $\overline{y}$  is simply defined as
+\begin{equation}
+  \overline{y} = \frac{1}{L} \sum_{i=1}^L y_i \;.
+\end{equation}
+
+\subsubsection*{Width, $W$}
+
+The width, $W$, of the interface is defined as
+\begin{equation}
+ \left \langle W \right\rangle = \left \langle \sqrt{ \frac{1}{L} \sum_{i=1}^L \left( y_i^2 - \overline{y}^2 \right)  } \right\rangle \;.
+\end{equation}
+For a normal KPZ interface, the width scales with $L^{1/2}$ in the steady state. 
+
+\subsubsection*{Number of Contacts, $C$}
+
+The number of contacts, $C$, is the count of how many of the interface sites $i$ have separation $y_i=0$ from the membrane. 
+
+\subsubsection*{ASEP Current, $J$}
+
+The current $J$ in the underlying ASEP allows us to quantify the growth rate of the interface. By defining the indicator function
+\begin{equation}
+  \tau_i = \begin{cases}
+	      0 \;, & \mbox{if site vacant} \\
+              1 \;, & \mbox{if site occupied} \\
+           \end{cases} \quad,
+\end{equation}
+then the ASEP current $J$ is defined as
+\begin{equation}
+  J = \left \langle \frac{1}{L} \sum_{i=1}^L \; p\tau_i(1-\tau_{i+1})  - (1-p)(1-\tau_{i-1})\tau_i \right\rangle \;.
+\end{equation}
+where $\langle . \rangle$ signifies a statistical average in the steady state. The quantity $\tau_i(1-\tau_{i+1})$ measures the existence of a particle which has a vacant site ahead it can hop into, which is the only local configuration of two sites which will contribute to the forward current of particles, and likewise for $(1-\tau_{i-1})$. 
+
+However, to measure the current in the interface correctly, we must make the additional modification that we ignore contributions to the current from particles that would normally be able to hop, but are actually impeded by the exclusion interaction with the membrane. 
+
+We could write this as 
+\begin{equation}
+  J = \left \langle \frac{1}{L} \sum_{i=1}^L \; \theta_{i}p\tau_i(1-\tau_{i+1})  - (1-p)(1-\tau_{i-1})\tau_i \right\rangle \;,
+\end{equation}
+where
+\begin{equation}
+  \theta_i = \begin{cases}
+               0 \;, & y_i = 0 \\
+               1 \;, & \mbox{otherwise}
+             \end{cases} \;. 
+\end{equation}
+Note here, that I have used the convention
+\begin{equation}
+  y_{i+1} = y_i + 2\tau_i -1 \;,
+\end{equation}
+where $y_i$ is the distance from the membrane to interface point $i$. (The alternative convention would be $y_{i+1} = y_i + 2\tau_{i+1} -1$.) It could be useful in future to try and find an explicit definition for $\theta_i$ in terms of $\tau_j$, $y_j$, which might reveal something we haven't thought about yet.
+
+\subsubsection*{Membrane Velocity, $v_m$}
+
+We also measure the membrane velocity, $v_m$, by counting the net number of steps taken by the membrane and dividing by time. 
+
+\subsection{Results}\label{sec:results}
+
+The results from simulation show the existence of three phases as $u$ is varied. These are most clearly illustrated by a plot of the contact count $C$ against $u$ (\fref{fig:C-u}).
+\begin{enumerate}
+ \item {\bf Smooth phase:} For $u < u_1 \simeq 0.61$, the number of contacts is extensive ($C \sim L$), and the interface is narrow/smooth ($W \sim \Or(1)$)
+ \item {\bf Rough phase:} For $u_1 < u < u_2$, the number of contacts is subextensive ($C \sim \Or(1)$), and the interface is rough ($W \sim L^\alpha$, the value of $\alpha$ will be discussed later, but we think it is $1/2$, but with finite size effects...)
+ \item {\bf KPZ/Unbound phase:} For $u > u_2 = 3/4$ we have the somewhat trivial unbound phase, where the average velocity of the membrane is greater than that of the interface. As such, the membrane drifts away from the interface, and the interface grows unaffected by it. Thus $C = 0$ and $W \sim L^\alpha$, where $\alpha = 1/2$ as the interface is now an unimpeded KPZ interface.
+\end{enumerate}
+
+\begin{figure}[h!]
+  \centering
+  %\includegraphics[width=0.7\textwidth]{img/BMIsim_lrange_cc-u_G1.png}
+  \includegraphics[width=0.7\textwidth]{img/C-u_p10.png}
+  \caption{Contact count $C$ versus $u$. System size $L = 2^l$}
+  \label{fig:C-u}
+\end{figure}
+
+By looking at the current $J$ (\fref{fig:J-u}) in the (T)ASEP underlying the dynamics of the membrane, alongside the measurement of $C$, we can get some understanding of the causes of these three phases. 
+
+We see that at small $u$, where the membrane is biased towards the interface, the exclusion with the membrane inhibits the growth of the interface, keeping it {\bf smooth}. As $u$ increases, $J$ increases as the interface is impeded \emph{less often}\footnote{I think it's important to point out that although less of the interface is impeded, I think it's because the interface is impeded less often, and so has time to roughen, reducing the number of interface points closest to the membrane, before the membrane returns to meet it.}, until the interface is impeded infrequently enough to allow the maximal current to flow. 
+
+The maximal current in the (T)ASEP signifies the {\bf rough} phase, where further increases in $u$ no longer increases the velocity of the interface. \emph{Importantly}, in this phase further increases in $u$ also do not increase the velocity of the membrane (see \fref{fig:J-u}). This is because the (average) membrane velocity, $2u-1$, is still less that the interface velocity. Thus, throughout the rough phase, the interface pushes the membrane at velocity which is independent of $u$, but still greater than the membrane's natural velocity.
+
+The maximal velocity in the TASEP is $J_{max} = \rho(1-\rho)$, where $\rho$ is the particle density. In this case, perdiod boundaries require $\rho = 1/2$, and so $J_{max}=1/4$. Because the interface grows in steps of two, the interface velocity $v_i = 2J_{max} = 1/2$. So, when the membrane velocity $2u-1 > v_i$, then the membrane will drift away from the interface, and the two become {\bf unbound}. Thus the upper transition value $u_2$ satisfies
+\begin{equation*}
+  2u_2 - 1 = \frac{1}{2} \;,
+\end{equation*}
+giving $u_2 = 3/4$.
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.7\textwidth]{img/J-u_p10.png}
+  \caption{Plot of $J$ versus $u$.}
+  \label{fig:J-u}
+\end{figure}
+
+We are particularly interested in the scaling of the width $W$ in the three different phases. We can see from \fref{fig:W-u_raw} that $W$ seems to scale independent of system size when $u$ is small ({\bf smooth}). We can also see from \fref{fig:W-u_rescale} that $W \sim L^{1/2}$ when $u > 3/4$, as we expect ({\bf unbound}). What we would really like to know is what happens in the {\bf rough} phase, which is less clear from the plots in \fref{fig:W-u}.
+
+\begin{figure}
+ \centering
+  \includegraphics[width=0.7\textwidth]{img/W-u_p10.png}
+  \caption{$W$ versus $u$. Strong finite size effects are evident in smaller systems, but as the system size $L$ is increased the width becomes more uniform across the range $u_1 < u < u_2$.}
+  \label{fig:W-u_raw}
+\end{figure}
+\begin{figure}[h!]
+  \centering
+  \subfigure[][$W/L^{1/2}$ versus $u$.] {
+    \includegraphics[width=0.7\textwidth]{img/W-u_p10_rescale.png}
+    \label{fig:W-u_rescale}
+  }
+  \subfigure[][$W/L^{1/2}$ versus $(u-u_1)L^{1/2}$, $u_1 = 0.61$.]{
+    \includegraphics[width=0.7\textwidth]{img/W-u_p10_superrescale.png}
+    \label{fig:W-u_superrescale}
+  }
+  \caption{For small $u$, $W \sim L^0$. Crossover and rescaling indicates rough phase at $u \simeq 0.61$ with $W \sim L^{1/2}$. For $u > 3/4$ we have a normal KPZ interface. System sizes $L = 2^l$, where $l = 7$-$15$. The rescaling provides strong evidence of a discontinuous transition in $W$ at $u_1$.}
+  \label{fig:W-u}
+\end{figure}
+In the {\bf rough} phase where it is still interacting with the membrane, but has a width which scales similarly to $L^{1/2}$. Using numerical scaling methods it has been difficult to identify precisely the values of $u_1$ and the roughness exponent $\alpha$ in this phase. One reason for this may have been some dependence on $u$ in the roughness exponent $\alpha$. 
+
+To examine the roughness exponent more closely the exponent $\alpha$ was measured for each value of $u$ by preforming a linear regression on $\ln(W)$ against $\ln(L)$, as indicated in \fref{fig:alpha-u_regression}. 
+\begin{figure}[h!]
+ \centering
+ \includegraphics[width=0.7\textwidth]{img/alpha-u_regression.png}
+ \caption{To find $\alpha(u)$, a linear regression was performed at on $\ln(W)$ against $\ln(L)$ for each value of $u$.}
+ \label{fig:alpha-u_regression}
+\end{figure}
+
+What we see, as shown in \fref{fig:alpha-u}, is that in the {\bf rough} phase the exponent $\alpha$ seems to vary continuously with $u$. In the {\bf unbound} phase we very unambiguously see $\alpha = 1/2$ as expected, and we see that well into the {\bf smooth} phase that $\alpha = 0$. 
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.7\textwidth]{img/lnWlnL_pyproc_exp.png}
+  \caption{The roughness exponent $\alpha(u)$ measured as a function of $u$.}
+  \label{fig:alpha-u}
+\end{figure}
+In fact, as we can see in \fref{fig:W-u_4set}, there seem to be very significant finite size effects in the measurement of $\alpha$ in the {\bf rough} phase. What \fref{fig:W-u_4set} seems to suggest is that as the system sizes increase, the exponent is discontinuous, with an overshoot, at $u \simeq 0.61$ (or maybe even a smaller value in the region $u\simeq 0.59$-$6$), and \emph{tentatively}, it looks like in this region the finite size effect diminishes as $L$ is increased, leaving $\alpha = 1/2$ in this region. However the form/behaviour of this finite size effect is strange/interesting/unusual, as it seems to be indicating a `super-rough' spike in $\alpha$ at the transition, rather than the whole $\alpha$ bump in this region flattening out as $L$ increases. It's not clear yet whether the bump is flattening out to $\alpha = 1/2$ in this region as $L$ is increased, or whether it persists leaving some $u$ dependence in $\alpha$ - hopefuly more data at the larger system sizes will improve the statistics and clear this up.
+\begin{figure}[h!]
+ \centering
+ \subfigure[][Data.]{
+  \includegraphics[width=0.7\textwidth]{img/p10_W-u_4set_SE.png}
+ }
+ \subfigure[][Sketch visualising how I think this plot is changing with system size.]{
+  \includegraphics[width=0.7\textwidth]{img/p10_W-u_4set_SE_sketch.png}
+ }
+ \caption{The roughness exponent $\alpha(u)$ measured by linear regression of the width data at each value of $u$ individual.}
+ \label{fig:W-u_4set}
+\end{figure}
+
+\subsection{Attempt at Numerically Identifying $u_1$}
+
+Numerically and analytically, the value $u = u_2$ at which there is a transition from the rough phase to the unbound (KPZ) phase is easy to identify. Less easy to identify is the value $u = u_1$ where there is a transition between the smooth and rough phases.
+
+The identification of $u_1$ has so far been more difficult because there seem to be a significant finite size effects near the smooth to rough transition. A possible candidate for the order parameter is the contact count $C$. In order to try to  identify more precisely the value of $u_1$, I performed a linear regression on the logged $C$-$L$ data at different system sizes $L$ to get a measure of the scaling exponent of $C$ (\fref{fig:C-u_exp}). 
+
+\begin{figure}[h!]
+ \centering
+ \includegraphics[width=0.7\textwidth]{img/p10_C-u_all_SE.png}
+ \caption{Linear regression of logged $C$-$L$ data at different $u$ (x-axis) was used to estimate scaling exponent $\gamma$ (y-axis) of the contact count, $C$.}
+ \label{fig:C-u_exp}
+\end{figure}
+We can see a transition from a regime where the scaling exponent is $\sim 1$ to a regime where the scaling exponent is $\sim 0$ in a region roughly centered on $u = 0.6$. Unfortunately the transition is very sharp. It turns out that this broadening can be attributed to the influence of smaller system sizes. If we reproduce this plot only using subsets of the full data (\fref{fig:C-u_exp_sets}) we see that the transition appears to sharpen with increased system size.
+
+In \fref{fig:C-u_exp_sets_3} the exponent was calculated regressing data from systems with $l=\{7,8,9\}$, $l=\{8,9,10\}$, ... and so on, where the system size $L = 2^l$. It may be worth noting here that I only have a relatively small amount of data for $l=14,15$ at the moment, but some more is on the way.
+
+\begin{figure}[ht!]
+ \centering
+ \subfigure[][3 system sizes per set]{
+  \includegraphics[width=0.7\textwidth]{img/p10_C-u_3set_SE.png}
+   \label{fig:C-u_exp_sets_3}
+ }
+ \subfigure[][4 system sizes per set]{
+  \includegraphics[width=0.7\textwidth]{img/p10_C-u_4set_SE.png}
+   \label{fig:C-u_exp_sets_4}
+ }
+ \caption{The scaling exponent $\gamma$ of the contact count $C$ (y-axis) against the parameter $u$, calculated from a linear regression of the logged data from (a) 3 system sizes, (b) 4 system sizes.}
+ \label{fig:C-u_exp_sets}
+\end{figure}
+
+The next thing that I want to do is to somehow use this data to estimate with some confidence the value of $u_1$. One thing I have tried to do is perform a finite-size scaling analysis on the data seen in \fref{fig:C-u_exp_sets}. This is done using the autoscale code written by Oliver Melchert \cite{Melchert2009} as implemented in \rref{Houdayer2004}. This analysis uses the scaling assumption
+% \begin{equation}\label{eq:scaling_ansatz}
+%   y(x,L) = L^{-b} f[(x-x_c)L^a] \;.
+% \end{equation}
+\begin{equation}\label{eq:scaling_ansatz}
+  \gamma(u,L) = L^{-b} f[(u-u_1)L^a] \;.
+\end{equation}
+where $\gamma$ is the scaling exponent of $C$.
+To use it with data derived from multiple system sizes, I have to define an effective system size corresponding to the system sizes of the original data, the details of which are not too important for the measurement, so their description is deferred to \sref{sec:L_eff}. 
+
+\begin{figure}[ht!]
+ \centering
+ \subfigure[][$L^{typ}_{l,4}$, $u_c \simeq 0.606$]{
+  \includegraphics[width=0.7\textwidth]{img/p10_C-u_4set_SE_rs_typ.png}
+ }
+ \subfigure[][$L^{avg}_{l,4}$, $u_c \simeq 0.610$]{
+  \includegraphics[width=0.7\textwidth]{img/p10_C-u_4set_SE_rs_avg.png}
+ }
+ \caption{An attempt at finite size scaling of the $\gamma$ data (the $C$ scaling exponent), using \emph{an effective system size}. ($u_c$ is our estimate for $u_1$) }
+ \label{fig:C-u_4set_collapse}
+\end{figure}
+Obviously the measurements of the exponents $a$ and $b$ from \eqref{eq:scaling_ansatz} depend on which effective system size is used, but the measurement of $u_c$ doesn't, and in both cases we find that $u_c = 0.61$ (to 2 significant figures)\footnote{I haven't figured out yet how to get an error measurement out of this scaling programme though.}.
+
+What's promising about these measurements is that the measure $S$, which is calculated by the fitting programme, is approximately equal to 3 (for both effective system sizes used). $S$ is a measure of the confidence in the collapse \cite{Houdayer2004} and values $\lesssim 2$ are considered to indicate a good level of confidence in the result. Although 3 is not less than 2, it is relatively close. Furthermore, I haven't got much data yet for the system sizes $l=14,15$ ($L=2^l$), so my feeling is that I could increase the accuracy of this measurement once I have obtained and processed more data from simulation.
+
+\subsubsection{Defining an effective system size}\label{sec:L_eff}
+
+There are two choices for the effective system size $L^{eff.}_{l,n}$:
+\begin{equation}
+  L^{avg}_{l,n} = \frac{1}{n} \sum_{k=l}^{l+n-1} 2^k = \frac{1}{n} 2^l (2^n -1) \;,
+\end{equation}
+and
+\begin{equation}
+  \log_2 L^{typ}_{l,n} = \frac{1}{n} \sum_{k=l}^{l+n-1} k = \frac{2l + n - 1}{2} \;.
+\end{equation}
+At present it's not clear to me which effective system size is best, or even whether it makes sense to do this at all, but an initial collapse (\fref{fig:C-u_4set_collapse}) gives a promising result using either $L^{typ}_{l,n}$ or $L^{avg}_{l,n}$. 
+
+%  BACTERIAL COLONY GROWTH %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage\phantom{blabla}
+\newpage\phantom{blabla}
+\newpage\phantom{blabla}
+\newpage\phantom{blabla}
+\newpage
+\section{Bacterial Colony Growth}
+
+\begin{figure}[h!]
+ \centering
+ \includegraphics[width=0.7\textwidth]{img/bacterial_colony_schematic.png}
+ \caption{Schematic of the bacterial colony growth model being studied by Bartek Waclaw. (My own work - possibly not accurate!) Correspondence to MI model illustrated in \fref{fig:MI-bacteria}.}
+ \label{fig:bacteria}
+\end{figure}
+\begin{figure}[h!]
+ \centering
+ \includegraphics[width=0.7\textwidth]{img/MI-bacteria.png}
+ \caption{Sketch of equivalence between bacterial colony growth (\fref{fig:bacteria}) and the MI model.}
+ \label{fig:MI-bacteria}
+\end{figure}
+
+
+
+Bartek Waclaw has been numerically simulating the growth of a bacterial colony. I think this is a molecular dynamics type simulation, with the size, shape, velocity of and forces on each individual bacteria being simulated explicitly, but we'll have to check with Bartek to be sure. In this simulation a bacterial colony grows outwards from some initial colony/individual. There is a food source in the simulation too, so as this runs out some bacteria (the oldest, which have exhausted their food source) die. Ahead of the layer of dead bacteria is a layer of live bacteria. 
+
+Bartek has been measuring the width of the edge of the live layer (see \fref{fig:bacteria}) and for different sets of growth/food/etc.. parameters, he sees three regimes: 
+\begin{enumerate}
+ \item a ``smooth'' phase, where the width scales as $L^{1/3}$
+ \item a rough phase, where the width scales as $L^{1/2}$
+ \item another phase where the width has a more interesting, `super-rough' structure.
+\end{enumerate}
+
+I think (but I'm not 100\% certain) that Bartek would say he understands the super-rough phase and the rough phase. He became interested in our model (I think) when it became clear that our mean-field theory predicts a scaling of $L^{1/3}$, as seen in his smooth phase.
+
+Once we discussed it, we realised that there is a strong correspondence between his bacterial colony model and the MI model with $p < 1/2$, $u < 1/2$. In order to confirm this equivalence, and whether there really was a width of exponent 1/3 present, I ran my simulation with $u = 0$, and a range of values of $p< 1/2$. Setting $u=0$ means that the membrane can only take steps towards the interface, and $p<1/2$ means that the interfacial growth is biased away from the membrane.
+
+
+We see (\fref{fig:alpha-p}) that at $p = 0$ the roughness exponent is $1/2$ and, as $p$ is increased to $1/2$, $\alpha$ decreases to $\sim 1/3$. For $p > 1/2$ the roughness exponent is very small - in this regime the interface and membrane are biased towards each other, and the interface is flattened.
+
+\begin{figure}[h!]
+ \centering
+ \includegraphics[width=0.7\textwidth]{img/alpha-p_u00.png}
+ \caption{A plot of the roughness exponent $\alpha$ against the hop-forwards probability $p$ for $u = 0$. Calculated using linear regression, as described in \fref{fig:alpha-u_regression}.}
+ \label{fig:alpha-p}
+\end{figure}
+
+The case $p=0$ is special because in this case the interface doesn't feel the membrane at all, because there is no possibility of excluding moves. It makes sense that the interface has the KPZ scaling with $\alpha=1/2$ in this case. 
+
+David Mukamel and Martin have guessed that for $0 < p < 1/2$ ($p \le 1/2$?) the roughness exponent $\alpha = 1/3$ when $L\to\infty$, but for finite $L$ there should be a crossover scaling variable $Lp$, i.e
+\begin{equation}
+  \alpha = \begin{cases}
+             1/2 \;, & Lp \ll 1 \\
+             1/3 \;, & Lp \gg 1
+           \end{cases}
+\end{equation}
+
+From simulations (\fref{fig:W-L}) we find evidence of a crossover of this nature, although over a couple of orders of magnitude.
+
+\begin{figure}[h!]
+ \centering
+ \includegraphics[width=0.7\textwidth]{img/p01_Lp_W-L.png}
+ \caption{Plot of $W$ against $L$, for $p = 0.1$, with lines as guides to eye for seeing scaling exponents. There is clear evidence of a crossover from $\alpha = 1/2$ at $Lp \sim 0.1 \exp(4) \sim 6$ to $\alpha = 1/3$ at $Lp \sim 0.1 \exp(8) \sim 300$.}
+ \label{fig:W-L}
+\end{figure}
+
+From a plot of the contact count $C$, with $p=0.1$, (\fref{fig:C-t_p0.1}) we learn that there is on average only 1 contact between the membrane and interface. In fact there is of order 1 contact on average across the range of $p<1/2$, $u = 0.0$. This is in contrast to the rough phase when $p=1.0$ where, as illustrated in \fref{fig:C-t_p1.0u0.65}, there are typically order 10 contacts between the membrane and interface. As is discussed in \sref{sec:discussion}, it may be that the difference in the structure of the contact regions may be very significant for the difference in obeserved behaviour between the membrane-pushes-interface and interface-pushes-membrane regimes.
+
+From initial plots of the current $J$ (\fref{fig:J-t_p0.1}) we see that over time the current tends to approximately the maximal ASEP current $(2p-1)/4$. This is useful because it tells us that we can adapt our mean field theory from the case $p = 1.0$ with $u$ varying to for use in this case without having to change the maximal current assumption, which greatly simplifies the problem.
+
+\begin{figure}[h!]
+  \centering
+  \subfigure[][contact count $C$ against time $t$.]{
+    \includegraphics[width=0.7\textwidth]{img/C-t_p01u00.png}
+    \label{fig:C-t_p0.1}
+  }
+  \subfigure[][current $J$ against time $t$.]{
+    \includegraphics[width=0.7\textwidth]{img/J-t_p01u00.png}
+    \label{fig:J-t_p0.1}
+  }
+  \caption{Plots of the contact count $C$ and the current $J$ against time ($p = 0.1$). The contact count $C$ tends to 1 with time. The current tends to the ASEP maximal current $J_{max}(p) = (2p-1)/4$; $J_{max}(0.1) = -0.2$. $L = 2^l$.}
+\end{figure}
+
+\begin{figure}[h!]
+ \centering
+ \includegraphics[width=0.7\textwidth]{img/C-t_p10u065.png}
+ \caption{Plot of contact count $C$ against time $t$, for $p=1.0$, $u = 0.65$. There are typically much more than 1 contact in the rough phase when $p=1.0$.}
+ \label{fig:C-t_p1.0u0.65}
+\end{figure}
+
+
+%  MEAN FIELD THEORY %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage\phantom{blabla}
+\newpage\phantom{blabla}
+\newpage\phantom{blabla}
+\section{Mean Field Theory}
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.5\textwidth]{img/mf_schematic.pdf}
+  \caption{Schematic describing the mean-field theory}
+\end{figure}
+
+To make the crudest mean-field assumption (for the case $p=1.0$) we write down a single site mean-field master equation for the probability $P(y)$ that a point on the interface is a distance $y$ from the membrane to see what this tells us about the system. The master equation reads as follows:
+\begin{eqnarray}
+  \frac{\partial P(y)}{\partial t} & = & uP(y-1) \I_{y>0} + (1-u)(1-P(0))^L P(y+1) + \frac{1}{4}P(y+2) \nonumber \\
+                                   & - & uP(y) - (1-u)(1-P(0))^L P(y)\I_{y>0} -  \frac{1}{4}P(y) \I_{y>1} \;,
+\end{eqnarray}
+where $\I_X = 1$ if the condition $X$ is satisfied, and $0$ otherwise. The factor $1/4$ comes from the TASEP maximal current $\rho(1-\rho)$ when the density is $1/2$. The factor $[1-\pzero]^L$ describes the probability that all sites have $y>0$. 
+
+\subsubsection{Origin of terms}
+
+Below I explain the origin of each of the terms in the master equation:
+
+\begin{itemize}
+ \item  $+ uP(y-1) \I_{y>0}$ \newline
+ 
+        The membrane hops one step \emph{away from} the interface, increasing the height at the site from $y-1$ to $y$. This move cannot happen if afterwards the interface point is at height 0, because that requires the height to hae been negative previously.
+        
+ \item  $-uP(y)$ \newline
+ 
+	The membrane moves one step away from the interface.
+	
+ \item $ + (1-u)(1-P(0))^L P(y+1)$ \newline
+ 
+        The membrane hops one step \emph{towards} the interface, decreasing the height from $y+1$ to $y$. The coefficient $(1-P(0))^L$ represents the effect of the rest of the interface - this move would be forbidden if any other site had height $y=0$.
+        
+ \item $ - (1-u)(1-P(0))^L P(y)\I_{y>0}$ \newline
+ 
+        The membrane hops one stes towards the interface. This cannot happen if the height $y=0$.
+        
+ \item $ + \frac{1}{4}P(y+2)$ \newline
+ 
+        The interface grows towards the membrane. When the interface grows the height decreases two units, from $y+2$ to $y$. The happens at a rate proportinal to the current in the interface, $1/4$. We have made two assumptions:
+        \begin{enumerate}
+         \item We have $p=1.0$, meaning that the interface can only grow towards the membrane (particles can only hop in one direction in the inderlying (T)ASEP).
+         \item We are in the maximal current regime. For the TASEP, the maximal current is $\rho(1-\rho)$. The density here is $1/2$, and so the current is $1/4$.
+        \end{enumerate}
+
+ \item $-  \frac{1}{4}P(y) \I_{y>1}$ \newline
+ 
+        The interface grows towards the membrane. This cannot happen if $y< 2$, because the growth decreases the height by 2.
+\end{itemize}
+
+
+\subsubsection{Generating Function}
+
+We define the generating function
+\begin{equation}\label{eq:G_defn_P}
+ G(z) = \sum_{y=0}^{\infty}z^yP(y) \;,
+\end{equation}
+and in the steady state we have the equation
+\begin{eqnarray}
+ 0 & = & zaG(z) + \frac{G(z)}{z^2} - \frac{\pone}{z} - \frac{\pzero}{z^2} + \frac{bG(z)}{z} - \frac{b\pzero}{z} \nonumber \\
+   & - & (a+b+1)G(z) + \pzero + b\pzero + z\pone \;,
+\end{eqnarray}
+where we have defined
+\begin{equation}
+  a = 4u \;, \quad b = 4(1-u)(1-P(0))^L \;.
+\end{equation}
+This can be rearranged to give
+\begin{equation}\label{eq:Gz_solve}
+  G(z) = \frac{\pone(1+z)z + \pzero(1+(1+b)z)}{1 + (b+1)z -az^2} \;.
+\end{equation}
+
+
+\subsection{Predictions of Critical Values}
+
+We require that the distribution $P(y)$ is normalised, meaning
+\begin{equation}
+  G(1) = \sum_{y=0}^\infty P(y) = 1 \;,
+\end{equation}
+from which we find an equation relating $P(0)$ and $P(1)$:
+\begin{equation}\label{eq:normalisation}
+  2\pone + (1+b) \pzero = 2 + b - a \;.
+\end{equation}
+
+The normalisation condition allows us to make simple predictions for the critical values of $u$, $u_1$ and $u_2$. First, notice that for the distribution to be normalised the condition
+\begin{equation}\label{eq:mf_norm_condition}
+  2 + b - a > 0
+\end{equation}
+must be satisfied. If it is not satisfied for some set of parameter values, then there is no steady state at those values. 
+
+Now we first consider the case where $P(0)$ is finite and greater than $\OL$. In this case, remembering that $b = 4(1-u)(1-P(0))^L$, $b\to0$ as $L\to\infty$ and so the condition \eqref{eq:mf_norm_condition} becomes
+\begin{eqnarray}
+  a & < & 2  \;, \nonumber \\
+  u & < & \frac{1}{2} \;.
+\end{eqnarray}
+This tells us that a steady state where $P(0) > \OL$, which is what we see in the smooth phase, exists only when $u < 1/2$. Thus we have predicted the lower critical value $u_1 = 1/2$.
+
+When $u\ge 1/2$, $b$ must be finite and so, to leading order in $L$, we require $P(0)\le\OL$ for this to be true. In the infinite system size limit, $L\to\infty$, $P(0) \to 0$ and we find $b \to 4(1-u)$. In this case the condition \eqref{eq:mf_norm_condition} becomes
+\begin{eqnarray}
+  2 + 4 - 4u - 4 u & > & 0  \;,\nonumber \\
+                 u & < & 3/4 \;. 
+\end{eqnarray}
+This means that, for $u \ge 3/4$ no steady steady state is possible, and thus we have an estimate for the upper critical exponent $u_2 = 3/4$.
+
+In general, for a finite system, we see that for finite $b$ we require
+\begin{equation}
+ P(0) = - \frac{\ln c}{L} \;, 
+\end{equation}
+where $c$ is independent of $L$, but not $u$. This scaling of $P(0)$ is what we see in \fref{fig:C-u} for the measured contact count $C$. The average contact count $C$ is related to $P(0)$ by
+\begin{equation}\label{eq:P0_L}
+  P(0) = \frac{C}{L} \;.
+\end{equation}
+In \fref{fig:C-u} we see in the rough phase that $C \sim L^0$, and so $P(0) \sim L^{-1}$.
+
+\subsubsection{Intuitive Prediction}
+
+The predictions $u_1 = 1/2$ and $u_2 = 3/4$ can also be reasoned simply and intuitively. 
+
+As described in \sref{sec:results}, the average speed of the membrane is $v_m = 2u-1$ in the direction away from the interface. The current in the rough phase $J_{max}=1/4$. The interface grows in steps of 2, so the velocity of the interface is $v_i = 2J_{max} = 1/2$. When $v_m > v_i$, the membrane can `escape' and the two become decoupled. This happens when $2u-1 > 1/2$, giving $u > 3/4 = u_2$.
+
+Similarly, at the transition from the smooth phase to the rough, $v_i = 1/2$. In this case, when the interface is in contact with the membrane, the membrane has an effective (average) velocity $v^*_m = u $. In this case, if $v^*_m < v_i$, $u < 1/2 = u_1$, then growth and roughening of the interface will be inhibited by the membrane, and so it will remain smooth. 
+
+
+\subsection{Width Scaling}
+
+It turns out that, with some calculation, one finds that this mean-field theory predicts $W \sim L^1$, which doesn't agree with the results from simulation (e.g. \fref{fig:W-u}). This is because the mean-field above does not account for the fact that the interface is constrained to have single steps between adjacent sites. Thus, in the mean-field theory the heights of neighbouring sites can vary significantly (rather than by exactly one unit), which results in the order $L$ height fluctuations.
+
+To implement the single step constraint, we can replace $P(y)$ with the statistical weight $w(y)$ for a single site, and then combine these single site weights using a transfer matrix which does imposes the constraint on possible interface configurations to get a new prediction for the width scaling.
+
+\subsubsection{Single Site Weights}
+
+We can now rewrite the mean-field master equation from above in terms of $w(y)$. The function $w(y)$ is the statistical weight of having the piece of the interface a distance $y$ from the membrane.
+
+As we did for $P(y)$ in \eqref{eq:G_defn_P}, we define the generating function for $\wy$
+\begin{equation}\label{eq:G_defn_w}
+ G(z) = \sum_{y=0}^{\infty}z^y \wy \;,
+\end{equation}
+which in the steady state is
+\begin{equation}
+  G(z) = \frac{\wone z^2 + (\wone + (1+b)\wzero)z + \wzero}{-a(z-z_-)(z-z_+)} \;,
+\end{equation}
+where
+\begin{equation}
+  z_\pm = \frac{ (1+b) \pm \sqrt{ (1+b)^2 + 4a }}{2a}
+\end{equation}
+and
+\begin{equation}
+  a = 4u \;, \quad b = 4(1-u)(1-\pzero)^L \;.
+\end{equation}
+Because
+\begin{equation}
+  |z_-| < |z_+|
+\end{equation}
+the pole at $z_-$ is nearer the origin, and will dominate the integral
+\begin{equation}
+ \wy = \oint \frac{\D z}{2\pi i} \frac{G(z)}{z^y}
+\end{equation}
+at large $n$, but because 
+\begin{equation}
+  z_- < 0 
+\end{equation}
+this means that the distribution would oscillate between positive and negative values as $n$ is increased. Negative values are obviously unphysical, so the term $(z-z_-)$ in the denominator must be cancelled by the numerator. Thus,
+\begin{equation}\label{eq:Gz_numerator}
+  \wone z^2 + (\wone + (1+b)\wzero)z + \wzero = -a(Az+B)(z-z_-)\;.
+\end{equation}
+The generating function can now be written
+\begin{equation}
+  G(z) = \frac{Az + B}{z-z_+} \;,
+\end{equation}
+which can be expanded in powers of $z$ to give
+\begin{equation}
+  G(z) = -\frac{B}{z_+} - \left( A + \frac{B}{z_+} \right) \sum_{y=1}^\infty \left( \frac{z}{z_+} \right)^y \;.
+\end{equation}
+With some algebra, we then find
+\begin{equation}\label{eq:wy}
+  \wy = \frac{\wzero}{(1+z_-)} \frac{1}{z_+^y} \;, \quad y>0 \;,
+\end{equation}
+where $\wzero$ remains to be fixed self-consistently.
+
+The important things to notice from this result are first that $z_+ > 1$, and so 
+\begin{equation}
+  \wy \sim z_+^{-y}
+\end{equation}
+decays with $y$, and second that because $1 + z_- < 1$, $w(0)$ is less than the value that corresponds to \eqref{eq:wy} evaluated at $y=0$.  
+
+\subsubsection{Single Step Constraint and the Transfer Matrix}
+
+To take into account any restrictions in the difference in height between neighbouring sites on the interface we define a transfer matrix which allows us to select only configurations where the difference in heights between neighbouring sites is exactly one (Single Step). 
+
+We define
+\begin{equation}
+  T = \begin{pmatrix}
+       0      & w(0)   & 0      & 0      & 0      & \cdots \\
+       w(1)   & 0      & w(1)   & 0      & 0      &        \\
+       0      & w(2)   & 0      & w(2)   & 0      &        \\
+       0      & 0      & w(3)   & 0      & w(3)   &        \\
+       \vdots &        &        &        &        & \ddots \\
+      \end{pmatrix} \;.
+\end{equation}
+Using \eqref{eq:wy}
+
+\begin{equation}
+  T = \frac{\wzero}{(1+z_-)}
+      \begin{pmatrix}
+       0      & (1+z_-)& 0      & 0      & 0      & \cdots \\
+       q      & 0      & q      & 0      & 0      &        \\
+       0      & q^2    & 0      & q^2    & 0      &        \\
+       0      & 0      & q^3    & 0      & q^3    &        \\
+       \vdots &        &        &        &        & \ddots \\
+      \end{pmatrix} \;,
+\end{equation}
+where 
+\begin{equation}
+  q = z_+^{-1} \;.
+\end{equation}
+Now, the partition function for  a lattice of size $L$ with periodic boundary conditions and which conforms to the single step constraint is
+\begin{equation}
+  Z = \sum_{y=0}^\infty \bra{y} T^L \ket{y} \;,
+\end{equation}
+where $\ket{y}$ is a (right) basis vector of the space of heights:
+\begin{equation}
+  \ket{y}_i = \delta_{y,i} \;.
+\end{equation}
+The probability of an interface site having height $y$ is now 
+\begin{equation}
+  \py = \frac{\bra{y} T^L \ket{y}}{Z} \;.
+\end{equation}
+A factor $(\wzero/(1+z_-))^L$ factorises from both top and bottom, so we can redefine $T$:
+\begin{equation}\label{eq:T}
+  T = \begin{pmatrix}
+       0      & (1+z_-)& 0      & 0      & 0      & \cdots \\
+       q      & 0      & q      & 0      & 0      &        \\
+       0      & q^2    & 0      & q^2    & 0      &        \\
+       0      & 0      & q^3    & 0      & q^3    &        \\
+       \vdots &        &        &        &        & \ddots \\
+      \end{pmatrix} \;.
+\end{equation}
+The matrix $T$ satisfies an eigenvalue equation
+\begin{equation}
+  T \ket{\mu} = \mu \ket{\mu} \;,
+\end{equation}
+where
+\begin{equation}
+  \ket{\mu} = \sum_{y=0}^\infty \phi^{(\mu)}_y \ket{y} \;.
+\end{equation}
+Thus
+\begin{eqnarray}
+  \py &  = & \frac{\bra{y} T^L \sum_\mu \ket{\mu} \braket{\mu}{y}}{\sum_{y'=0}^\infty \bra{y'} T^L \sum_\mu \ket{\mu} \braket{\mu}{y'}} \nonumber \\
+      &  = & \frac{ \sum_\mu \mu^L \braket{y}{\mu} \braket{\mu}{y}}{\sum_\mu \mu^L \sum_{y'=0}^\infty \braket{y'}{\mu} \braket{\mu}{y'}}\;.
+\end{eqnarray}
+If we then assume that this sum is dominated by the largest eigenvalue for large $L$, and we abuse our notation a bit and call this largest eigenvalue $\mu$, its corresponding right-eigenvector $\ket{\phi}$ and its corresponding left-eigenvector $\bra{\psi}$, then 
+
+\begin{equation}
+  \py  =  \frac{ \braket{y}{\phi} \braket{\psi}{y}}{\sum_{y'=0}^\infty \braket{y'}{\phi} \braket{\psi}{y'}}  \;.
+\end{equation}
+So, to find $\py$, we just need to find the right and left eigenvectors corresponding to the largest eigenvalue $\mu$ of $T$.
+
+\subsubsection{Airy Function}
+
+By writing the right eigenvector $\ket{\phi}$ as a sum over the basis vectors $\ket{y}$:
+\begin{equation}\label{eq:phi_basis}
+  \ket{\phi} = \sum_{y=0}^\infty \phi_y \ket{y} \;,
+\end{equation}
+We find that  coefficients $\phi_y$ satisfy the following recursion relations:
+\begin{equation}\label{eq:recursion01}
+  \mu \phi_0 = (1+z_-)\phi_1 \;,
+\end{equation}
+\begin{equation}\label{eq:recursion}
+  q^y (\phi_{y+1} + \phi_{y-1}) = \mu \phi_y \;, \quad y>0 \;.
+\end{equation}
+A similar relation can also be found for the left eigenvector
+
+We have found previously that
+\begin{equation}\label{eq:z+}
+  z_+ = 1 + \OL \;,
+\end{equation}
+thus
+\begin{equation}\label{eq:q}
+  q = 1 - \OL = 1 - \epsilon \;, \quad \epsilon \ll 1 \;.
+\end{equation}
+We can then make a continuum approximation of the recursion relation \eqref{eq:recursion}, to find
+\begin{equation}\label{eq:ctm}
+  (2-\mu - 2y\epsilon) \phi(y) + \frac{\D^2 \phi}{\D y^2} = 0 + \mbox{higher order terms} \;, %partial derivative?
+\end{equation}
+and from \eqref{eq:recursion01} we find the boundary condition
+\begin{equation}\label{eq:bc}
+  \left( \frac{\mu}{1+z_-} -1 \right) \phi(0) = D\phi(0) = \left. \frac{\D \phi}{\D y} \right|_{y=0} \;.
+\end{equation}
+Again, a similar analysis follows for the left eigenvector.
+
+When $\mu < 2$, the solution to \eqref{eq:ctm} oscillates, which is not what we want, so we disregard this case. When $\mu - 2 \gg 2y\epsilon$, we find that we cannot satisfy \eqref{eq:bc}, so we also disregard this case. 
+
+This leaves us with the case $\mu = 2 + \delta$, where $\delta$ is a small quantity, like $\epsilon$.In this special case, the equation we want to solve for the eigenvector is
+\begin{equation}\label{eq:ctm2}
+   \frac{\D^2 \phi}{\D y^2} - (\delta + 2\epsilon y) \phi(y) = 0 \;,
+\end{equation}
+which is of the form of Airy's equation:
+\begin{equation}\label{eq:Airy-eq}
+  \frac{\D^2 f(z)}{\D z^2} - zf(z) = 0 \;,
+\end{equation}
+to which the solution is $f(z) = \Ai(z)$, where 
+\begin{equation}\label{eq:Airy-fn}
+  \Ai(x) = \frac{1}{\pi} \int_0^\infty \cos\left(\frac{t^3}{3} + xt\right) \D t \;.
+\end{equation}
+So to find $\phi(y)$ we make a change of variables:
+\begin{equation}
+  \phi(y) \to f(z) \;, \quad z = A + By \;,
+\end{equation}
+to find that 
+\begin{equation}\label{eq:phi_gen_soln}
+  \phi(y) = \alpha \Ai(A + (2\epsilon)^{1/3}y) \;,
+\end{equation}
+where $\alpha$ is some constant.
+
+We can get a value for $A$ by considering the boundary condition \eqref{eq:bc}. Because $0 < 1+z_- < 1$, $D > 0$. This means that
+\begin{equation}
+ \frac{\phi'(0)}{\phi(0)} = D > 0 \;, \quad \phi'(0) = \left. \frac{\D \phi(y)}{\D y} \right|_{y=0} \;,
+\end{equation}
+and so
+\begin{equation}
+  \frac{\Ai'(A)}{\Ai(A)} = \frac{D}{(2\epsilon)^{1/3}} \gg 1 \;, \quad \Ai'(A) = \left. \frac{\D \Ai(z)}{\D y} \right|_{y=0} \;.
+\end{equation}
+We can see from the plot in Figure \ref{fig:Airy-fn} that this condition can be satisfied near $x=z_0$, the first real root of the Airy function.
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.5\textwidth]{img/airy.pdf}
+  \caption{Plot of the Airy function, $\Ai(x)$, as given in \eqref{eq:Airy-fn}}
+  \label{fig:Airy-fn}
+\end{figure}
+$\phi(y)$ must be positive and not infinite, however, so
+\begin{equation}
+  A = z_0 + \Or( (2\epsilon)^{1/3} )  = z_0 + \beta (2\epsilon)^{1/3} \;,
+\end{equation}
+where $\beta$ is some finite constant. So finally, we can write
+\begin{equation}\label{eq:phi_y}
+  \phi(y) = \alpha \Ai \bigg( (y+\beta)(2\epsilon)^{1/3} - |z_0| \bigg) \;. 
+\end{equation}
+
+Similarly, we find
+\begin{equation}\label{eq:psi_y}
+ \psi(y) = \alpha \Ai \bigg( (y+\beta-1)(2\epsilon)^{1/3} - |z_0| \bigg) \;. 
+\end{equation}
+
+\subsubsection{Width Scaling}
+
+Using the solution for $\phi(y)$ in \eqref{eq:phi_y} and $\psi(y)$ in \eqref{eq:psi_y} we can find the leading order epsilon scaling of $Z$, $P(0)$ and $\langle y^n \rangle$. I summarise the results here, but the calculations are presented elsewhere:
+\begin{equation}
+  Z \sim \epsilon \;,
+\end{equation}
+and
+\begin{equation}
+  \langle y^n \rangle \sim \epsilon ^{n/3} \;.
+\end{equation}
+From this, it follows that 
+\begin{equation}
+  W \sim \epsilon^{-1/3}
+\end{equation}
+and
+\begin{equation}
+  \pzero \sim \epsilon \;. 
+\end{equation}
+Using \eqref{eq:P0_L}, which tells us how $\pzero$ scales with $L$ in the rough phase, we find that
+\begin{equation}
+  \epsilon \sim \frac{1}{L} \;, 
+\end{equation}
+and thus we find
+\begin{equation}
+  W \sim L^{1/3} \;.  
+\end{equation}
+This is still not 1/2, as we see in simulations, but is closer! The exponent 1/2 actually seems to come from the Airy function, which is a solution to our eigenvalues problem. This exponent 1/3 has appeared in work by David Mukamel and colleagues in studies of non-equilibrium wetting (\cite{Hinrichsen1997,Hinrichsen2000,Hinrichsen2003} I think), where again the Airy function formed part of a solution.
+
+\subsection{General Mean-Field Theory}
+
+[Note: this is still a work in progress]
+
+We can write down a more general mean-field master equation which includes the full range of possible values of $p$:
+\begin{eqnarray}\label{eq:general}
+  \frac{\partial P(y)}{\partial t} & = & u \bigg[ P(y-1) \I_{y>0} - P(y) \bigg] \nonumber \\
+				   & + & (1-u)[1-\pzero]^L \bigg[ P(y+1)  - P(y) \I_{y>0} \bigg] \nonumber \\
+				   & + & \frac{p}{4} \bigg[ P(y+2) - P(y) \I_{y>1} \bigg] \nonumber \\
+				   & + & \frac{(1-p)}{4} \bigg[ P(y-2) \I_{y>1} - P(y) \bigg] \;.
+\end{eqnarray}
+The lines of the right-hand side of the equation represent:
+\begin{enumerate}
+ \item membrane moves up (probability $u$)
+ \item membrane moves down (probability $1-u$)
+ \item particle moves forwards, interface grows up (probability $p$)
+ \item particle moves backwards, interface grows down (probability $1-p$)
+\end{enumerate}
+Again, we have assumed that we are in the maxmial current phase. This means that the forwards current is proportional to $p/4$ and the backwards current is proportional to $(1-p)/4$.
+
+We define the generating function
+\begin{equation}\label{eq:general_G}
+ G(z) = \sum_{y=0}^{\infty}z^y P(y) \;,
+\end{equation}
+In the steady state, $\partial P(y)/\partial t = 0$. Using this, the generating function \eqref{eq:general_G} and the master equation \eqref{eq:general} we find
+\begin{equation}
+  G(z) = \frac{ - \left[ pP(1) z^2 + \{ pP(1) + (b+p)P(0) \}z + pP(0) \right] }{ \left[ (1-p)z^3 + (a + 1 - p)z^2 - (b+p) z - p \right] } \;,
+\end{equation}
+where
+\begin{equation}\label{eq:ab_defn}
+  a = 4u \;, \quad b = 4(1-u)(1-P(0))^L \;.
+\end{equation}
+
+The idea with this is to perform a similar analysis as was done previously to find a formula for the statistical weights $w(y)$. It is then hoped that in the case $p<1/2$, $u< 1/2$, $w(y)$ would have the form $w(y) \sim q^y$, $q < 1$. Then the same transfer matrix analysis would go through, and we would have this time an \emph{accurate prediction} that the width $W \sim L^{1/3}$ in this regime. 
+
+% We can proceed by looking at the regime $u=0$. In this case $a = 0$ and $b = 4(1-P(0))^L$. If we make a further assumption about the scaling of $P(0)$, e.g. $P(0) \lesssim \Or(1/L)$ then $b$ can be treated as a constant as $L\to\infty$. The generating function becomes:
+% \begin{equation}
+%   G(z) = \frac{ - \left[ pP(1) z^2 + \{ pP(1) + (b+p)P(0) \}z + pP(0) \right] }{ \left[ ((1-p)z^2-p)(z+1)- bz \right] } \;,
+% \end{equation}
+
+\subsection{Finding the Probability Distribution}
+
+We have the following expresison for the generating function:
+\begin{equation}
+  G(z) = \frac{
+	       - \left[ p P(1) z^2 + (pP(1) + (b+p)P(0))z + pP(0) \right] 
+              }
+              {
+               \left[ (1-p)z^3 +(a + 1 -p) z^2 (b+p)z -p \right]
+              } \;.
+\end{equation}
+The cubic in the denominator makes it difficult to solve. We assign a function to the denominator:
+\begin{equation}
+  h(z) = (1-p)z^3 +(a + 1 -p) z^2 (b+p)z -p \;.
+\end{equation}
+This cubic function $h(z)$ has three real roots\footnote{Do these roots become complex for certain parameter values?} $z_+$, $z_-$ and $z_p$, such that 
+\begin{equation}
+  z_+ > 0 \;,
+\end{equation}
+\begin{equation}
+  z_p < z_- < 0 \;,
+\end{equation}
+and
+\begin{equation}
+  |z_p| > |z_+| > |z_-| \;. 
+\end{equation}
+$z_+$ and $z_-$ correspond to the two roots of the same name of the quadratic in the $p=1$ case. In the limit $p\to1$ the root $z_p$ must disappear as $h(z)$ become a cubic. We can see then that $z_p \sim -a/(1-p)$, such that the order $1/(1-p)^2$ terms in $h(z)$ cancel. 
+% {\bf (NOTE: I need to make this analysis more concrete.)}
+
+Importantly, because we still have $|z_-| < |z_+|$, the pole at $z_-$ is still closer to the origin and dominates the integral of $G(z)$ which describes $P(y)$. Thus, as in the $p=1$ case, we must cancel a factor $(z-z_-)$ from top and bottom. Conversly, the pole $z_p$ is further from the origin that $z_+$, because $|z_p| > |z_+|$, and so this pole (with negative real part) does not dominate the same integral, so does not need to be cancelled. 
+% {\bf (NOTE: are we sure $|z_p| > |z_+|$? I'm pretty confident - see graph.)}
+
+\begin{figure}[h!]
+ \centering
+ \includegraphics[width=0.7\textwidth]{img/p00_cubic_roots.png}
+ \caption{When $p=0$, $|z_p|>|z_+|$ across the range $u = 0 $ to $1$. Also, $z_- = 0$ (or at least $z_- \simeq 0$).}
+ \label{fig:p00_cubic_roots}
+\end{figure}
+
+
+So now we can write
+\begin{equation}
+  h(z) = (1-p)(z-z_-)(z-z_+)(z-z_p)\;, 
+\end{equation}
+and the numerator of $G(z)$ can be written as
+\begin{equation}
+  - \left[ pP(0) z^2 + \left( pP(1) + (b+p)P(0) \right) z + pP(0) \right] = -(Az+B)(z-z_-) \;.
+\end{equation}
+Immediately from this we can write
+\begin{equation}
+  A = pP(1) \;, 
+\end{equation}
+and
+\begin{equation}
+  B = -\frac{pP(0)}{z_-} \;,
+\end{equation}
+which will be useful later.
+
+Now, coming back to the generating function, we can write $G(z)$ as 
+\begin{equation}
+  G(z) = - \frac{(Az + B)}{(1-p)(z-z_+)(z-z_p)} \;.
+\end{equation}
+To find an expression for $P(y)$ we expand $G(z)$ in powers of $z$ to find
+\begin{equation}
+ G(z) = - \frac{(Az + B)}{(1-p)z_+z_p} \sum_{n=0}^\infty \frac{z^n}{z_p^n} \left[ \frac{ (z_p/z_+)^{n+1} -1 }{(z_p/z_+) - 1} \right] \;.
+\end{equation}
+
+We want to find the coefficients of $z^n$ to find the values of $P(n)$. To do this we multiply through by $(Az + B)$ to get
+\begin{eqnarray}
+ G(z) &=& -\frac{1}{(1-p)z_+z_p} Bz^0 \nonumber \\ 
+        &-& \sum_{n=1}^\infty\frac{ z^n}{(1-p)(z_p-z_+)} \left( \frac{Az_++B}{z_+^{n+1}} - \frac{Az_p+B}{z_p^{n+1}} \right) \;.
+\end{eqnarray}
+
+From this we see that
+\begin{equation}
+ P(0) = - \frac{B}{(1-p)z_+z_p} \;,
+\end{equation}
+and, for $n>0$, 
+\begin{equation}
+ P(n) = \frac{ 1}{(1-p)(z_p-z_+)} \left( \frac{Az_++B}{z_+^{n+1}} - \frac{Az_p+B}{z_p^{n+1}} \right) \;. 
+\end{equation}
+From the expression for $P(0)$ we have
+\begin{equation}
+  B = -(1-p)z_+z_pP(0) \;,
+\end{equation}
+and from earlier we have $A = pP(1)$, which we can use to find
+\begin{eqnarray}
+ P(n) &=& -\frac{1}{(1-p)(z_p-z_+)} \left( \frac{pP(1)(z_p^n-z_+^n) -(1-p)P(0)(z_p^{n+1} -z_+^{n+1})}{z_+^n z_p^n} \right) \;.
+\end{eqnarray}
+
+By setting $n=1$ we can solve self-consistently for $P(1)$:
+\begin{equation}
+ P(1) = \frac{(1-p)(z_p + z_+)}{z_+ z_p (1-p) - p} P(0) \;.
+\end{equation}
+
+Now we substitute the expression for $P(1)$ back in to the expresison for $P(n)$ to find
+\begin{equation}
+  P(n) = -\frac{P(0)}{z_+^n z_p^n(z_p-z_+)} \left( \frac{p(z_p^n-z_+^n)(z_p+z_+)}{z_+z_p(1-p) + p} -(z_p^{n+1} -z_+^{n+1}) \right) \;. 
+\end{equation}
+We can simplify and rearrange to find
+\begin{equation}\label{eq:gen_soln}
+  P(n) = \frac{P(0)}{z_+^{n-1} z_p^{n-1}(z_p-z_+)} \left( \frac{ (1-p) [z_p^{n+1} - z_+^{n+1}] - p[  z_p^{n-1} - z_+^{n-1}]}{(z_+z_p(1-p) + p)} \right) \;. 
+\end{equation}
+
+\subsection{Recovering $p=1$ equation}
+
+We now outline how to recover the $p=1$ solution:
+\begin{equation}
+ P(n) = \frac{P(0)}{1+z_-} z_+^{-n} \;, \quad n > 0 \;.
+\end{equation}
+
+To begin, we use the two expressions for $B$:
+\begin{equation}
+  B = -(1-p)z_pz_+P(0) \;, \quad B = -\frac{p}{z_-}P(0) \;,
+\end{equation}
+to define
+\begin{equation}
+  \alpha_p = (1-p)z_p = \frac{p}{z_-z_+} \;.
+\end{equation}
+Importantly, $\alpha_p$ remains finite as $p\to 1$, because $z_p \sim (1-p)^{-1}$. For convenience, we define
+\begin{equation}
+  \alpha_1 = \frac{1}{z_-z_+} \;.
+\end{equation}
+Using this we rewrite \eqref{eq:gen_soln} in terms of $\alpha_p$ and powers of $z_p^{-1}$:
+\begin{equation}
+ P(n) = \frac{P(0)}{z_+^{n-1}} \left\{
+                                \frac
+                                {
+                                  \left( \alpha_p - (1-p)z_+^{n+1}z_p^{-n}) \right) - p \left( z_p^{-1} - z_+^{n-1}z_p^{-(n-1)} \right)
+                                }
+                                {
+                                  \left( z_+ \alpha_p + p \right) \left( 1 - z_+ z_p^{-1} \right)
+                                }
+                               \right\}
+\end{equation}
+Next, we informally take the limit $p\to1$ by setting all terms with powers of $z_p^{-1}$ to zero to find
+\begin{equation}
+  P(n) = \frac{P(0)}{z_+^{n-1}} \frac{\alpha_1}{(z_+ \alpha_1 + 1)} \;.
+\end{equation}
+Finally, we substitute in the expression for $\alpha_1$ in terms of $z_\pm$ to find
+\begin{equation}
+  P(n) = \frac{P(0)}{(1+z_-)} \frac{1}{z_+^n} \;,
+\end{equation}
+as required.
+
+
+% SUMMARY SO FAR %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage\phantom{blah}
+\section{Summary of MI Model So Far}
+
+Let's recap:
+
+\subsubsection*{Original Study: $p=1.0$}
+
+\begin{itemize}
+ \item We have looked at the MI model with $p=1.0$ across various values of $u$. $p=1.0$ means that the interface is described by a TASEP, and can only grow towards the membrane. When $u>1/2$, the membrane is biased away from the interface. When $u < 1/2$, the membrane is biased towards the interface.
+ \item Numerically we measure four properties of the system:
+  \begin{enumerate}
+   \item $\overline{y}$ :the mean separation between the membrane and the interface
+   \item $W$: the width of the interface ($W^2 = \overline{y^2} - \overline{y}^2$)
+   \item $C$: the (average) number of points of contact between the membrane and interface. (The number of points where the separation $y=0$)
+   \item $J$: the current in the (T)ASEP (including the exclusion interaction between the interface and membrane)
+  \end{enumerate}
+ \item The numerical measurements suggest the existence of 3 phases:
+  \begin{enumerate}
+   \item {\bf smooth phase, $u < u_1 \sim 0.6$:}\newline In this phase $C \sim \Or(L)$, $J$ inhibited, strongly depends on $u$, $W \sim \Or(1)$.
+   \item {\bf rough phase, $u_1 < u < u_2$:}\newline In this phase $C \sim \Or(1)$. $J$ reaches the maximal (T)ASEP current value (1/4 for density 1/2), and is not affected by changes in $u$. The width is rough, we think $W\sim L^{1/2}$ in this phase, but the is some numerical evidence that the roughness exponent $\alpha = \alpha(u)>1/2$.
+   \item {\bf unbound (KPZ) phase, $u_2 = 3/4 \ge u$:}\newline In this phase the membrane moves away from the interface with average speed $2u-1$, and the two decouple. The interface behaves as a standard KPZ interface, with $W \sim L^{1/2}$. $C=0$, and $J$ is the maximal (T)ASEP current.
+  \end{enumerate}
+ \item Some scaling analysis of $C$ and $W$ data in the rough phase seems to indicate that $u_1 \simeq 0.61$ and that $\alpha \ge 1/2$ in this regime.
+ \item Analytically, we've built a single site mean field theory from which the predictions $u_1 = 1/2$ and $u_2 = 3/4$ can be drawn.
+ \item The mean field theory alone predict a width scaling $W\sim L^1$ in the rough phase. This is because we have no constraint on adjacent heights (no single step constraint)
+ \item We can introduce the single step constraint constraint using a transfer matrix, but in this case find $W \sim L^{1/3}$.
+ \item Because it has been difficult to confirm from the numerical data a definitive value of the width scaling exponent $\alpha$, I have spent a fair amount of time trying to clarify whether or not the prediction of $\alpha = 1/3$ from the transfer matrix is accurate or not. {\bf I think now, based on evidence from \fref{fig:W-u_4set}, that $\alpha \ge 1/2$ in the rough phase, and that the prediction $\alpha = 1/3$ is actually incorrect}, although I'm not sure my evidence is rigorous/definitive enough to rule it out with 100\% certainty. 
+\end{itemize}
+
+\subsubsection*{Bacterial Colony Growth Regime}
+
+\begin{itemize}
+ \item Bartek has a model for bacterial colony growth, in which he sees a width exponent 1/3 in the edge of the colony (for a certain set of parameters)
+ \item The bacterial colony model bears close resemblence to the MI model with $p < 1/2$, $u<1/2$. $p < 1/2$ means the interface is biased to grow away from the membrane, and $u < 1/2$ means that the membrane is biased to move towards the interface.
+ \item Simulating the MI model with $u=0$, $p < 1/2$ we see that the roughness exponent undergoes a crossover from $1/3$ when $0 < p < 1/2$ and $Lp\gg 1$, to $1/2$ when $Lp \ll 1$, $p \to 0$.
+ \item We actually find that the roughness exponent is $1/2$ when $p=0$. The reason for this is that when $p=0$ the interface does not interact with the membrane, and so grows independently as a KPZ interface.
+ \item What would be nice is if we could adapt our mean-field theory to describe this regime, and find that it accurately predicts the width $W \sim L^{1/3}$ in this case. Work on this is ongoing. There will possibly be an update soon!
+\end{itemize}
+ 
+
+
+%  DISCUSSION %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage%\phantom{blabla}
+\section{Discussion}\label{sec:discussion}
+
+A useful way to try to understand the MI model is to consider what we might expect from the $p$-$u$ phase diagram (\fref{fig:pu_pd}). There are four intuitive cases:
+\begin{enumerate}
+ \item $p > 1/2$, $u < 1/2$ (top left quadrant of \fref{fig:pu_pd}): \newline
+ 
+       The membrane and interface are biased towards each other and push against each other, creating a smooth interface.
+       
+ \item $p < 1/2$, $u > 1/2$ (bottom right quadrant of \fref{fig:pu_pd}): \newline
+ 
+       The mebrane and interface are biased away from each other, and so drift apart and do not interact.
+       
+ \item $p < 1/2$, $u < 1/2$ (bottom left quadrant of \fref{fig:pu_pd}; bacterial colony scenario): \newline
+ 
+       The membrane and interface are biased in the same direction, with the interface ahead and the membrane behind. In this case growth of the interface (on average) removes contacts with interface, and the membrane creates them.
+       
+ \item $ p > 1/2$, $u > 1/2$ (top right quadrant of \fref{fig:pu_pd}; original MI $p=1.0$ scenario): \newline
+ 
+       The membrane and interface are biased in the same direction, with the membrane ahead and the interface behind. In this case the growth of the interface (on average) creates contacts with the membrane, and the membrane removes them.
+\end{enumerate}
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.8\textwidth]{img/pu_phase_space.png}
+  \caption{Picture describing the the relative (average) directions of motion of the membrane and interface in $p$-$u$ phase space.}
+  \label{fig:pu_pd}
+\end{figure}
+
+The most interesting cases are 3 and 4, corresponding to both membrane and interface moving in the same direction. The key difference between the two is which piece is ahead and which piece is behind. This has significant consequences for the local structure around the points of contact between the two. 
+
+In case 4, when the interface is behind the membrane, the membrane is on average moving away from the interface, so the dynamics of the interface is the dominant process when it comes to creating contacts. Once one contact is created, further growth in the region nearby will create an extended, contiguous region of adjacent contact points (see \fref{fig:upup}).
+
+Conversely, in case 3, when the membrane is behind the interface, the dynamics of the interface are predominantly removing contacts. In this case, it is actually quite difficult to create a set of adjacent contact points, beacuse the membrane is not responsible for holding one contact point whil others join nearby. In this case, to create a contiguous region of contacts, a region of the interface has to both be closest to the interface and spontaneously align its heights before the membrane moves onto it, which is much less likely than the mechanism in case 4. Thus, in this case we expect to see only isolated points of contact with the membrane (see \fref{fig:downdown}). 
+\begin{figure}[h!]
+ \centering
+ \subfigure[][$p\gtrsim 1/2$, $u\gtrsim 1/2$]{
+  \includegraphics[width=0.7\textwidth]{img/up_up_contact.png}
+  \label{fig:upup}
+ }
+ \subfigure[][$p\lesssim 1/2$, $u\lesssim 1/2$]{
+  \includegraphics[width=0.7\textwidth]{img/down_down_contact.png}
+  \label{fig:downdown}
+ }
+ \caption{Difference in structure at contact region when (a) interface moves towards the membrane and the membrane moves away from the interface, and (b) when the membrane moves towards the interface and the interface moves away from the membrane. In case (a) it is more likely that regions of adjacent contact sites are formed due to the dynamics of the interface, wheras in case (b) it is more likely that any regions of adjacent contacts will shrink due to the dynamics of the interface.}
+\end{figure}
+
+This difference in the contact regions, between membrane-follows-interface and interface-follows-membrane, may explain why our mean-field theory correctly predicts the width scaling of $L^{1/3}$ when the membrane follows the interface, but does not predict $L^{1/2}$ for when the interface follows the membrane. When the interface follows the membrane, there are strong correlations in the heights at the contact regions. These correlations are not represented at all by our theory. In the other case, when the membrane follows the interface, these correlations are not present, and so the theory more accurately describes the dynamics in this case.
+
+% %  QUESTIONS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \newpage
+% \section{Questions?}
+% 
+% So there are a few questions we still need to answer:
+% \begin{enumerate}
+%  \item The mean-field theory prodiction of $\alpha = 1/3$ agrees well with what's seen in the regime $u = 0$, $p < 1/2$, but not so well with what's seen in the regime $p = 1.0$, $u > 1/2$ ($\alpha$ here is measured at $1/2$). Is there a fundamental difference between the two regimes? 
+%  \item Can we more accurately and precisely identify $u_1$ from simulation data?
+%  \item The plot of $\alpha$-$u$ for $p=1.0$ (\fref{fig:alpha-u}) seems to suggest that the rough phase is actually ``super-rough'' ($\alpha > 1/2$) - is this a significant measurement?
+% \end{enumerate}
+% 
+% Here are some initial responses from me:
+% \begin{enumerate}
+%  \item I've had a quick thought: the contact count $C$ was consistently 1 at $p = 0.1$. It would be interesting to see if $C=1$ at different values of $p<1/2$ when $u=0$. I say this, because for $p=1.0$, $u=0.7$, the average contact count is between 3 and 4, and my scaling analysis suggests that it is the same across the rough phase. This might be worth investigating.
+%  \item I have somem new and improved simulation data that I hope I will be able to use to improve on this.
+%  \item I have no idea!
+% \end{enumerate}
+
+%  BIBLIOGRAPHY %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\newpage\phantom{blah}
+\newpage%\phantom{blah}
+\bibliographystyle{unsrt}
+\bibliography{MI_overview}
+
+\end{document}

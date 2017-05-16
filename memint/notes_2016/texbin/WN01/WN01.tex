@@ -1,0 +1,249 @@
+\documentclass[a4paper,10pt]{article}
+%\documentclass[a4paper,10pt]{scrartcl}
+
+% PACKAGES
+
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+% SETTINGS
+
+\setlength{\parindent}{1em}
+\setlength{\parskip}{1em}
+
+\hoffset=-50pt
+\voffset=-20pt
+\textwidth=440pt
+\textheight=650pt
+
+%defaults:
+%\textheight = 592pt
+%\textwidth = 390pt
+
+% COMMANDS
+
+\newcommand{\fref}[1]{Figure \ref{#1}}
+\newcommand{\sref}[1]{Section \ref{#1}}
+
+% TITLE
+
+\title{Update From Weizmann \#1}
+\author{Justin Whitehouse}
+\date{\today}
+
+\pdfinfo{%
+  /Title    ()
+  /Author   ()
+  /Creator  ()
+  /Producer ()
+  /Subject  ()
+  /Keywords ()
+}
+
+\begin{document}
+\maketitle
+
+%\abstract{Research in collaboration with: David Mukamel, Weizmann Institute of Science, Israel; Martin Evans and Richard Blythe, University of Edinburgh}
+
+\tableofcontents
+\newpage
+
+
+% SUMMARY ================================================================
+\section{Summary}
+
+I have been working on these things since arriving here:
+
+\begin{itemize}
+ \item More simulations! (I can now run my sims on eddie3)
+ \item Understanding the velocity phase space (in terms of variables $p$, $u$).
+ \item Understanding the width exponent ($\alpha$) phase space (in terms of variables $p$, $u$).
+ \item I've spent a bit of time trying to figure out what the $L$ scaling of $\alpha$ is in the region $0 < p < 1/2$, when $u=0$.
+\end{itemize}
+
+\subsection{Velocity Phase Space}
+
+The phase space can be split into three regions (see \fref{fig:pu_space_vel}):
+\begin{enumerate}
+ \item The unbound region: the membrane and interface are unbound
+ \item The smooth region: 
+  \begin{itemize}
+   \item $p > (2u+1)/2$
+   \item here the membrane and interface are tightly bound, and move together with velocity $u$.
+  \end{itemize}
+ \item The rough region: 
+  \begin{itemize}
+   \item $p < (2u+1)/2$, $p > (4u -1)/2$
+   \item here the membrane and interface are not tightly bound, but move together with velocity $(2p-1)/4$.
+  \end{itemize}
+\end{enumerate}
+
+\subsection{Width Exponent Phase Space}
+
+The width exponent ($\alpha$) phase space has the three same regions as above (see \fref{fig:pu_space_alpha}):
+\begin{enumerate}
+ \item The unbound region (KPZ, not interesting): $\alpha = 1/2$
+ \item The smooth region: $\alpha = 0$
+ \item The rough region:
+ \begin{itemize}
+  \item $p=0$: $\alpha = 1/2$ (no interaction - KPZ)
+  \item $u=0$: crossover from $\alpha = 1/2$ at $p=0$ to $\alpha = 1/3$ for $p > 0$, although there is maybe a bit of uncertainty surrounding this $\alpha = 1/3$ measurement.
+  \item $u>0$, $p<1/2$: crossover from $\alpha=1/2$ to $\alpha = 1/3$ (like at $u=0$)
+  \item $p=1/2$: $\alpha = 1/3$ at $u\ge0$ crosses over to $\alpha=1/2$ at $u=1/2$ (becomes unbound here).
+  \item $1/2<p\le1$, $u \gtrsim 1/2$: $\alpha=1/2$ (limited evidence)
+  \item $p>1/2$, $u<1/2$: unclear at present.
+ \end{itemize}
+\end{enumerate}
+
+% Phase diagram figures page -------------------------------------------------------------------------------
+\newpage
+
+\begin{figure}[h!]
+ \centering
+ \includegraphics[height=0.4\textheight]{img/pu_space_vel.png}
+ \caption{Phase diagram for the velocity.}
+ \label{fig:pu_space_vel}
+\end{figure}
+\begin{figure}[h!]
+ \centering
+ \includegraphics[height=0.4\textheight]{img/pu_space_alpha.png}
+ \caption{Phase diagram for the width exponent $\alpha$.}
+ \label{fig:pu_space_alpha}
+\end{figure}
+\newpage
+% ---------------------------------------------------------------------------------------------------------------------
+
+% VELOCITY ================================================================
+\section{Velocity Phase Space}
+
+From the current $J$ we can obtain the velocity of the bound membrane-interface pair $v=2J$.
+
+First, we look at small values of $u$. We find that (see \fref{fig:J-p_small_u}) that while $p < (2u+1)/2$ the velocity is $v = (2p-1)/2$. In this regime the interface is pushing the membrane upwards at its velocity $(2p-1)/2$. If we increase p the velocity become limited to the velocity of the membrane. In this regime, because the membrane can effectively only move up, it's effective velocity is $u$. Thus in this regime $v=u$.
+
+This is how we deduce the boundary line which separates the smooth and rough phases in the phase diagrams above. In this region, the velocity of the membrane is $u$ and the velocity of the interface is $(2p-1)/2$. We have the smooth phase when the interface velocity is greater than the membrane velocity, when
+\begin{equation}
+ u < \frac{2p-1}{2} \;, \quad p > \frac{2u+1}{2} \;.
+\end{equation}
+To be explicit, for a given $p$ we expect a transition between the regimes at
+\begin{equation}\label{eq:u1}
+ u_1(p) = \frac{2p-1}{2} \;.
+\end{equation}
+
+\begin{figure}
+ \centering
+ \includegraphics[width=0.7\textwidth]{img/J-p_u00.png}
+ \includegraphics[width=0.7\textwidth]{img/J-p_u01.png}
+ \caption{Current against $p$ at $u=0$ and $u=0.1$. While $p < (2u+1)/2)$, $v = (2p-1)/4$. Above this, $v=u$. }
+ \label{fig:J-p_small_u}
+\end{figure}
+
+If we now look across $u$ at a fixed values of $p$ we get confirmation of these current phases (see \fref{fig:J-u_at_p}). When $u < (2p-1)/2$, $v = u$ and the velocity of the interface is limited to that of the membrane. When $u > (2p-1)/2$, $v = (2p-1)/2$, and they move together at the speed of the interface (now the membrane can take steps back towards the interface).
+
+\begin{figure}
+ \centering
+ \includegraphics[width=0.7\textwidth]{img/J-u_p06.png}
+ \includegraphics[width=0.7\textwidth]{img/J-u_p07.png}
+ \caption{Current against $u$ at $p=0.6$ and $u=0.7$. While $u < (2p-1)/2$, $v = u$. Above this, $v=(2p-1)/2$. }
+ \label{fig:J-u_at_p}
+\end{figure}
+
+We can see that the change from one velocity regime to the other is only abrupt in the case where $u=0$. In general, there is a smooth crossover. There is some evidence in the graphs to indicate that by increasing the system size the curves of the data may move closer to the predicted velocities near the transition value. I guess this would be another case of finite size scaling.
+
+What's also interesting is that although the current is $(2p-1)/2$ across the entire rough phase, the width exponent varies between regions within this phase.
+
+% WIDTH ================================================================
+\newpage
+\section{Roughness (Width) Exponent $\alpha$}
+
+We've previously done a lot of work studying the width as a function of $u$ at $p=1$. Based on some finite size scaling analysis we found that $\alpha=1/2$. We also estimated that $u_1$, the value at which the transition from smooth to rough occurs is $u_1\simeq0.6$. This is a little greater than the value $u_1(1)=1/2$ predicted by \eqref{eq:u1}.
+
+We can do a similar analysis for some other values of $p>1/2$. For example, with $p=0.75$ (see \fref{fig:W-u_p0.75}) we also find $\alpha = 1/2$ and I have estimated (by eye, from the point where the curves cross) that $u_1 \simeq 0.35$. This is also ``a bit" larger than $1/4$ as predicted by \eqref{eq:u1}.
+
+I'm not sure how to reconcile the difference in prediction and measurement of $u_1$ at the moment. With regards to the width exponent, my guess is that $\alpha=1/2$ everywhere in the rough phase where $p>1/2$ (so the red triangular region in the top right quadrant of  \fref{fig:pu_space_alpha}).
+
+% W-u
+\begin{figure}
+ \centering
+ \includegraphics[width=0.7\textwidth]{img/W-u_p075_rescale.png}
+ \includegraphics[width=0.7\textwidth]{img/W-u_p075_superrescale.png}
+ \caption{Width against $u$ for $p = 0.75$. Rescaling has been done with my guesses for the exponents, and the value of $u_1$. The $u_1$ indicated in the graph is larger than $u_1(3/4)=1/4$ predicted by \eqref{eq:u1}. }
+ \label{fig:W-u_p0.75}
+\end{figure}
+
+Looking at the bottom left quadrant of the phase diagram, we see that for small $u$ there is a crossover from $\alpha=1/2$ at $p=0$ to $\alpha=1/3$ for $0<p<1/3$, with some corrections related to the system size (see \fref{fig:W-p_u0.0} and \fref{fig:W-p_u0.1}). When $p > 1/2$ it's not yet clear what $\alpha$ is (although possibly also $1/3$ -- see top of \fref{fig:W-p_u0.1}).
+
+% W-p_u0.0
+\begin{figure}
+ \centering
+ \includegraphics[width=0.7\textwidth]{img/W-p_u000_a033.png}
+ \includegraphics[width=0.7\textwidth]{img/W-p_u000_a050.png}
+ \caption{Width against $p$, for $u=0.0$. The width is rescaled by $L^{-1/3}$ (top) and $L^{-1/2}$ (bottom). From \eqref{eq:u1} the smooth phase is expected when $p>1/2$.}
+ \label{fig:W-p_u0.0}
+\end{figure}
+
+% W-p_u0.1
+\begin{figure}
+ \centering
+ \includegraphics[width=0.7\textwidth]{img/W-p_u010_a033.png}
+ \includegraphics[width=0.7\textwidth]{img/W-p_u010_a050.png}
+ \caption{Width against $p$, for $u=0.1$. The width is rescaled by $L^{-1/3}$ (top) and $L^{-1/2}$ (bottom). From \eqref{eq:u1} the smooth phase is expected when $p>3/5$.}
+ \label{fig:W-p_u0.1}
+\end{figure}
+
+% W-u p = 1/2
+I think naively we expect $p=1/2$ to be the boundary separating the $\alpha=1/3$ and $\alpha=1/2$ regimes, as this is the boundary line between the membrane-in-front and interface-in-front regimes. The data in \fref{fig:W-p_u0.1} suggests that maybe there is some region with $p>1/2$ where $\alpha=1/3$, which would mean that we have to rethink this simple prediction.
+
+If we look at the width at $p=0.5$ (see \fref{fig:W-u_p0.5}) we see that there is a crossover from $\alpha=1/3$ at $u = 0$ to $\alpha=1/2$ at $u=0.5$ (where the unbound phase begins). \emph{I'm actually a little concerned that the $\alpha=1/2$ scaling for $u<1/2$ doesn't show up cleanly in the bottom image of \fref{fig:W-u_p0.5} -- I'll have to look into it.}
+
+\begin{figure}
+ \centering
+ \includegraphics[width=0.7\textwidth]{img/W-u_p05_a033_rescale.png}
+ \includegraphics[width=0.7\textwidth]{img/W-u_p05_a050_rescale.png}
+ \caption{Rescaled width plotted against $u$ at $p=0.5$. The width is rescaled by $L^{-1/3}$ (top) and $L^{-1/2}$ (bottom). We can see there is a crossover from $\alpha=1/3$ to $\alpha=1/2$ as $u$ is increased from $0$ to $0.5$.}
+ \label{fig:W-u_p0.5}
+\end{figure}
+
+% ALPHA (u=0) ================================================================
+\newpage
+\section{Crossover of the width exponent at $u=0$}
+
+So before I left I was thinking about how to check predictions for the scaling functions of the width along the $u=0$ line. The first update on this front is that I have obtained and processed a bit more data (see \fref{fig:alpha-p}). What was troubling was that $\alpha$ seemed to tend to a value $\alpha \sim 0.3$ for $0 <p<1/2$, and not $\alpha = 1/3$ as we expected. I've done some analysis of this exponent using subsets of the data to see how system size seems to be affecting $\alpha$.
+
+From the top image of \fref{fig:alpha-p} we see that increasing the system size seems to bring the exponent $\alpha$ down, away from $1/3$, in the region $0<p<1/2$. I've been thinking about how to do some finite size scaling analysis on this to be able to learn something useful quantitatively, but as of yet I haven't made much progress. It's a bit tricky because the standard scaling function
+\begin{equation}
+ \alpha(p) = L^{-b} f( |p-p_c|L^{a})
+\end{equation}
+doesn't seem to work very well. I need to give this some more thought.
+
+I will also mention a thought that I had about the exponent $\gamma$ in the scaling function near $p=0$:
+\begin{equation}
+ W(p,L) = L^{1/2}g(pL^\gamma) \;.
+\end{equation}
+If $g(x)\to x^{\phi}$ as $x\to\infty$, and we expect that $W\to L^{1/3}$, then 
+\begin{equation}
+ \gamma\phi = -\frac{1}{6} \;.
+\end{equation}
+Assuming $\gamma = 1/2$, which we think we can infer from the data in \fref{fig:u0_g0.6}, then $\phi = -1/3$.
+
+I've actually measured $\alpha \simeq 0.3$. If $\phi$ in the scaling function is $-1/3$, then if I've systematically underestimated $1/3$ as $0.3$, the corresponding value of $\gamma$ is $0.6$, which is the best estimate I've obtained from the data. 
+
+Thinking about this, I have thought that one possibility for this kind of systematic error may be that I haven't run the simulation for long enough. I thought I'd figured out adequate run times for the different system sizes (based on an estimate which uses $L^{3/2}$ as the scaling of the correlation time), but maybe in certain regions of the phase space this time increases more than my ``safety factor" on my run times can absorb? It's just a guess, but I think it's worth looking into. This might also explain some of the system size dependence seem in the upper image of \fref{fig:W-p_u0.0}.
+
+\begin{figure}
+ \centering
+ \includegraphics[width=0.7\textwidth]{img/alpha-p_u00_3sets.png}
+ \includegraphics[width=0.7\textwidth]{img/alpha-p_u00_3sets_superzoom_p05.png}
+ \caption{$\alpha$ against $p$, at $u=0$. $\alpha$ is estimated by preforming a linear regression of $\ln W$ against $\ln L$, for subsets of the data.}
+ \label{fig:alpha-p}
+\end{figure}
+
+\begin{figure}
+ \centering
+ \includegraphics[width=0.7\textwidth]{img/u00_pLW_data_psmallsets_g06_only_logx.png}
+ \caption{Finite size scaling was used to estimate the scaling exponent $\gamma\simeq0.60$ ($=1/2$?) when $p$ is close to $0$, for $u=0$.}
+ \label{fig:u0_g0.6}
+\end{figure}
+
+\end{document}

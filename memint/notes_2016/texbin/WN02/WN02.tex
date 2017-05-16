@@ -1,0 +1,232 @@
+\documentclass[a4paper,10pt]{article}
+%\documentclass[a4paper,10pt]{scrartcl}
+
+% PACKAGES
+
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+% SETTINGS
+
+\setlength{\parindent}{1em}
+\setlength{\parskip}{1em}
+
+\hoffset=-50pt
+\voffset=-20pt
+\textwidth=440pt
+\textheight=650pt
+
+%defaults:
+%\textheight = 592pt
+%\textwidth = 390pt
+
+% COMMANDS
+
+\newcommand{\fref}[1]{Figure \ref{#1}}
+\newcommand{\sref}[1]{Section \ref{#1}}
+
+\newcommand{\bra}[1]{\langle #1 |}
+\newcommand{\ket}[1]{| #1 \rangle}
+\newcommand{\braket}[2]{\langle #1 | #2 \rangle}
+\newcommand{\ketbra}[2]{| #1 \rangle \langle #2 |}
+
+\newcommand{\Ai}{\mathrm{Ai}}
+
+% TITLE
+
+\title{Update From Weizmann \#2}
+\author{Justin Whitehouse}
+\date{\today}
+
+\pdfinfo{%
+  /Title    ()
+  /Author   ()
+  /Creator  ()
+  /Producer ()
+  /Subject  ()
+  /Keywords ()
+}
+
+\begin{document}
+\maketitle
+
+%\abstract{Research in collaboration with: David Mukamel, Weizmann Institute of Science, Israel; Martin Evans and Richard Blythe, University of Edinburgh}
+
+\tableofcontents
+\newpage
+
+\section{Introduction}
+
+In the last few days I have been (numerically) looking at the heights distribution, in particular at $p = 0.5$. Richard recently presented an exactly solvable case for the model, which I tried to use to fit to the measured height distribution.
+
+\subsection{Summary}
+
+From Richard's solution I have derived a solution for the probability, $P(y)$, of a point on the interface having height $y$ in terms of the Airy function $\Ai(x)$ in essentially exactly these same way as we did previously for our mean-field theory. 
+
+The solution I've found can be fit quite well to the measured distribution (with enough free paramters...). I think this corroborates our numerical evidence from the width measurements for a width exponent of $1/3$ near/at $p=0.5$.
+
+Maybe in (the near?) future I will try to analyse the general case mean-field theory as perturbation/deviation from Richard's equilibrium solution (because the structure is very similar).
+
+I've quickly recapped a couple of Richard's results which I use in my analysis before giving a brief overview of what I've done.
+
+\subsection{Note about notation}
+
+Richard has used $N$ for the system size. I will instead be using $L$, to be consistent with my own notation.
+
+% RICHARD OVERVIEW ================================================================
+
+\section{Quick Overview of Richard's Solution}
+
+Richard wrote down a master equation for which a stationary solution can be found for the special parameter combination
+\begin{equation}\label{eq:special_combo}
+ \left( \frac{p}{1-p} \right)^{\frac{L}{2}} = \frac{1-u}{u} \;.
+\end{equation}
+To hold for arbitrary $u$ in the $L\to\infty$ limit, we must take
+\begin{equation}\label{eq:p-a}
+ p = \frac{1}{2} \left( 1 + \frac{a}{N} \right) \;, 
+\end{equation}
+and so \eqref{eq:special_combo} becomes
+\begin{equation}\label{eq:a-u}
+ \mathrm{e}^a = \frac{1-u}{u} \;.
+\end{equation}
+
+The stationary distribution $P(\mathcal{C},y_0)$ can be written as a matrix product
+\begin{equation}
+ P(\mathcal{C},y_0) = \frac{
+ 					\bra{y_0} \prod_{i=1}^L [\tau_i D + (1-\tau_i)E] \ket{y_0}
+                                           }
+                                           {
+                                            Z
+                                           }
+\end{equation}
+where 
+\begin{equation}
+ Z = \sum_{y_0=0}^\infty \bra{y_0} (D+E)^L \ket{y_0}
+\end{equation}
+and $\bra{y} \in \{ \bra{0}, \bra{1}, \ldots \}$ is the height basis ($\braket{y}{y'} = \delta_{y,y'}$). 
+The representation of the matrices $D$ and $E$ in this basis is
+\begin{equation}
+ \bra{y'}D\ket{y} = \begin{cases}
+                              \left( \frac{ 1-p}{p} \right)^{\frac{y-1}{2}} & y-y'=1 \\
+                              0 & \mbox{otherwise} 
+                             \end{cases}
+\end{equation}
+\begin{equation}
+ \bra{y'}E\ket{y} = \begin{cases}
+                              \left( \frac{ 1-p}{p} \right)^{\frac{y}{2}} & y-y'=-1 \\
+                              0 & \mbox{otherwise} 
+                             \end{cases}
+\end{equation}                         
+
+\section{Defining $P(y)$, Transfer Matrix, Eigenfunctions}
+
+I have defined the probability that a site picked at random has height $y$ as
+\begin{equation}
+ P(y) = \sum_{\mathcal{C}} P(\mathcal{C},y) = \frac{\bra{y}  ( D + E)^L \ket{y}}{Z} \;.
+\end{equation}
+Defining
+\begin{equation}
+ \rho = \left( \frac{ 1-p}{p} \right) \;,
+\end{equation}
+the matrix $T = (D+E)$ has the structure
+\begin{equation}
+  T = \begin{pmatrix}
+         0      & \rho^0  & 0      & 0     & 0      & \cdots \\
+         \rho^0  & 0      & \rho^1  & 0     & 0      &        \\
+         0      & \rho^1  & 0      & \rho^2 & 0      &        \\
+         0      & 0      & \rho^2  & 0     & \rho^3  &        \\
+       \vdots &        &         &        &         & \ddots \\
+      \end{pmatrix} \;,
+\end{equation}
+which as Richard has already pointed out, is very similar to the transfer matrix $T'$ we have in the $p=1$ mean-field theory:
+\begin{equation}
+  T' = \begin{pmatrix}
+         0      & c    & 0      & 0     & 0      & \cdots \\
+         q^1  & 0      & q^1  & 0     & 0      &        \\
+         0      & q^2  & 0      & q^2 & 0      &        \\
+         0      & 0      & q^3  & 0     & q^3  &        \\
+       \vdots &        &         &        &         & \ddots \\
+      \end{pmatrix} \;.
+\end{equation}
+
+Similarly to how we did it for the mean-field theory, we can define the eigenvectors of $T$ as
+\begin{equation}
+ T\ket{\phi} = \mu\ket{\phi}
+ \end{equation}
+where
+\begin{equation}
+ \ket{\phi} = \sum_{y=0}^\infty \phi_y \ket{y} \;.
+\end{equation}
+
+\subsection{Eigenfunction}
+
+Using the expressions above we can write down the recursion relations
+\begin{equation}\label{eq:recursion_bc}
+ \phi_2 = \mu \phi_0 \;,
+\end{equation}
+\begin{equation}\label{eq:recursion}
+ \rho^{y-1} \phi_{y-1} + \rho^{y} \phi_{y+1} = \mu \phi_y \;, \quad y > 0 \; .
+\end{equation}
+Maybe we could find a solution from this for $\phi_y$ (perhaps in terms of Chebyshev polynomials, but I'm going to make a continuum approximation, as we did previously.
+
+With $p = (1/2)(1 + a/L)$, we find that $\rho \simeq 1 - 2a/L$, so we can write $\rho = 1 - \epsilon$, with $\epsilon \ll 1$ (same as $q \simeq 1- \epsilon$ in earlier work). We make the expansion
+\begin{equation}
+ \phi_{y\pm1} \simeq \phi(y) \pm \phi'(y) + \frac{1}{2} \phi''(y) + \mbox{ h.o.t}\;,
+\end{equation}
+to find
+\begin{equation}
+ (3 - \mu - 2y\epsilon)\phi(y) + \phi''(y) = 0  \mbox{ ( $+$ h.o.t)}\;,
+\end{equation}
+
+This is essentially the same differential equation we found in our earlier mean-field theory. The boundary condition can only be satisfied with $\mu - 3 = \delta$, with $\delta \ll 1$. We map the equation onto Airy's equation, and find
+\begin{equation}\label{eq:phi(y)}
+ \phi(y) = c \; \Ai[ (y + b)(2\epsilon)^{1/3} + z_0] \;, \quad \Ai[z_0] = 0 \;,
+\end{equation}
+where $b$ and $c$ are constants.
+
+\subsection{Probability Distribution}
+
+From \eqref{eq:phi(y)} we can write
+\begin{equation}
+ P(y) = \frac{\Ai[ (y + b)(2\epsilon)^{1/3} + z_0] ^2}{Z} \;, 
+\end{equation}
+where
+\begin{equation}
+ Z = \int_0^\infty \mathrm{d}x \; \Ai[(x + b)(2\epsilon)^{1/3} + z_0] ^2 \;.
+\end{equation}
+
+\section{Fit to data}
+
+We can rewrite $P(y)$ as
+\begin{equation}\label{eq:P(y)}
+ P(y) = \frac{(2\epsilon)^{1/3}\Ai[ (y + b)(2\epsilon)^{1/3} + z_0] ^2}{Z} \;, 
+\end{equation}
+where
+\begin{equation}
+ Z = \int_{b(2\epsilon)^{1/3} + z_0}^\infty \mathrm{d}z \; \Ai[z] ^2 \;.
+\end{equation}
+To see how this solution compares to data, I will (not very precisely or rigorously) fit this function to some height distribution data obtained for $p=0.5$, through the parameters $Z$ and $b$. By choosing $u$ and knowing the system size $L$ I can set $\epsilon = 2a/L$ and set $a$ by using $a = \ln( (1-u)/u)$.
+
+Plotted in \fref{fig:Airy_2fit} we can see that the distribution in \eqref{eq:P(y)} has roughly the right shape, but a good fit cannot be obtained using $Z$ and $b$ alone. Fitting using $\epsilon$ as well allows us to obtain quite a good fit (\fref{fig:Airy_3fit}).
+
+A quick observation: in \fref{fig:Airy_2fit} I used $\epsilon = 2a/L$, with $a = \ln((1-u)/u)$, $u=0.4$ and $L=1024$. This gives $\epsilon = 7.92\times10^{-4}$, which is approximately twice the value for which the fit was obtained. (it would be nice if it turns out I got a factor of two wrong somewhere and that we can fit this with just the two parameters $Z$ and $b$.)
+
+A second quick observation: with $u=0.4$, $L = 1024$, the corresponding value of $p$ according to \eqref{eq:special_combo} is $p = 0.50020$.
+
+\begin{figure}
+ \centering
+ \includegraphics[width=0.7\textwidth]{img/hd_l10p05u04_AiryZ06b-2.png}
+ \caption{Attempt at a fit of the height distribution for $p=0.5$, $u = 0.4$ using $Z$ and $b$ (values chosen by eye).}
+ \label{fig:Airy_2fit}
+\end{figure}
+
+\begin{figure}
+ \centering
+ \includegraphics[width=0.7\textwidth]{img/hd_l10p05u04_AiryZ05b1e00004.png}
+ \caption{Attempt at a fit of the height distribution for $p=0.5$, $u=0.4$ using $Z$, $b$ and $\epsilon$ (values chosen by eye).}
+ \label{fig:Airy_3fit}
+\end{figure}
+
+\end{document}

@@ -1,0 +1,1227 @@
+\documentclass[a4paper,10pt]{article}
+%\documentclass[a4paper,10pt]{scrartcl}
+
+% PACKAGES 
+
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+% \usepackage{bbold}
+\usepackage{graphicx}
+\usepackage{bbm}
+
+% SETTINGS
+
+\setlength{\parindent}{1em}
+\setlength{\parskip}{1em}
+
+\hoffset=-50pt
+\textwidth=440pt
+
+% COMMANDS 
+
+\newcommand{\pone}{P(1)}
+\newcommand{\pzero}{P(0)}
+\newcommand{\py}{P(y)}
+
+\newcommand{\wone}{w(1)}
+\newcommand{\wzero}{w(0)}
+\newcommand{\wy}{w(y)}
+
+\newcommand{\I}{\mathbbm{I}}
+%\newcommand{\I}{\mathcal{I}}
+\newcommand{\D}{\mathrm{d}}
+\newcommand{\e}{\mathrm{e}}
+\newcommand{\Or}{\mathcal{O}}
+\newcommand{\dL}{\frac{d}{L}}
+\newcommand{\OL}{\Or\left(\frac{1}{L}\right)}
+\newcommand{\OLL}{\Or\left(\frac{1}{L^2}\right)}
+
+\newcommand{\bra}[1]{\langle #1 \vert}
+\newcommand{\ket}[1]{\vert #1 \rangle}
+\newcommand{\braket}[2]{\langle #1 \vert #2 \rangle}
+
+\newcommand{\Ai}{\mathrm{Ai}}
+
+\title{Mean-Field Theory in the General Case}
+\author{Justin Whitehouse}
+\date{\today}
+
+\pdfinfo{%
+  /Title    ()
+  /Author   ()
+  /Creator  ()
+  /Producer ()
+  /Subject  ()
+  /Keywords ()
+}
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+\section{Introductory Remarks}
+
+\begin{itemize}
+ \item I have put full calculations in appendices and tried present the calculations more succinctly in the main text (with some comments).
+\end{itemize}
+
+
+\section{Master Equation}
+
+\begin{eqnarray}\label{eq:MASTER}
+  \frac{\partial P(y)}{\partial t} & = & u \bigg[ P(y-1) \I_{y>0} - P(y) \bigg] \nonumber \\
+				   & + & (1-u)[1-\pzero]^L \bigg[ P(y+1)  - P(y) \I_{y>0} \bigg] \nonumber \\
+				   & + & \frac{p}{4} \bigg[ P(y+2) - P(y) \I_{y>1} \bigg] \nonumber \\
+				   & + & \frac{(1-p)}{4} \bigg[ P(y-2) \I_{y>1} - P(y) \bigg] \;.
+\end{eqnarray}
+The lines of the right-hand side of the equation represent:
+\begin{enumerate}
+ \item membrane moves up (probability $u$)
+ \item membrane moves down (probability $1-u$)
+ \item particle moves forwards, interface grows up (probability $p$)
+ \item particle moves backwards, interface grows down (probability $1-p$)
+\end{enumerate}
+The factor $1/4$ comes from the TASEP maximal current $\rho(1-\rho)$ when the density is $1/2$. The factor $[1-\pzero]^L$ describes the probability that all sites have $y>0$. $\I_X$ is an indicator function, defined as:
+\begin{equation}
+  \I_X = \begin{cases}
+	    1 \;, & X\mbox{ is true.} \\
+	    0 \;, & X\mbox{ is false.}
+         \end{cases}
+\end{equation}
+
+
+\section{Generating Function}
+
+Define the generating function
+\begin{equation}\label{eq:G_DEFN}
+ G(z) = \sum_{y=0}^{\infty}z^y P(y) \;. 
+\end{equation}
+In the steady state, $\partial P(y)/\partial t = 0$. Using this, the generating function \eqref{eq:G_DEFN} and the master equation \eqref{eq:MASTER} we find
+\begin{equation}
+  G(z) = \frac{ - \left[ pP(1) z^2 + \{ pP(1) + (b+p)P(0) \}z + pP(0) \right] }{ \left[ (1-p)z^3 + (a + 1 - p)z^2 - (b+p) z - p \right] } \;,
+\end{equation}
+where
+\begin{equation}\label{eq:ab_defn}
+  a = 4u \;, \quad b = 4(1-u)(1-P(0))^L \;,
+\end{equation}
+and in the rough phase $b \to (1-u)$ as $L \to \infty$. (And in the smooth phase $b \to 0$ as $L \to \infty$?)
+
+By setting $p=1$ we find
+\begin{equation}
+  G(z) = \frac{ - \left[ P(1) z^2 + \{ P(1) + (b+1)P(0) \}z + P(0) \right] }{ \left[ a z^2 - (b+1) z - 1 \right] } \;,
+\end{equation}
+as was found for the master equation for the $p=1$ case studied previously.
+
+\subsection{Finding the Probability Distribution}
+
+We have the following expression for the generating function:
+\begin{equation}
+  G(z) = \frac{
+	       - \left[ p P(1) z^2 + (pP(1) + (b+p)P(0))z + pP(0) \right] 
+              }
+              {
+               \left[ (1-p)z^3 +(a + 1 -p) z^2 (b+p)z -p \right]
+              } \;.
+\end{equation}
+The cubic in the denominator makes it difficult to solve. We assign a function to the denominator:
+\begin{equation}
+  h(z) = (1-p)z^3 +(a + 1 -p) z^2 (b+p)z -p \;.
+\end{equation}
+This cubic function $h(z)$ has three real roots\footnote{Do these roots become complex for certain parameter values?} $z_+$, $z_-$ and $z_p$, such that 
+\begin{equation}
+  z_+ > 0 \;,
+\end{equation}
+\begin{equation}
+  z_p < z_- < 0 \;,
+\end{equation}
+and
+\begin{equation}
+  |z_p| > |z_+| > |z_-| \;. 
+\end{equation}
+$z_+$ and $z_-$ correspond to the two roots of the same name of the quadratic in the $p=1$ case. In the limit $p\to1$ the root $z_p$ must disappear as $h(z)$ become a cubic. We can see then that $z_p \sim -a/(1-p)$, such that the order $1/(1-p)^2$ terms in $h(z)$ cancel. 
+% {\bf (NOTE: I need to make this analysis more concrete.)}
+
+Importantly, because we still have $|z_-| < |z_+|$, the pole at $z_-$ is still closer to the origin and dominates the integral of $G(z)$ which describes $P(y)$. Thus, as in the $p=1$ case, we must cancel a factor $(z-z_-)$ from top and bottom. Conversely, the pole $z_p$ is further from the origin that $z_+$, because $|z_p| > |z_+|$, and so this pole (with negative real part) does not dominate the same integral, so does not need to be cancelled. 
+% {\bf (NOTE: are we sure $|z_p| > |z_+|$? I'm pretty confident - see graph.)}
+
+\begin{figure}[h!]
+ \centering
+ \includegraphics[width=0.7\textwidth]{cubic/p00/p00_cubic_roots.png}
+ \caption{When $p=0$, $|z_p|>|z_+|$ across the range $u = 0 $ to $1$. Also, $z_- = 0$ (or at least $z_- \simeq 0$).}
+ \label{fig:p00_cubic_roots}
+\end{figure}
+
+
+So now we can write
+\begin{equation}
+  h(z) = (1-p)(z-z_-)(z-z_+)(z-z_p)\;, 
+\end{equation}
+and the numerator of $G(z)$ can be written as
+\begin{equation}
+  - \left[ pP(0) z^2 + \left( pP(1) + (b+p)P(0) \right) z + pP(0) \right] = -(Az+B)(z-z_-) \;.
+\end{equation}
+Immediately from this we can write
+\begin{equation}
+  A = pP(1) \;, 
+\end{equation}
+and
+\begin{equation}
+  B = -\frac{pP(0)}{z_-} \;,
+\end{equation}
+which will be useful later.
+
+Now, coming back to the generating function, we can write $G(z)$ as 
+\begin{equation}
+  G(z) = - \frac{(Az + B)}{(1-p)(z-z_+)(z-z_p)} \;.
+\end{equation}
+To find an expression for $P(y)$ we will try to rewrite $G(z)$ as a sum of powers of $z$. To begin, we factorise out $-z_+$, $-z_p$, to find
+\begin{eqnarray}
+  G(z) &=& - \frac{(Az + B)}{(1-p)z_+z_p(1-z/z_+)(1-z/z_p)} \nonumber \\
+       &=& - \frac{(Az + B)}{(1-p)z_+z_p} \sum_{l=0}^\infty \left(\frac{z}{z_+}\right)^l \sum_{m=0}^\infty \left(\frac{z}{z_p}\right)^m \;. 
+\end{eqnarray}
+Using the substitution $n=l+m$ and by rearranging the sums we find
+\begin{eqnarray}
+  G(z) &=& - \frac{(Az + B)}{(1-p)z_+z_p} \sum_{n=0}^\infty \frac{z^n}{z_p^n} \sum_{l=0}^n \left(\frac{z_p}{z_p}\right)^l \;.
+\end{eqnarray}
+We then evaluate the geometric sum over $l$ to find
+\begin{equation}
+ G(z) = - \frac{(Az + B)}{(1-p)z_+z_p} \sum_{n=0}^\infty \frac{z^n}{z_p^n} \left[ \frac{ (z_p/z_+)^{n+1} -1 }{(z_p/z_+) - 1} \right] \;.
+\end{equation}
+
+We want to find the coefficients of $z^n$ to find the values of $P(n)$. To do this we first multiply through by $(Az + B)$:
+\begin{equation}
+ G(z) = - \frac{1}{(1-p)z_+z_p} \sum_{n=0}^\infty \frac{Az^{n+1} + Bz^n}{z_p^n} \left[ \frac{ (z_p/z_+)^{n+1} -1 }{(z_p/z_+) - 1} \right] \;,
+\end{equation}
+and then relabel the $n\to n-1$ in the ``$A$'' sum:
+\begin{eqnarray}
+ G(z) = - \frac{1}{(1-p)z_+z_p}  & & \left\{ \sum_{n=1}^\infty \frac{Az^n}{z_p^{n-1}} \left[ \frac{ (z_p/z_+)^n -1 }{(z_p/z_+) - 1} \right] \right. \nonumber \\ 
+                                 & & +\left. \sum_{n=0}^\infty \frac{Bz^n}{z_p^n} \left[ \frac{ (z_p/z_+)^{n+1} -1 }{(z_p/z_+) - 1} \right] \right\} \;.
+\end{eqnarray}
+Next, pull out the $n=0$ term and combine the sums, to get
+\begin{eqnarray}
+ G(z) &=& -\frac{1}{(1-p)z_+z_p} Bz^0 
+        - \sum_{n=1}^\infty\frac{ z^n}{(1-p)(z_p-z_+)} \left( \frac{Az_++B}{z_+^{n+1}} - \frac{Az_p+B}{z_p^{n+1}} \right) \;.
+\end{eqnarray}
+
+From this we see that
+\begin{equation}
+ P(0) = - \frac{B}{(1-p)z_+z_p} \;,
+\end{equation}
+and, for $n>0$, 
+\begin{equation}
+ P(n) = \frac{ 1}{(1-p)(z_p-z_+)} \left( \frac{Az_++B}{z_+^{n+1}} - \frac{Az_p+B}{z_p^{n+1}} \right) \;. 
+\end{equation}
+From the expression for $P(0)$ we have
+\begin{equation}
+  B = -(1-p)z_+z_pP(0) \;,
+\end{equation}
+and from earlier we have
+\begin{equation}
+  A = pP(1) \;.
+\end{equation}
+We can use these to calculate
+\begin{eqnarray}
+ Az_{+,p}+B &=& z_{+,p} (pP(1) - (1-p)z_{p,+}P(0) ) \;.
+\end{eqnarray}
+Substituting back in to the expression for $P(n)$, $n>0$ we find
+\begin{eqnarray}
+ P(n) &=& -\frac{1}{(1-p)(z_p-z_+)} \left( \frac{pP(1)(z_p^n-z_+^n) -(1-p)P(0)(z_p^{n+1} -z_+^{n+1})}{z_+^n z_p^n} \right) \;.
+\end{eqnarray}
+
+By setting $n=1$ we can solve self-consistently for $P(1)$:
+\begin{eqnarray}
+ P(1) &=& -\frac{P(1)}{(1-p)z_p z_+} + \frac{P(0)(z_p +z_+)}{z_pz_+} \;,
+\end{eqnarray}
+and so by rearranging we find
+\begin{equation}
+ P(1) = \frac{(1-p)(z_p + z_+)}{z_+ z_p (1-p) - p} P(0) \;.
+\end{equation}
+
+Now we substitute the expression for $P(1)$ back in to the expression for $P(n)$ to find
+\begin{equation}
+  P(n) = -\frac{P(0)}{z_+^n z_p^n(z_p-z_+)} \left( \frac{p(z_p^n-z_+^n)(z_p+z_+)}{z_+z_p(1-p) + p} -(z_p^{n+1} -z_+^{n+1}) \right) \;. 
+\end{equation}
+We can simplify a bit, using
+\begin{equation}
+ p(z_p^n-z_+^n)(z_p+z_+) = pz_p^{n+1} - pz_+^{n+1} -pz_pz_+^n + pz_+z_p^n \;, 
+\end{equation}
+and 
+\begin{equation}
+ -(z_p^{n+1} -z_+^{n+1}) (z_+z_p(1-p) + p) = -pz_p^{n+1} + pz_+^{n+1} - (1-p) z_+z_p^{n+2} + (1-p)z_pz_+^{n+2} \;,
+\end{equation}
+to find
+\begin{equation}
+  P(n) = -\frac{P(0)}{z_+^n z_p^n(z_p-z_+)} \left( \frac{-pz_pz_+^n + pz_+z_p^n - (1-p) z_+z_p^{n+2} + (1-p)z_pz_+^{n+2}}{(z_+z_p(1-p) + p)} \right) \;. 
+\end{equation}
+Finally, rearrange to find
+\begin{equation}\label{eq:gen_soln}
+  P(n) = \frac{P(0)}{z_+^{n-1} z_p^{n-1}(z_p-z_+)} \left( \frac{ (1-p) [z_p^{n+1} - z_+^{n+1}] - p[  z_p^{n-1} - z_+^{n-1}]}{(z_+z_p(1-p) + p)} \right) \;. 
+\end{equation}
+
+\subsection{Recovering $p=1$ equation}
+
+We now outline how to recover the $p=1$ solution:
+\begin{equation}
+ P(n) = \frac{P(0)}{1+z_-} z_+^{-n} \;, \quad n > 0 \;.
+\end{equation}
+
+To begin, we use the two expressions for $B$:
+\begin{equation}
+  B = -(1-p)z_pz_+P(0) \;, \quad B = -\frac{p}{z_-}P(0) \;,
+\end{equation}
+to define
+\begin{equation}
+  \alpha_p = (1-p)z_p = \frac{p}{z_-z_+} \;.
+\end{equation}
+Importantly, $\alpha_p$ remains finite as $p\to 1$, because $z_p \sim (1-p)^{-1}$. For convenience, we define
+\begin{equation}
+  \alpha_1 = \frac{1}{z_-z_+} \;.
+\end{equation}
+Using this we rewrite \eqref{eq:gen_soln} in terms of $\alpha_p$ and powers of $z_p^{-1}$:
+\begin{equation}
+ P(n) = \frac{P(0)}{z_+^{n-1}} \left\{
+                                \frac
+                                {
+                                  \left( \alpha_p - (1-p)z_+^{n+1}z_p^{-n}) \right) - p \left( z_p^{-1} - z_+^{n-1}z_p^{-(n-1)} \right)
+                                }
+                                {
+                                  \left( z_+ \alpha_p + p \right) \left( 1 - z_+ z_p^{-1} \right)
+                                }
+                               \right\}
+\end{equation}
+Next, we informally take the limit $p\to1$ by setting all terms with powers of $z_p^{-1}$ to zero to find
+\begin{equation}
+  P(n) = \frac{P(0)}{z_+^{n-1}} \frac{\alpha_1}{(z_+ \alpha_1 + 1)} \;.
+\end{equation}
+Finally, we substitute in the expression for $\alpha_1$ in terms of $z_\pm$ to find
+\begin{equation}
+  P(n) = \frac{P(0)}{(1+z_-)} \frac{1}{z_+^n} \;,
+\end{equation}
+as required.
+
+\subsection{Further Simplification}
+
+The root $z_p$ is problematic because it diverges as $p\to1$ as $(1-p)^{-1}$. Using the two definitions of $B$ from \eqref{eq:B1_app} and \eqref{eq:B2_app} we can define
+\begin{equation}\label{eq:alpha_p_defn_app}
+  \alpha_p = (1-p)z_p = \frac{p}{z_+z_-} \;.
+\end{equation}
+Unlike $z_p$, as $p\to 1$, $\alpha_p$ remains finite. We can also define
+\begin{equation}
+  x_p = \frac{z_+}{z_p} \;, \quad x_p < 1 \;, \quad |x_p| < 1 \;, 
+\end{equation}
+which has the useful property that $x_p \to 0$ as $p\to 1$. {\bf (NOTE: I think I've made assumption about what $z_+$ does as $p\to 1$, which I haven't justified...)} The aim is to replace all instances of $z_p$ with $\alpha_p$ or $x_p$.
+We can now write $P(n)$ in terms of these new variables:
+\begin{equation}\label{eq:gen_soln_2}
+  P(n) = \frac{P(0)}{z_+^{n-1}} \left( \frac{ \alpha_p^{2}[1 - x_p^{n+1}] - p  (1-p) [ 1 - x_p^{n-1}]}{ \alpha_p(1-x_p)(z_+\alpha_p + p)} \right) \;. 
+\end{equation}
+When $n$ is large, the terms $x_p^n \to 0$, and so we see that
+\begin{equation}
+  P(n) \simeq P(0) z_+ \left( \frac{ \alpha_p^{2} - p  (1-p) }{ \alpha_p(z_+\alpha_p + p)} \right) \frac{1}{z_+^{n}} \;. 
+\end{equation}
+
+This is useful because it shows that for large $n$, the transfer matrix has approximately the same structure as the $p=1$ case, albeit with a different-but-related multiplying factor. The structure of the transfer matrix is the important part for getting the width exponent $1/3$.
+
+
+We can reintroduce $z_p$ to \eqref{eq:gen_soln_2} to find an expression for $P(n)$ as a sum of exponentials. We rearrange the $x_p$ terms and multiply through the $z_+^{-(n-1)}$ term to find
+\begin{equation}\label{eq:gen_soln_3}
+  P(n) = \frac{P(0)}{ \alpha_p(1-x_p)(z_+\alpha_p + p)} \left( \frac{[\alpha_p^{2}-p(1-p)]}{z_+^{n-1}} + \frac{[ p(1-p) - \alpha_p^2 x_p^2]}{z_+^{n-1}}  \right) \;. 
+\end{equation}
+
+
+\section{Transfer Matrix}
+
+\subsection{Definition}
+
+We want to use the solution for $P(n)$ above to give us equations for the statistical weights of heights $n$ in the interface, and then from this build a transfer matrix which selects only interface configurations where the heights between adjacent neighbours differ by exactly 1. 
+
+We take \eqref{eq:gen_soln_3} and rewrite with weights, as
+\begin{equation}
+  w(n) = w(0) \theta_p \left( \frac{Q_p}{z_+^{n}} + \frac{R_p}{z_p^{n}}  \right) \;, \quad n > 0 \;,
+\end{equation}
+where
+\begin{equation}
+ \theta_p = \frac{1}{ \alpha_p(1-x_p)(z_+\alpha_p + p)} \;, 
+\end{equation}
+\begin{equation}
+  Q_p = z_+[\alpha_p^{2}-p(1-p)] \;,
+\end{equation}
+and
+\begin{equation}
+  R_p = z_p[ p(1-p) - \alpha_p^2 x_p^2] \;. 
+\end{equation}
+We also introduce the definitions
+\begin{equation}
+  q = \frac{1}{z_+} \;, \quad q > 0 \;, \quad |q| < 1 \;, 
+\end{equation}
+and
+\begin{equation}
+  r = \frac{1}{z_p} \;, \quad r < 0 \;, \quad |r| < |q|< 1 \;,
+\end{equation}
+to write
+\begin{equation}
+  w(n) = w(0) \theta_p Q_p \left( q^n + \frac{R_p}{Q_p} r^n  \right) \;, \quad n > 0 \;.
+\end{equation}
+using this we define the transfer matrix:
+\begin{equation}
+  T = \begin{pmatrix}
+       0      & w(0)   & 0      & 0      & 0      & \cdots \\
+       w(1)   & 0      & w(1)   & 0      & 0      &        \\
+       0      & w(2)   & 0      & w(2)   & 0      &        \\
+       0      & 0      & w(3)   & 0      & w(3)   &        \\
+       \vdots &        &        &        &        & \ddots \\
+      \end{pmatrix} \;, 
+\end{equation}
+which can be written as
+\begin{equation}
+  T  = w(0) \theta_p Q_p \left[ T_q + \frac{R_p}{Q_p} T_r \right] \;,
+\end{equation}
+where
+\begin{equation}
+  T_q = \begin{pmatrix}
+         0      & (\theta_p Q_p)^{-1} & 0      & 0      & 0      & \cdots \\
+         q      & 0                   & q      & 0      & 0      &        \\
+         0      & q^2                 & 0      & q^2    & 0      &        \\
+         0      & 0                   & q^3    & 0      & q^3    &        \\
+         \vdots &                     &        &        &        & \ddots \\
+        \end{pmatrix} \;,
+\end{equation}
+and
+\begin{equation}
+  T_r = \begin{pmatrix}
+         0      & 0     & 0      & 0      & 0      & \cdots \\
+         r      & 0     & r      & 0      & 0      &        \\
+         0      & r^2   & 0      & r^2    & 0      &        \\
+         0      & 0     & r^3    & 0      & r^3    &        \\
+         \vdots &       &        &        &        & \ddots \\
+        \end{pmatrix} \;.
+\end{equation}
+\emph{As a quick aside:} we could also write $T_r$ as
+\begin{equation}
+  T_r = \begin{pmatrix}
+         0      & 0     & 0      & 0      & 0      & \cdots \\
+         -|r|      & 0     & -|r|      & 0      & 0      &        \\
+         0      & |r|^2   & 0      & |r|^2    & 0      &        \\
+         0      & 0     & -|r|^3    & 0      & -|r|^3    &        \\
+         \vdots &       &        &        &        & \ddots \\
+        \end{pmatrix} \;,
+\end{equation}
+which may give us some useful physical insight. ($T_r$ represents an increase in probabilities of occupying even heights (except 0), and a decrease in probability of occupying odd heights?)
+
+For convenience we can redefine $T$ without the multiplying factor $w(0)\theta_p Q_p$:
+\begin{equation}
+  T = \left[ T_q + \frac{R_p}{Q_p} T_r \right] \;.
+\end{equation}
+
+\subsubsection{Recovering $p=1$ Transfer Matrix}
+
+To make the connection back to our previous work, we can show that it is straightforward to recover the $p=1$ transfer matrix:
+\begin{equation}\label{eq:T}
+  T = \begin{pmatrix}
+       0      & (1+z_-)& 0      & 0      & 0      & \cdots \\
+       q      & 0      & q      & 0      & 0      &        \\
+       0      & q^2    & 0      & q^2    & 0      &        \\
+       0      & 0      & q^3    & 0      & q^3    &        \\
+       \vdots &        &        &        &        & \ddots \\
+      \end{pmatrix} \;.
+\end{equation}
+
+To begin notice that for $p=1$, $R_1 = 0$. Next, using the definition of $\alpha_p$ in \eqref{eq:alpha_p_defn_app}, we see that 
+\begin{equation}
+  \theta_1 = \frac{z_+ z_-^2}{z_-+1} 
+\end{equation}
+and
+\begin{equation}
+ Q_1 = \frac{1}{z_+z_-^2} \;.
+\end{equation}
+Thus, the element $(T_q)_{0,1} = (\theta_p Q_p)^{-1}$ becomes
+\begin{equation}
+ (\theta_1 Q_1)^{-1}= \frac{z_-+1}{z_+ z_-^2} \frac{z_+z_-^2}{1} = (z_- + 1) \;, 
+\end{equation}
+and $T_q = T$ in \eqref{eq:T}. 
+
+
+\subsection{Eigenvectors}
+
+By defining the basis vectors
+\begin{equation}
+  \bra{n} \;, \quad \ket{n} \;, \quad n = 0,1,2,3,\ldots 
+\end{equation}
+and the eigenvectors
+\begin{equation}
+ T \ket{\phi} = \mu \ket{\phi}\;, 
+\end{equation}
+\begin{equation}
+ \bra{\psi} T = \mu \bra{\psi} \;, 
+\end{equation}
+where $\mu$ is the largest eigenvalue (largest real part), we can write a partition sum 
+\begin{equation}
+  Z = \sum_{n=0}^\infty \bra{n} T^L \ket{n} \simeq  \mu^L \sum_{n=0}^\infty \braket{n}{\phi}\braket{\psi}{n}
+\end{equation}
+and similarly the height distribution
+\begin{equation}
+  P(n) = \frac{ \bra{n} T^L \ket{n} }{Z} \simeq \frac{ 
+               \braket{n}{\phi}\braket{\psi}{n}
+              }
+              {
+               \sum_{n'=0}^\infty \braket{n'}{\phi}\braket{\psi}{n'} \;. 
+              }\;,
+\end{equation}
+for large $L$. We also define
+\begin{eqnarray}
+ \bra{\phi} &=& \sum_{n=0}^\infty \phi_n \bra{n} \;, \nonumber \\
+ \ket{\psi} &=& \sum_{n=0}^\infty \psi_n \ket{n} \;,
+\end{eqnarray}
+and see that
+\begin{equation}
+  P(n) = \frac{ 
+               \phi_n\psi_n
+              }
+              {
+               \sum_{n'=0}^\infty \phi_n' \psi_n' \;. 
+              }
+\end{equation}
+
+
+
+\subsubsection{Recursion relations for coefficients $\phi_n$, $\psi_n$}
+
+To calculate the distribution $P(n)$ we need to find the eigenfunctions $\phi_n$, $\psi_n$. Using the equations
+\begin{equation}
+ T\ket{\phi} = \left[ T_q + \frac{R_p}{Q_p} T_r \right] \ket{\phi} = \mu \ket{\phi}
+\end{equation}
+and
+\begin{equation}
+ \bra{\psi}T = \bra{\psi}\left[ T_q + \frac{R_p}{Q_p} T_r \right]= \mu \bra{\phi}
+\end{equation}
+we can find recursion relations for both. 
+
+For the right eigenvector we have a boundary equation
+\begin{equation}
+ \frac{1}{\theta_p Q_p} \phi_1 = \mu \phi_0 \;, 
+\end{equation}
+and for $n>0$
+\begin{equation}
+ \left( q^n + \frac{R_p}{Q_p} r^n \right) \left( \phi_{n-1} + \phi_{n+1} \right) = \mu \phi_n \;. 
+\end{equation}
+
+For the left eigenvector we have two boundary terms
+\begin{equation}
+ \left( q + \frac{R_p}{Q_p} r \right) \psi_1 = \mu \psi_0 
+\end{equation}
+and
+\begin{equation}\label{eq:left_2nd_boundary}
+ \frac{1}{\theta_p Q_p} \psi_0 + \left( q^2 + \frac{R_p}{Q_p} r^2 \right) \psi_2= \mu \psi_1 \;, 
+\end{equation}
+and for $n > 1$ we have
+\begin{equation}\label{eq:left_recursion}
+ \left( q^{n-1} + \frac{R_p}{Q_p} r^{n-1} \right) \psi_{n-1} + \left( q^{n+1} + \frac{R_p}{Q_p} r^{n+1} \right) \psi_{n+1} = \mu \psi_n \;. 
+\end{equation}
+
+Actually, one can show that
+\begin{equation}
+  \frac{1}{\theta_p} = Q_p + R_p \;.
+\end{equation}
+This means that for $\psi_n$ the second boundary equation \eqref{eq:left_2nd_boundary} can be rewritten as
+\begin{equation}
+  \left( 1 + \frac{R_p}{Q_p} \right) \psi_0 + \left( q^2 + \frac{R_p}{Q_p} r^2 \right) \psi_2= \mu \psi_1 \;, 
+\end{equation}
+which is actually consistent with the general recursion relation \eqref{eq:left_recursion}, and so it is not a boundary term after all. Thus, the left eigenfunction satisfies
+\begin{equation}
+ \left( q^{n-1} + \frac{R_p}{Q_p} r^{n-1} \right) \psi_{n-1} + \left( q^{n+1} + \frac{R_p}{Q_p} r^{n+1} \right) \psi_{n+1} = \mu \psi_n \;,
+\end{equation}
+for $n>0$, with the boundary condition
+\begin{equation}
+ \left( 1 + \frac{R_p}{Q_p} \right) \psi_1 = \mu \psi_0 \;.
+\end{equation}
+Also, the boundary condition for the right eigenfunction can be expressed as
+\begin{equation}
+  \left( 1 + \frac{R_p}{Q_p} \right) \phi_1 = \mu \phi_0 \;. 
+\end{equation}
+
+\subsubsection{SUMMARY: Recursion relations}
+
+{\bf To be clear, we have:}
+\begin{equation}
+ \left( q^n + \frac{R_p}{Q_p} r^n \right) \left( \phi_{n-1} + \phi_{n+1} \right) = \mu \phi_n \;,
+\end{equation}
+for $n>0$, with the boundary condition
+\begin{equation}
+  \left( 1 + \frac{R_p}{Q_p} \right) \phi_1 = \mu \phi_0 \;,
+\end{equation}
+for the right eigenfunction, and for the left eigenfunction we have
+\begin{equation}
+ \left( q^{n-1} + \frac{R_p}{Q_p} r^{n-1} \right) \psi_{n-1} + \left( q^{n+1} + \frac{R_p}{Q_p} r^{n+1} \right) \psi_{n+1} = \mu \psi_n \;,
+\end{equation}
+for $n>0$, with the boundary condition
+\begin{equation}
+ \left( 1 + \frac{R_p}{Q_p} \right) \psi_1 = \mu \psi_0 \;.
+\end{equation}
+{\bf (NOTE TO SELF: maybe define $f_n = q^n + (R_p/Q_p)r^n$ for convenience?)}
+
+\emph{[ WORK IN PROGRESS: next steps: 1. continuum approximation, 2. Airy function solution? 3. $L$ scaling? ]}
+
+\subsubsection{Consistency with $p=1$}
+
+How the general $p$ recursion relations above are consistent with those found for $p=1$ is not obvious at a glance. To see that they are, we need to consider $R_p/Q_p$ and $r$.
+
+First, when $p=1$, $R_p/Q_p = z_-$, which means that
+\begin{equation}
+  1 + \frac{R_1}{Q_1} = 1 + z_- \;. 
+\end{equation}
+Second: $r = r_p = z_p^{-1}$. As $p\to1$, $z_p$ diverges, and so $r\to 0$. Now we use these results with the recursion relations above. First, the right eigenfunction:
+\begin{eqnarray}
+  \left( q^n + \frac{R_1}{Q_1} r_1^n \right) \left( \phi_{n-1} + \phi_{n+1} \right) &=& \mu \phi_n \nonumber \\
+  \left( q^n + z_- (0)^n \right) \left( \phi_{n-1} + \phi_{n+1} \right) &=& \mu \phi_n \nonumber \\
+  q^n  \left( \phi_{n-1} + \phi_{n+1} \right) &=& \mu \phi_n \;, 
+\end{eqnarray}
+for $n>0$ with the boundary condition
+\begin{eqnarray}
+ \left( 1 + \frac{R_1}{Q_1} \right) \phi_1 &=& \mu \phi_0 \nonumber \\
+ \left( 1 + z_- \right) \phi_1 &=& \mu \phi_0 \;.
+\end{eqnarray}
+Second, the left eigenfunction:
+\begin{eqnarray}
+ \left( q^{n-1} + \frac{R_1}{Q_1} r-1^{n-1} \right) \psi_{n-1} + \left( q^{n+1} + \frac{R_1}{Q_1} r_1^{n+1} \right) \psi_{n+1} = \mu \psi_n \nonumber \\
+ \left( q^{n-1} + z_- r_1^{n-1} \right) \psi_{n-1} + \left( q^{n+1} + z_- r_1^{n+1} \right) \psi_{n+1} = \mu \psi_n \;, 
+\end{eqnarray}
+which gives
+\begin{equation}
+ q^{n-1} +  \psi_{n-1} + q^{n+1} \psi_{n+1} = \mu \psi_n 
+\end{equation}
+for $n>1$, but for $n=1$ becomes
+\begin{equation}
+ \left( 1 + z_- \right) \psi_{0} + q^{2} \psi_{2} = \mu \psi_1 \;, 
+\end{equation}
+
+
+
+\subsection{Continuum Approximation}
+
+We can make a continuum approximation
+\begin{eqnarray}
+ \phi_{n\pm1} &=& \phi(n) \pm \frac{ \D \phi}{\D n} + \frac{1}{2} \frac{\D^2 \phi}{\D n} + \mbox{h.o.t.}\;, \\
+ \psi_{n\pm1} &=& \psi(n) \pm \frac{ \D \psi}{\D n} + \frac{1}{2} \frac{\D^2 \psi}{\D n} + \mbox{h.o.t.}\;.
+\end{eqnarray}
+We also define
+\begin{eqnarray}
+ q &=& 1 -\epsilon \;, \quad \epsilon \ll 1 \;, \\
+ r &=& -(1 - \eta) \;, \quad \eta \ll 1 \;.
+\end{eqnarray}
+{\bf (NOTE: In the $p=1$ case, $q = 1 -\epsilon$ was based on the observation that $z_+^{-1} \simeq 1 - \Or(L^{-1})$. Is this still the case in general? And is something similar true for $r$ too?)} These expressions allow us to write
+\begin{eqnarray}
+ q^n &\simeq& 1 -n \epsilon \;, \\
+ r^n &\simeq& \e^{i\pi n}(1 -n \eta) \;. \\
+\end{eqnarray}
+The $r$ terms complicate matters, because they introduce a complex compenent to the coefficents in the recursion relations.
+
+\subsubsection{ASIDE: $L$ Scaling and $\epsilon$}
+
+It would actually be more useful if we could relate the small parameter scalings of $q$ and $r$. In an earlier work (``mf.pdf'') I showed that
+\begin{equation*}
+ z_+ = 1 + \Or\left(\frac{1}{L}\right) \;, \quad p = 1 \;, 
+\end{equation*}
+and thus 
+\begin{equation*}
+ q = z_+^{-1} = 1 - \Or\left(\frac{1}{L}\right) \;, \quad p = 1 \;, 
+\end{equation*}
+which is why we define
+\begin{equation*}
+ q = 1 - \epsilon \;, \quad \epsilon \ll 1 \;. 
+\end{equation*}
+It was possible to find this because:
+\begin{enumerate}
+ \item we had expressions for the roots $z_+$ and $z_-$ in terms of $a$,  $b$,
+ \item we knew a relationship between $a$,$b$ and $P(0)$ (or $w(0)$), 
+ \item numerically we find, and analytically we can argue, that $P(0) \sim 1/L$. 
+\end{enumerate}
+Now, for general $p$, we have three roots $z_-$, $z_+$ and $z_p$, and we don't know the expressions for any of them\footnote{We can get them from Mathematica, but they are extremely complicated.}. It's likely that $z_+ = 1 + \Or(1/L)$ still, because that's what we see in simulation, but we have no idea about how $z_p$ scales with $L$ (and thus how $r$ scales with $\epsilon$).
+
+
+\subsubsection{Right Eigenvector Equations}
+
+\emph{[This (sub-sub-)section is now a bit out of date.]}
+
+In the continuum limit, the right eigenvector equation becomes
+\begin{equation}\label{eq:rev_eq_1}
+ \left[ 2 - \mu - 2n\epsilon + 2(1-n\eta) \frac{R_p}{Q_p} \e^{i\pi n} \right] \phi(n)  + \left[ 1 + \frac{R_p}{Q_p} \e^{i\pi n} \right] \frac{\D^2 \phi}{\D n^2} = 0  \;, 
+\end{equation}
+with the boundary condition
+\begin{equation}
+  \left. \frac{\D \phi}{\D n} \right|_{n=0} = (\mu \theta_p Q_p - 1) \phi(0) \;. 
+\end{equation}
+We have made the assumptions that
+\begin{equation*}
+ \epsilon \frac{\D^2 \phi}{\D n^2} \;, \quad \eta \frac{\D^2 \phi}{\D n^2}
+\end{equation*}
+are both negligible. {\bf (NOTE: why? ``smoothly varying''?)}
+% We can rewrite \eqref{eq:rev_eq_1}
+% \begin{equation}\label{eq:rev_eq_2}
+%  \left[ 2 \left( 1-\frac{R_p}{Q_p} \e^{i\pi n} \right) - \mu - 2 \left( \epsilon - \frac{R_p}{Q_p} \e^{i\pi n} \eta \right) n \right] \phi(n)  + \left[ 1 + \frac{R_p}{Q_p} \e^{i\pi n} \right] \frac{\D^2 \phi}{\D n^2} = 0  \;, 
+% \end{equation}
+
+The general solution for $\phi(n)$ is complex, so we can write it as
+\begin{equation}
+  \phi(n) = u_\phi(n) + iv_\phi(n) \;, 
+\end{equation}
+where the functions $u_\phi(n)$ and $v_\phi(n)$ are both real. Then, we split \eqref{eq:rev_eq_1} into an equation each for the real part 
+\begin{eqnarray}
+  0 & = & \left[ 2 - \mu - 2n\epsilon + 2(1-n\eta) \frac{R_p}{Q_p} \cos(\pi n) \right] u_\phi(n) \nonumber \\
+    & - & \left[  2(1-n\eta)\frac{R_p}{Q_p} \sin(\pi n) \right] v_\phi(n) \nonumber \\
+    & + & \left[ 1 + \frac{R_p}{Q_p} \cos(\pi n) \right] \frac{\D^2 u_\phi}{\D n^2} \nonumber \\
+    & - & \left[ \frac{R_p}{Q_p} \sin(\pi n) \right] \frac{\D^2 v_\phi}{\D n^2} \;, 
+\end{eqnarray}
+and the imaginary part
+\begin{eqnarray}
+  0 & = & \left[  2(1-n\eta)\frac{R_p}{Q_p} \sin(\pi n) \right]  u_\phi(n)  \nonumber \\
+    & + & \left[ 2 - \mu - 2n\epsilon + 2(1-n\eta) \frac{R_p}{Q_p} \cos(\pi n) \right] v_\phi(n) \nonumber \\
+    & + & \left[ \frac{R_p}{Q_p} \sin(\pi n) \right] \frac{\D^2 u_\phi}{\D n^2} \nonumber \\
+    & + & \left[ 1 + \frac{R_p}{Q_p} \cos(\pi n) \right] \frac{\D^2 v_\phi}{\D n^2} \;.
+\end{eqnarray}
+
+\subsubsection{Left Eigenvector Equations}
+
+\emph{[Work in progress]}
+
+%  =====================================================================================================================================================================
+%  APPENDIX ============================================================================================================================================================
+%  =====================================================================================================================================================================
+
+\newpage
+\appendix
+
+\section{Calculation of Generating Function in Steady State}
+
+In the steady state
+\begin{eqnarray}
+  0 & = & u \bigg[ P(y-1) \I_{y>0} - P(y) \bigg] \nonumber \\
+				   & + & (1-u)[1-\pzero]^L \bigg[ P(y+1)  - P(y) \I_{y>0} \bigg] \nonumber \\
+				   & + & \frac{p}{4} \bigg[ P(y+2) - P(y) \I_{y>1} \bigg] \nonumber \\
+				   & + & \frac{(1-p)}{4} \bigg[ P(y-2) \I_{y>1} - P(y) \bigg] \;.
+\end{eqnarray}
+Using the definitions for $a$ and $b$ from \eqref{eq:ab_defn}, multiply both sides by $z^y$ and sum from $y=0$ to infinity:
+\begin{eqnarray}
+  0 & = &     a \left[ \sum_{y=1}^\infty z^y P(y-1) - \sum_{y=0}^\infty z^y P(y) \right] \nonumber \\
+    & + &     b \left[ \sum_{y=0}^\infty z^y P(y+1) - \sum_{y=1}^\infty z^y P(y) \right] \nonumber \\
+    & + &     p \left[ \sum_{y=0}^\infty z^y P(y+2) - \sum_{y=2}^\infty z^y P(y) \right] \nonumber \\
+    & + & (1-p) \left[ \sum_{y=2}^\infty z^y P(y-2) - \sum_{y=0}^\infty z^y P(y) \right] \;.
+\end{eqnarray}
+Change of variables to make all sums over $P(y)$:
+\begin{eqnarray}
+  0 & = &     a \left[ z     \sum_{y=0}^\infty z^y P(y) - \sum_{y=0}^\infty z^y P(y) \right] \nonumber \\
+    & + &     b \left[ z^{-1}\sum_{y=1}^\infty z^y P(y) - \sum_{y=1}^\infty z^y P(y) \right] \nonumber \\
+    & + &     p \left[ z^{-2}\sum_{y=2}^\infty z^y P(y) - \sum_{y=2}^\infty z^y P(y) \right] \nonumber \\
+    & + & (1-p) \left[ z^2   \sum_{y=0}^\infty z^y P(y) - \sum_{y=0}^\infty z^y P(y) \right] \;.
+\end{eqnarray}
+Rewrite all sums in terms of $G(z)$, $P(0)$ and $P(1)$:
+\begin{eqnarray}
+  0 & = &     a \left[ z      - 1 \right] G(z) \nonumber \\
+    & + &     b \left[ z^{-1} - 1 \right] \left[ G(z) - P(0) \right] \nonumber \\
+    & + &     p \left[ z^{-2} - 1 \right] \left[ G(z) - zP(1) - P(0) \right]\nonumber \\
+    & + & (1-p) \left[ z^2    - 1 \right] G(z)\;.
+\end{eqnarray}
+Group together terms with $G(z)$, $P(0)$ and $P(1)$:
+\begin{eqnarray}
+  0 & = & \left[ a (z - 1 ) + b (z^{-1} - 1 ) + p (z^{-2} - 1 ) + (1-p) ( z^2 - 1) \right] G(z) \nonumber \\
+    & - & p \left[ z^{-1} - z \right] P(1) \nonumber \\
+    & - & \left[ b(z^{-1} - 1 ) + p ( z^{-2} - 1) \right] P(0) \;.
+\end{eqnarray}
+Multiply through by $z^2$:
+\begin{eqnarray}
+  0 & = & \left[ a z^2(z - 1 ) + b z(1 - z ) + p (1 - z^2 ) + (1-p) z^2( z^2 - 1) \right] G(z) \nonumber \\
+    & - & p z\left[ 1 - z^2 \right] P(1) \nonumber \\
+    & - & \left[ bz(1 - z ) + p ( 1 - z^2) \right] P(0) \;.
+\end{eqnarray}
+Now notice that every term contains a factor of $z-1$. Divide this out:
+\begin{eqnarray}
+  0 & = & \left[ a z^2 - b z - p (1 + z ) + (1-p) z^2( z + 1 ) \right] G(z) \nonumber \\
+    & + & p z\left[ 1 + z \right] P(1) \nonumber \\
+    & + & \left[ bz + p (1+z) \right] P(0) \;.
+\end{eqnarray}
+Rearrange by grouping powers of $z$:
+\begin{eqnarray}
+  0 & = & \left[ (1-p)z^3 +(a + 1 -p) z^2 (b+p)z -p \right] G(z) \nonumber \\
+    & + & p P(1) z^2 + (pP(1) + (b+p)P(0))z + pP(0)  \;. 
+\end{eqnarray}
+Now rearrange to get the expression \eqref{eq:G_DEFN} for $G(z)$:
+\begin{equation}
+  G(z) = \frac{
+	       - \left[ p P(1) z^2 + (pP(1) + (b+p)P(0))z + pP(0) \right] 
+              }
+              {
+               \left[ (1-p)z^3 +(a + 1 -p) z^2 (b+p)z -p \right]
+              }
+\end{equation}
+
+\section{Finding the Probability Distribution}
+
+We have the following expression for the generating function:
+\begin{equation}
+  G(z) = \frac{
+	       - \left[ p P(1) z^2 + (pP(1) + (b+p)P(0))z + pP(0) \right] 
+              }
+              {
+               \left[ (1-p)z^3 +(a + 1 -p) z^2 (b+p)z -p \right]
+              } \;.
+\end{equation}
+The cubic in the denominator makes it difficult to solve. We assign a function to the denominator:
+\begin{equation}
+  h(z) = (1-p)z^3 +(a + 1 -p) z^2 (b+p)z -p \;.
+\end{equation}
+This cubic function $h(z)$ has three real roots\footnote{Do these roots become complex for certain parameter values?} $z_+$, $z_-$ and $z_p$, such that 
+\begin{equation}
+  z_+ > 0 \;,
+\end{equation}
+\begin{equation}
+  z_p < z_- < 0 \;,
+\end{equation}
+and
+\begin{equation}
+  |z_p| > |z_+| > |z_-| \;. 
+\end{equation}
+$z_+$ and $z_-$ correspond to the two roots of the same name of the quadratic in the $p=1$ case. In the limit $p\to1$ the root $z_p$ must disappear as $h(z)$ become a cubic. We can see then that $z_p \sim -a/(1-p)$, such that the order $1/(1-p)^2$ terms in $h(z)$ cancel. {\bf (NOTE: I need to make this analysis more concrete.)}{\bf (NOTE: include sketch of roots?)}
+
+Importantly, because we still have $|z_-| < |z_+|$, the pole at $z_-$ is still closer to the origin and dominates the integral of $G(z)$ which describes $P(y)$. Thus, as in the $p=1$ case, we must cancel a factor $(z-z_-)$ from top and bottom. Conversely, the pole $z_p$ is further from the origin that $z_+$, because $|z_p| > |z_+|$, and so this pole (with negative real part) does not dominate the same integral, so does not need to be cancelled. {\bf (NOTE: are we sure $|z_p| > |z_+|$? I'm pretty confident - see graph.)}
+
+So now we can write
+\begin{equation}
+  h(z) = (1-p)(z-z_-)(z-z_+)(z-z_p)\;, 
+\end{equation}
+and the numerator of $G(z)$ can be written as
+\begin{equation}
+  - \left[ pP(0) z^2 + \left( pP(1) + (b+p)P(0) \right) z + pP(0) \right] = -(Az+B)(z-z_-) \;.
+\end{equation}
+Immediately from this we can write
+\begin{equation}
+  A = pP(1) \;, 
+\end{equation}
+and
+\begin{equation}\label{eq:B1_app}
+  B = -\frac{pP(0)}{z_-} \;,
+\end{equation}
+which will be useful later.
+
+Now, coming back to the generating function, we can write $G(z)$ as 
+\begin{equation}
+  G(z) = - \frac{(Az + B)}{(1-p)(z-z_+)(z-z_p)} \;.
+\end{equation}
+To find an expression for $P(y)$ we will try to rewrite $G(z)$ as a sum of powers of $z$. To begin, we factorise out $-z_+$, $-z_p$, to find
+\begin{eqnarray}
+  G(z) &=& - \frac{(Az + B)}{(1-p)z_+z_p(1-z/z_+)(1-z/z_p)} \nonumber \\
+       &=& - \frac{(Az + B)}{(1-p)z_+z_p} \sum_{l=0}^\infty \left(\frac{z}{z_+}\right)^l \sum_{m=0}^\infty \left(\frac{z}{z_p}\right)^m \;. 
+\end{eqnarray}
+Using the substitution $n=l+m$ and by rearranging the sums we find
+\begin{eqnarray}
+  G(z) &=& - \frac{(Az + B)}{(1-p)z_+z_p} \sum_{n=0}^\infty z^n \sum_{l=0}^n \frac{1}{z_p^{n-l}}\frac{1}{z_+^l} \nonumber \\
+       &=& - \frac{(Az + B)}{(1-p)z_+z_p} \sum_{n=0}^\infty \frac{z^n}{z_p^n} \sum_{l=0}^n \left(\frac{z_p}{z_p}\right)^l \;.
+\end{eqnarray}
+We then evaluate the geometric sum over $l$ to find
+\begin{equation}
+ G(z) = - \frac{(Az + B)}{(1-p)z_+z_p} \sum_{n=0}^\infty \frac{z^n}{z_p^n} \left[ \frac{ (z_p/z_+)^{n+1} -1 }{(z_p/z_+) - 1} \right] \;.
+\end{equation}
+
+We want to find the coefficients of $z^n$ to find the values of $P(n)$. To do this we first multiply through by $(Az + B)$:
+\begin{equation}
+ G(z) = - \frac{1}{(1-p)z_+z_p} \sum_{n=0}^\infty \frac{Az^{n+1} + Bz^n}{z_p^n} \left[ \frac{ (z_p/z_+)^{n+1} -1 }{(z_p/z_+) - 1} \right] \;,
+\end{equation}
+and then relabel the $n\to n-1$ in the ``$A$'' sum:
+\begin{eqnarray}
+ G(z) = - \frac{1}{(1-p)z_+z_p}  & & \left\{ \sum_{n=1}^\infty \frac{Az^n}{z_p^{n-1}} \left[ \frac{ (z_p/z_+)^n -1 }{(z_p/z_+) - 1} \right] \right. \nonumber \\ 
+                                 & & +\left. \sum_{n=0}^\infty \frac{Bz^n}{z_p^n} \left[ \frac{ (z_p/z_+)^{n+1} -1 }{(z_p/z_+) - 1} \right] \right\} \;.
+\end{eqnarray}
+Next, pull out the $n=0$ term and combine the sums, to get
+\begin{eqnarray}
+ G(z) &=& -\frac{1}{(1-p)z_+z_p} Bz^0 
+        - \sum_{n=1}^\infty\frac{ z^n}{(1-p)z_p^{n+1}(z_p-z_+)} \left( Az_p \left[ \left(\frac{z_p}{z_+}\right)^n -1 \right] + B \left[ \left(\frac{z_p}{z_+}\right)^{n+1} -1 \right]\right) \nonumber \\
+      &=& -\frac{1}{(1-p)z_+z_p} Bz^0 
+        - \sum_{n=1}^\infty\frac{ z^n}{(1-p)(z_p-z_+)} \left( A\left[ \left(\frac{1}{z_+}\right)^n -\left(\frac{1}{z_p}\right)^n \right] + B \left[ \left(\frac{1}{z_+}\right)^{n+1} -\left(\frac{1}{z_p}\right)^{n+1} \right]\right) \nonumber \\
+      &=& -\frac{1}{(1-p)z_+z_p} Bz^0 
+        - \sum_{n=1}^\infty\frac{ z^n}{(1-p)(z_p-z_+)} \left( \frac{Az_++B}{z_+^{n+1}} - \frac{Az_p+B}{z_p^{n+1}} \right) \;.
+\end{eqnarray}
+
+From this we see that
+\begin{equation}
+ P(0) = - \frac{B}{(1-p)z_+z_p} \;,
+\end{equation}
+and, for $n>0$, 
+\begin{equation}
+ P(n) = \frac{ 1}{(1-p)(z_p-z_+)} \left( \frac{Az_++B}{z_+^{n+1}} - \frac{Az_p+B}{z_p^{n+1}} \right) \;. 
+\end{equation}
+From the expression for $P(0)$ we have
+\begin{equation}\label{eq:B2_app}
+  B = -(1-p)z_+z_pP(0) \;,
+\end{equation}
+and from earlier we have
+\begin{equation}
+  A = pP(1) \;.
+\end{equation}
+We can use these to calculate
+\begin{eqnarray}
+ Az_{+,p}+B &=& pP(1)z_{+,p} - (1-p)z_+z_pP(0) \nonumber \\
+            &=& z_{+,p} (pP(1) - (1-p)z_{p,+}P(0) ) \;.
+\end{eqnarray}
+Substituting back in to the expression for $P(n)$, $n>0$ we find
+\begin{eqnarray}
+ P(n) &=& -\frac{1}{(1-p)(z_p-z_+)} \left( \frac{pP(1) - (1-p)P(0)z_p}{z_+^n} - \frac{pP(1) - (1-p)P(0)z_+}{z_p^n} \right) \nonumber \\
+      &=& -\frac{1}{(1-p)(z_p-z_+)} \left( \frac{pP(1)(z_p^n-z_+^n) -(1-p)P(0)(z_p^{n+1} -z_+^{n+1})}{z_+^n z_p^n} \right) \;.
+\end{eqnarray}
+
+By setting $n=1$ we can solve self-consistently for $P(1)$:
+\begin{eqnarray}
+ P(1) &=& -\frac{1}{(1-p)(z_p-z_+)} \left( \frac{pP(1)(z_p-z_+) -(1-p)P(0)(z_p^{2} -z_+^{2})}{z_+ z_p} \right) \nonumber \\
+      &=& -\frac{1}{(1-p)z_p z_+} \left[ pP(1) -(1-p)P(0)(z_p +z_+) \right] \nonumber \\
+      &=& -\frac{P(1)}{(1-p)z_p z_+} + \frac{P(0)(z_p +z_+)}{z_pz_+} \;,
+\end{eqnarray}
+and so by rearranging we find
+\begin{equation}
+ P(1) = \frac{(1-p)(z_p + z_+)}{z_+ z_p (1-p) - p} P(0) \;.
+\end{equation}
+
+Now we substitute the expression for $P(1)$ back in to the expression for $P(n)$ to find
+\begin{equation}
+  P(n) = -\frac{P(0)}{z_+^n z_p^n(z_p-z_+)} \left( \frac{p(z_p^n-z_+^n)(z_p+z_+)}{z_+z_p(1-p) + p} -(z_p^{n+1} -z_+^{n+1}) \right) \;. 
+\end{equation}
+We can simplify a bit, using
+\begin{equation}
+ p(z_p^n-z_+^n)(z_p+z_+) = pz_p^{n+1} - pz_+^{n+1} -pz_pz_+^n + pz_+z_p^n \;, 
+\end{equation}
+and 
+\begin{equation}
+ -(z_p^{n+1} -z_+^{n+1}) (z_+z_p(1-p) + p) = -pz_p^{n+1} + pz_+^{n+1} - (1-p) z_+z_p^{n+2} + (1-p)z_pz_+^{n+2} \;,
+\end{equation}
+to find
+\begin{equation}
+  P(n) = -\frac{P(0)}{z_+^n z_p^n(z_p-z_+)} \left( \frac{-pz_pz_+^n + pz_+z_p^n - (1-p) z_+z_p^{n+2} + (1-p)z_pz_+^{n+2}}{(z_+z_p(1-p) + p)} \right) \;. 
+\end{equation}
+Finally, rearrange to find
+\begin{equation}\label{eq:gen_soln_1_app}
+  P(n) = \frac{P(0)}{z_+^{n-1} z_p^{n-1}(z_p-z_+)} \left( \frac{ (1-p) [z_p^{n+1} - z_+^{n+1}] - p[  z_p^{n-1} - z_+^{n-1}]}{(z_+z_p(1-p) + p)} \right) \;. 
+\end{equation}
+
+\subsection{Further Simplification}
+
+The root $z_p$ is problematic because it diverges as $p\to1$ as $(1-p)^{-1}$. Using the two definitions of $B$ from \eqref{eq:B1_app} and \eqref{eq:B2_app} we can define
+\begin{equation}\label{eq:alpha_p_defn_app}
+  \alpha_p = (1-p)z_p = \frac{p}{z_+z_-} \;.
+\end{equation}
+Unlike $z_p$, as $p\to 1$, $\alpha_p$ remains finite. We can also define
+\begin{equation}
+  x_p = \frac{z_+}{z_p} \;, \quad x_p < 1 \;, \quad |x_p| < 1 \;, 
+\end{equation}
+which has the useful property that $x_p \to 0$ as $p\to 1$. {\bf (NOTE: I think I've made assumption about what $z_+$ does as $p\to 1$, which I haven't justified...)} The aim is to replace all instances of $z_p$ with $\alpha_p$ or $x_p$.
+
+First, we factorise out some powers of $z_p$ from \eqref{eq:gen_soln_1_app} to find
+\begin{equation}
+  P(n) = \frac{P(0)}{z_+^{n-1} z_p^{n-1}z_p(1-x_p)} \left( \frac{ (1-p) z_p^{n+1}[1 - x_p^{n+1}] - p  z_p^{n-1}[ 1 - x_p^{n-1}]}{(z_+z_p(1-p) + p)} \right) \;. 
+\end{equation}
+Then we cancel some powers of $z_p$:
+\begin{equation}
+  P(n) = \frac{P(0)}{z_+^{n-1} z_p(1-x_p)} \left( \frac{ (1-p) z_p^{2}[1 - x_p^{n+1}] - p  [ 1 - x_p^{n-1}]}{(z_+z_p(1-p) + p)} \right) \;. 
+\end{equation}
+We now multiply top and bottom by $(1-p)$, and substitute in $\alpha_p$ to find
+\begin{equation}\label{eq:gen_soln_2_app}
+  P(n) = \frac{P(0)}{z_+^{n-1}} \left( \frac{ \alpha_p^{2}[1 - x_p^{n+1}] - p  (1-p) [ 1 - x_p^{n-1}]}{ \alpha_p(1-x_p)(z_+\alpha_p + p)} \right) \;. 
+\end{equation}
+When $n$ is large, the terms $x_p^n \to 0$, and so we see that
+\begin{equation}
+  P(n) \simeq P(0) z_+ \left( \frac{ \alpha_p^{2} - p  (1-p) }{ \alpha_p(z_+\alpha_p + p)} \right) \frac{1}{z_+^{n}} \;. 
+\end{equation}
+
+
+\subsubsection{Sum of Exponentials}
+
+We can introduce $z_p$ back in to \eqref{eq:gen_soln_2_app} to find an expression for $P(n)$ as a sum of exponentials. We rearrange the $x_p$ terms and multiply through the $z_+^{-(n-1)}$ term to find
+\begin{equation}
+  P(n) = \frac{P(0)}{ \alpha_p(1-x_p)(z_+\alpha_p + p)} \left( \frac{ \alpha_p^{2}-p(1-p) + x_p^{n-1} [ p(1-p) - \alpha_p^2 x_p^2]}{z_p^{n-1}}  \right) \;. 
+\end{equation}
+This can be rewritten as
+\begin{equation}\label{eq:gen_soln_3_app}
+  P(n) = \frac{P(0)}{ \alpha_p(1-x_p)(z_+\alpha_p + p)} \left( \frac{[\alpha_p^{2}-p(1-p)]}{z_+^{n-1}} + \frac{[ p(1-p) - \alpha_p^2 x_p^2]}{z_p^{n-1}}  \right) \;. 
+\end{equation}
+
+%  TRANSFER MATRIX =======================================================================================================================================================
+\section{Transfer Matrix}
+
+\subsection{Definition}
+
+Take \eqref{eq:gen_soln_3_app} and rewrite with weights, as
+\begin{equation}
+  w(n) = w(0) \theta_p \left( \frac{Q_p}{z_+^{n}} + \frac{R_p}{z_p^{n}}  \right) \;, \quad n > 0 \;,
+\end{equation}
+where
+\begin{equation}
+ \theta_p = \frac{1}{ \alpha_p(1-x_p)(z_+\alpha_p + p)} \;, 
+\end{equation}
+\begin{equation}
+  Q_p = z_+[\alpha_p^{2}-p(1-p)] \;,
+\end{equation}
+and
+\begin{equation}
+  R_p = z_p[ p(1-p) - \alpha_p^2 x_p^2] \;. 
+\end{equation}
+We also introduce the definitions
+\begin{equation}
+  q = \frac{1}{z_+} \;, \quad q > 0 \;, \quad |q| < 1 \;, 
+\end{equation}
+and
+\begin{equation}
+  r = \frac{1}{z_p} \;, \quad r < 0 \;, \quad |r| < |q|< 1 \;,
+\end{equation}
+to write
+\begin{equation}
+  w(n) = w(0) \theta_p \left( Q_p q^n + R_p r^n  \right) \;, \quad n > 0 \;.
+\end{equation}
+
+
+Define the transfer matrix:
+\begin{equation}
+  T = \begin{pmatrix}
+       0      & w(0)   & 0      & 0      & 0      & \cdots \\
+       w(1)   & 0      & w(1)   & 0      & 0      &        \\
+       0      & w(2)   & 0      & w(2)   & 0      &        \\
+       0      & 0      & w(3)   & 0      & w(3)   &        \\
+       \vdots &        &        &        &        & \ddots \\
+      \end{pmatrix} \;.
+\end{equation}
+This can be written as
+\begin{equation}
+  T  = w(0) \theta_p \left[ Q_p T_q + R_p T_r \right] \;,
+\end{equation}
+where
+\begin{equation}
+  T_q = \begin{pmatrix}
+         0      & (\theta_p Q_p)^{-1} & 0      & 0      & 0      & \cdots \\
+         q      & 0                   & q      & 0      & 0      &        \\
+         0      & q^2                 & 0      & q^2    & 0      &        \\
+         0      & 0                   & q^3    & 0      & q^3    &        \\
+         \vdots &                     &        &        &        & \ddots \\
+        \end{pmatrix} \;,
+\end{equation}
+and
+\begin{equation}
+  T_r = \begin{pmatrix}
+         0      & 0     & 0      & 0      & 0      & \cdots \\
+         r      & 0     & r      & 0      & 0      &        \\
+         0      & r^2   & 0      & r^2    & 0      &        \\
+         0      & 0     & r^3    & 0      & r^3    &        \\
+         \vdots &       &        &        &        & \ddots \\
+        \end{pmatrix} \;.
+\end{equation}
+As a quick aside: we could also write $T_r$ as
+\begin{equation}
+  T_r = \begin{pmatrix}
+         0      & 0     & 0      & 0      & 0      & \cdots \\
+         -|r|      & 0     & -|r|      & 0      & 0      &        \\
+         0      & |r|^2   & 0      & |r|^2    & 0      &        \\
+         0      & 0     & -|r|^3    & 0      & -|r|^3    &        \\
+         \vdots &       &        &        &        & \ddots \\
+        \end{pmatrix} \;,
+\end{equation}
+which may give us some useful physical insight. ($T_r$ represents an increase in probabilities of occupying even heights (except 0), and a decrease in probability of occupying odd heights?)
+
+For convenience we can redefine $T$ without the multiplying factor $w(0)\theta_p Q_p$:
+\begin{equation}
+  T = \left[ T_q + \frac{R_p}{Q_p} T_r \right] \;.
+\end{equation}
+
+\subsubsection{Recovering $p=1$ Transfer Matrix}
+
+It is straightforward to recover the $p=1$ transfer matrix:
+\begin{equation}\label{eq:T}
+  T = \begin{pmatrix}
+       0      & (1+z_-)& 0      & 0      & 0      & \cdots \\
+       q      & 0      & q      & 0      & 0      &        \\
+       0      & q^2    & 0      & q^2    & 0      &        \\
+       0      & 0      & q^3    & 0      & q^3    &        \\
+       \vdots &        &        &        &        & \ddots \\
+      \end{pmatrix} \;,
+\end{equation}
+from our earlier work.
+
+To begin notice that for $p=1$, $R_1 = 0$. Next, using the definition of $\alpha_p$ in \eqref{eq:alpha_p_defn_app}, we see that 
+\begin{equation}
+  \theta_1 = \frac{z_+ z_-^2}{z_-+1} 
+\end{equation}
+and
+\begin{equation}
+ Q_1 = \frac{1}{z_+z_-^2} \;.
+\end{equation}
+Thus, the element $(T_q)_{0,1} = (\theta_p Q_p)^{-1}$ becomes
+\begin{equation}
+ (\theta_1 Q_1)^{-1}= \frac{z_-+1}{z_+ z_-^2} \frac{z_+z_-^2}{1} = (z_- + 1) \;, 
+\end{equation}
+and $T_q = T$ in \eqref{eq:T}. 
+
+
+\subsection{Eigenvectors}
+
+Some definitions:
+\begin{equation}
+ T \ket{\phi^{(\mu)}} = \mu \ket{\phi^{(\mu)}} \;, 
+\end{equation}
+\begin{equation}
+ \bra{\psi^{(\mu)}} T = \mu \bra{\psi^{(\mu)}} \;, 
+\end{equation}
+\begin{equation}
+ \ket{\phi^{(\mu)}} = \sum_{n=0}^\infty \phi_n^{(\mu)} \ket{n} \;, 
+\end{equation}
+\begin{equation}
+ \bra{\psi^{(\mu)}} = \sum_{n=0}^\infty \psi_n^{(\mu)} \bra{n} \;,
+\end{equation}
+with basis vectors:
+\begin{equation}
+  \bra{n} \;, \quad \ket{n} \;, \quad n = 0,1,2,3,\ldots 
+\end{equation}
+Partition function
+\begin{equation}
+  Z = \sum_{n=0}^\infty \bra{n} T^L \ket{n} \;, 
+\end{equation}
+and probability distribution
+\begin{equation}
+  P(n) = \frac{ \bra{n} T^L \ket{n} }{Z} \;.
+\end{equation}
+
+We can write
+\begin{eqnarray}
+ Z &=& \sum_{n=0}^\infty \bra{n} T^L \sum_{\mu} \ket{\phi^{(\mu)}}\bra{\psi^{(\mu)}} \ket{n} \nonumber \\
+   &=& \sum_{\mu}\mu^L \sum_{n=0}^\infty \braket{n}{\phi^{(\mu)}}\braket{\psi^{(\mu)}}{n} \;.
+\end{eqnarray}
+Assume that for large $L$ ($L\to\infty$) the sum is dominated by the largest eigenvalue, $\mu$ (abuse of notation!), to write
+\begin{equation}
+ Z \simeq \mu^L \sum_{n=0}^\infty \braket{n}{\phi}\braket{\psi}{n} \;,
+\end{equation}
+where
+\begin{eqnarray}
+  \ket{\phi} &=& \ket{\phi^{(\mu)}} \nonumber \\
+  \bra{\psi} &=& \bra{\psi^{(\mu)}} \;.
+\end{eqnarray}
+
+Similarly, for $P(n)$ we can write
+\begin{eqnarray}
+ P(n) &=&  \frac{
+                 \bra{n} T^L \sum_{\mu} \ket{\phi^{(\mu)}}\bra{\psi^{(\mu)}} \ket{n}
+                 }{Z} \nonumber \\
+      &=& \frac{
+                 \sum_{\mu} \mu^L\braket{n}{\phi^{(\mu)}}\braket{\psi^{(\mu)}}{n}
+                 }{Z}  \;, 
+\end{eqnarray}
+and again assuming the sum is dominated by the largest eigenvalue $\mu$ (again abusing notation) as $L\to\infty$ we find
+\begin{equation}
+ P(n) \simeq \frac{
+                   \mu^L \braket{n}{\phi}\braket{\psi}{n}
+                  }
+                  {Z} \;. 
+\end{equation}
+A factor of $\mu^L$ can be cancelled from both top and bottom to obtain
+\begin{equation}
+  P(n) = \frac{ 
+               \braket{n}{\phi}\braket{\psi}{n}
+              }
+              {
+               \sum_{n'=0}^\infty \braket{n'}{\phi}\braket{\psi}{n'} \;. 
+              }
+\end{equation}
+
+We define
+\begin{eqnarray}
+ \bra{\phi} &=& \sum_{n=0}^\infty \phi_n \bra{n} \;, \nonumber \\
+ \ket{\psi} &=& \sum_{n=0}^\infty \psi_n \ket{n} \;,
+\end{eqnarray}
+and see that
+\begin{equation}
+  P(n) = \frac{ 
+               \phi_n\psi_n
+              }
+              {
+               \sum_{n'=0}^\infty \phi_n' \psi_n' \;. 
+              }
+\end{equation}
+
+
+
+\subsubsection{Recursion relations for coefficients $\phi_n$, $\psi_n$}
+
+Using the equations
+\begin{equation}
+ T\ket{\phi} = \left[ T_q + \frac{R_p}{Q_p} T_r \right] \ket{\phi} = \mu \ket{\phi}
+\end{equation}
+and
+\begin{equation}
+ \bra{\psi}T = \bra{\psi}\left[ T_q + \frac{R_p}{Q_p} T_r \right]= \mu \bra{\phi}
+\end{equation}
+we can find recursion relations for $\phi_n$, $\psi_n$. 
+
+For the right eigenvector we have a boundary equation
+\begin{equation}
+ \frac{1}{\theta_p Q_p} \phi_1 = \mu \phi_0 \;, 
+\end{equation}
+and for $n>0$
+\begin{equation}
+ \left( q^n + \frac{R_p}{Q_p} r^n \right) \left( \phi_{n-1} + \phi_{n+1} \right) = \mu \phi_n \;. 
+\end{equation}
+
+For the left eigenvector we have two boundary terms
+\begin{equation}
+ \left( q + \frac{R_p}{Q_p} r \right) \psi_1 = \mu \psi_0 
+\end{equation}
+and
+\begin{equation}
+ \frac{1}{\theta_p Q_p} \psi_0 + \left( q^2 + \frac{R_p}{Q_p} r^2 \right) \psi_2= \mu \psi_1 \;, 
+\end{equation}
+and for $n > 1$ we have
+\begin{equation}
+ \left( q^{n-1} + \frac{R_p}{Q_p} r^{n-1} \right) \psi_{n-1} + \left( q^{n+1} + \frac{R_p}{Q_p} r^{n+1} \right) \psi_{n+1} = \mu \psi_n \;. 
+\end{equation}
+
+\subsubsection{Rewriting $\theta_p$}
+
+We have 
+\begin{equation*}
+ (\theta_p)^{-1} = \alpha_p(1-x_p)(z_+\alpha_p+p) \;, 
+\end{equation*}
+where
+\begin{equation*}
+ \alpha_p = z_p(1-p)\;, \quad x_p = \frac{z_+}{z_p} \;. 
+\end{equation*}
+We also have 
+\begin{eqnarray}
+ Q_p &=& z_+[\alpha_p^2 - p(1-p)] \nonumber \\
+ R_p &=& z_p[p(1-p)-\alpha_p^2 x_p^2] \nonumber \;.
+\end{eqnarray}
+Now we compute $Q_p + R_p$:
+\begin{eqnarray}
+ Q_p + R_p &=& z_+[\alpha_p^2 - p(1-p)] + z_p[p(1-p)-\alpha_p^2 x_p^2] \nonumber \\
+           &=& \alpha_p[z_+\alpha_p -z_px_p^2\alpha_p] +p(1-p)[z_p-z_+] \nonumber \\
+           &=& \alpha_p[z_+\alpha_p -z_+x_p\alpha_p] +\alpha_p \frac{p}{z_p}[z_p-z_+] \nonumber \\
+           &=& \alpha_p[z_+\alpha_p(1- x_p)] + \alpha_p p[1-x_p] \nonumber \\
+           &=& \alpha_p(z_+\alpha_p+p)(1-x_p) \;, 
+\end{eqnarray}
+so we can see that
+\begin{equation}
+  Q_p + R_p = \frac{1}{\theta_p} \;,
+\end{equation}
+and thus
+\begin{equation}
+  \frac{1}{\theta_pQ_p} = 1 + \frac{R_p}{Q_p} \;.
+\end{equation}
+This means that: for the right eigenfunction we have
+\begin{equation}
+ \left( q^n + \frac{R_p}{Q_p} r^n \right) \left( \phi_{n-1} + \phi_{n+1} \right) = \mu \phi_n \;. 
+\end{equation}
+for $n>0$, with the boundary condition
+\begin{equation}
+ 1 + \frac{R_p}{Q_p} \phi_1 = \mu \phi_0 \;;
+\end{equation}
+for the left eigenfunction we have
+\begin{equation}
+ \left( q^{n-1} + \frac{R_p}{Q_p} r^{n-1} \right) \psi_{n-1} + \left( q^{n+1} + \frac{R_p}{Q_p} r^{n+1} \right) \psi_{n+1} = \mu \psi_n \;, 
+\end{equation}
+for $n>0$ with the boundary condition
+\begin{equation}
+ \left( q + \frac{R_p}{Q_p} r \right) \psi_1 = \mu \psi_0 \;.
+\end{equation}
+
+
+
+
+%  END =================================================================================================================================================================
+\end{document}

@@ -1,0 +1,1261 @@
+\documentclass[a4paper,10pt]{article}
+%\documentclass[a4paper,10pt]{scrartcl}
+
+\usepackage[utf8x]{inputenc}
+\usepackage{amsmath}
+\usepackage{bbold}
+\usepackage{graphicx}
+
+\hoffset=-50pt
+\textwidth=440pt
+
+\newcommand{\pone}{P(1)}
+\newcommand{\pzero}{P(0)}
+\newcommand{\py}{P(y)}
+
+\newcommand{\wone}{w(1)}
+\newcommand{\wzero}{w(0)}
+\newcommand{\wy}{w(y)}
+
+\newcommand{\I}{\mathbb{1}}
+\newcommand{\D}{\mathrm{d}}
+\newcommand{\e}{\mathrm{e}}
+\newcommand{\Or}{\mathcal{O}}
+\newcommand{\dL}{\frac{d}{L}}
+\newcommand{\OL}{\Or\left(\frac{1}{L}\right)}
+\newcommand{\OLL}{\Or\left(\frac{1}{L^2}\right)}
+
+\newcommand{\bra}[1]{\langle #1 \vert}
+\newcommand{\ket}[1]{\vert #1 \rangle}
+\newcommand{\braket}[2]{\langle #1 \vert #2 \rangle}
+
+\newcommand{\Ai}{\mathrm{Ai}}
+
+\title{Mean Field Thoery}
+\author{}
+\date{}
+
+\pdfinfo{
+  /Title    ()
+  /Author   ()
+  /Creator  ()
+  /Producer ()
+  /Subject  ()
+  /Keywords ()
+}
+
+\begin{document}
+\maketitle
+
+\section{Master Equation, Weight Functions, Generating Function}
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.5\textwidth]{mf_schematic}
+\end{figure}
+
+\begin{eqnarray}
+  \frac{\partial \wy}{\partial t} & = & uw(y-1) \I_{y>0} + \frac{1}{4}w(y+2) + (1-u)[1-\pzero]^L w(y+1) \nonumber \\
+				  & - & uw(y) - \frac{1}{4} \wy \I_{y>1} - (1-u) [1-\pzero]^L \wy
+\end{eqnarray}
+The function $w(y)$ is the statistical weight of having the piece of the interface a distance $y$ from the membrane. The factor $1/4$ comes from the TASEP maximal current $\rho(1-\rho)$ when the density is $1/2$. The factor $[1-\pzero]^L$ describes the probability that all sites have $y>0$.
+
+We define the generating function
+\begin{equation}
+ G(z) = \sum_{y=1}^{\infty}z^y\wy \;,
+\end{equation}
+and in the steady state we find
+\begin{equation}
+  G(z) = \frac{\wone z^2 + (\wone + (1+b)\wzero)z + \wzero}{-a(z-z_-)(z-z_+)} \;,
+\end{equation}
+where
+\begin{equation}
+  z_\pm = \frac{ (1+b) \pm \sqrt{ (1+b)^2 + 4a }}{2a}
+\end{equation}
+and
+\begin{equation}
+  a = 4u \;, \quad b = 4(1-u)(1-\pzero)^L \;.
+\end{equation}
+Because
+\begin{equation}
+  |z_-| < |z_+|
+\end{equation}
+the pole at $z_-$ is nearer the origin, and will dominate the integral
+\begin{equation}
+ \wy = \oint \frac{\D z}{2\pi i} \frac{G(z)}{z^y}
+\end{equation}
+at large $n$, but because 
+\begin{equation}
+  z_- < 0 
+\end{equation}
+this means that the distribution would oscillate between positive and negative values as $n$ is increased. Negative values are obviously unphysical, so the term $(z-z_-)$ in the denominator must be cancelled by the numerator. Thus,
+\begin{equation}\label{eq:Gz_numerator}
+  \wone z^2 + (\wone + (1+b)\wzero)z + \wzero = -a(Az+B)(z-z_-)\;.
+\end{equation}
+This also gives us the condition
+\begin{equation}
+  \wone(1+z_-)z_- + \wzero(1+(1+b)z_-) = 0 \;.
+\end{equation}
+The generating function can now be written
+\begin{equation}
+  G(z) = \frac{Az + B}{z-z_+} \;,
+\end{equation}
+which can be expanded in powers of $z$ to give
+\begin{equation}
+  G(z) = -\frac{B}{z_+} - \left( A + \frac{B}{z_+} \right) \sum_{y=1}^\infty \left( \frac{z}{z_+} \right)^y
+\end{equation}
+To find $A$ and $B$ we expand \eqref{eq:Gz_numerator}, from which we find
+\begin{equation}
+  \wone = -aA \;, \quad \wzero = az_-B \;.
+\end{equation}
+Thus, using $z_+z_- = -1/a$,
+\begin{equation}
+  G(z) = \wzero - \left( z_+z_-\wone - \wzero \right) \sum_{y=1}^\infty \left( \frac{z}{z_+} \right)^y \;.
+\end{equation}
+We read off
+\begin{equation}
+  \wy = \frac{\wzero - z_+z_- \wone}{z_+^y} \;, \quad y > 0\;,
+\end{equation}
+and use self-consistency at $y=1$ to find
+\begin{equation}\label{eq:wy}
+  \wy = \frac{\wzero}{(1+z_-)} \frac{1}{z_+^y} \;.
+\end{equation}
+
+\subsection{General Form of Probability Interface does not Touch the Membrane}
+
+Instead of inserting $(1-P(0))^L$ in the master equation, we can simply define a generic, unspecified probability $K$ that the interface does not touch the membrane (i.e. that for all interface sites the height $y>0$).
+
+\section{Finding $\py$ Using the Transfer Matrix Approach}
+
+So far the mean field theory doesn't take into account any restrictions in the difference in height between neighbouring sites on the interface. We can do this by defining a transfer matrix which allows us to select only configurations where the difference in heights between neighbouring sites is exactly one (like the Restricted Solid on Solid condition, RSOS). 
+
+We define
+\begin{equation}
+  T = \begin{pmatrix}
+       0      & w(0)   & 0      & 0      & 0      & \cdots \\
+       w(1)   & 0      & w(1)   & 0      & 0      &        \\
+       0      & w(2)   & 0      & w(2)   & 0      &        \\
+       0      & 0      & w(3)   & 0      & w(3)   &        \\
+       \vdots &        &        &        &        & \ddots \\
+      \end{pmatrix} \;.
+\end{equation}
+Using \eqref{eq:wy}
+
+\begin{equation}
+  T = \frac{\wzero}{(1+z_-)}
+      \begin{pmatrix}
+       0      & (1+z_-)& 0      & 0      & 0      & \cdots \\
+       q      & 0      & q      & 0      & 0      &        \\
+       0      & q^2    & 0      & q^2    & 0      &        \\
+       0      & 0      & q^3    & 0      & q^3    &        \\
+       \vdots &        &        &        &        & \ddots \\
+      \end{pmatrix} \;,
+\end{equation}
+where 
+\begin{equation}
+  q = z_+^{-1} \;.
+\end{equation}
+Now, the partition function for  a lattice of size $L$ with periodic boundary conditions and which conforms to the RSOS rule is
+\begin{equation}
+  Z = \sum_{y=0}^\infty \bra{y} T^L \ket{y} \;,
+\end{equation}
+where $\ket{y}$ is a (right) basis vector of the space of heights:
+\begin{equation}
+  \ket{y}_i = \delta_{y,i} \;.
+\end{equation}
+The probability of an interface site having height $y$ is now 
+\begin{equation}
+  \py = \frac{\bra{y} T^L \ket{y}}{Z} \;.
+\end{equation}
+A factor $(\wzero/(1+z_-))^L$ factorises from both top and bottom, so we can redefine $T$:
+\begin{equation}\label{eq:T}
+  T = \begin{pmatrix}
+       0      & (1+z_-)& 0      & 0      & 0      & \cdots \\
+       q      & 0      & q      & 0      & 0      &        \\
+       0      & q^2    & 0      & q^2    & 0      &        \\
+       0      & 0      & q^3    & 0      & q^3    &        \\
+       \vdots &        &        &        &        & \ddots \\
+      \end{pmatrix} \;.
+\end{equation}
+The matrix $T$ satisfies an eigenvalue equation
+\begin{equation}
+  T \ket{\mu} = \mu \ket{\mu} \;,
+\end{equation}
+where
+\begin{equation}
+  \ket{\mu} = \sum_{y=0}^\infty \phi^{(\mu)}_y \ket{y} \;.
+\end{equation}
+Thus
+\begin{eqnarray}
+  \py &  = & \frac{\bra{y} T^L \sum_\mu \ket{\mu} \braket{\mu}{y}}{\sum_{y'=0}^\infty \bra{y'} T^L \sum_\mu \ket{\mu} \braket{\mu}{y'}} \nonumber \\
+      &  = & \frac{ \sum_\mu \mu^L \braket{y}{\mu} \braket{\mu}{y}}{\sum_\mu \mu^L \sum_{y'=0}^\infty \braket{y'}{\mu} \braket{\mu}{y'}}\nonumber \\
+      &  = & \frac{\mu^L \braket{y}{\mu} \braket{\mu}{y}}{\sum_{y'=0}^\infty \braket{y'}{\mu} \braket{\mu}{y'}}  \;.
+\end{eqnarray}
+If we then assume that this sum is dominated by the largest eigenvalue for large $L$, and we abuse our notation a bit and call this largest eigenvalue $\mu$, its corresponding right-eigenvector $\ket{\phi}$ and its corresponding left-eigenvector $\bra{\psi}$, then 
+
+\begin{equation}
+  \py  =  \frac{ \braket{y}{\phi} \braket{\psi}{y}}{\sum_{y'=0}^\infty \braket{y'}{\phi} \braket{\psi}{y'}}  \;.
+\end{equation}
+So, to find $\py$, we just need to find the right and left eigenvectors corresponding to the largest eigenvalue $\mu$ of $T$.
+
+\subsection{Right-Eigenvector Recursion}
+
+By writing the right eigenvector $\ket{\phi}$ as a sum over the basis vectors $\ket{y}$:
+\begin{equation}\label{eq:phi_basis}
+  \ket{\phi} = \sum_{y=0}^\infty \phi_y \ket{y} \;,
+\end{equation}
+We find that  coefficients $\phi_y$ satisfy the following recursion relations:
+\begin{equation}\label{eq:recursion01}
+  \mu \phi_0 = (1+z_-)\phi_1 \;,
+\end{equation}
+\begin{equation}\label{eq:recursion}
+  q^y (\phi_{y+1} + \phi_{y-1}) = \mu \phi_y \;, \quad y>0 \;.
+\end{equation}
+This is difficult to solve. It is useful to note that because of the factor $q^y$, a solution for $\phi_y$ must decrease faster than exponential. For example, something like $\phi_y \sim q^{y^2}$ ($q<1$).
+
+\subsection{Left-Eigenvector Recursion}
+
+
+By writing the left eigenvector $\bra{\psi}$ as a sum over the basis vectors $\bra{y}$:
+\begin{equation}\label{eq:psi_basis}
+  \bra{\psi} = \sum_{y=0}^\infty \psi_y \bra{y} \;,
+\end{equation}
+We find that  coefficients $\psi_y$ satisfy the following recursion relations:
+\begin{equation}\label{eq:recursion_psi_1}
+  \mu \psi_0 = (1+z_-)\psi_1 \;,
+\end{equation}
+\begin{equation}\label{eq:recursion_psi_2}
+  \mu \psi_1 = (1+z_-)\psi_0 + q^2\psi_2 \;,
+\end{equation}
+\begin{equation}\label{eq:recursion_psi_3}
+   \mu \phi_y = q^{y+1} \phi_{y+1} + q^{y-1} \phi_{y-1} \;, \quad y>1 \;.
+\end{equation}
+From \eqref{eq:recursion_psi_1} and \eqref{eq:recursion_psi_2} we find the boundary condition
+\begin{equation}\label{eq:psi_bc}
+  \left( \mu - \frac{c^2}{\mu} \right) \psi_1 = q^2 \psi_2 \;,
+\end{equation}
+where $c = 1 + z_-$.
+
+\section{Continuum Approximation}
+
+We have found previously (not shown here) that
+\begin{equation}\label{eq:z+}
+  z_+ = 1 + \OL \;,
+\end{equation}
+thus
+\begin{equation}\label{eq:q}
+  q = 1 - \OL = 1 - \epsilon \;, \quad \epsilon \ll 1 \;.
+\end{equation}
+We can then make a continuum approximation of the recursion relation \eqref{eq:recursion}, to find
+\begin{equation}\label{eq:ctm}
+  (2-\mu - 2y\epsilon) \phi(y) + \frac{\D^2 \phi}{\D y^2} = 0 + \mbox{higher order terms} \;, %partial derivative?
+\end{equation}
+and from \eqref{eq:recursion01} we find the boundary condition
+\begin{equation}\label{eq:bc}
+  \left( \frac{\mu}{1+z_-} -1 \right) \phi(0) = D\phi(0) = \left. \frac{\D \phi}{\D y} \right|_{y=0} \;.
+\end{equation}
+
+When $\mu < 2$, the solution to \eqref{eq:ctm} oscillates, which is not what we want, so we disregard this case. 
+
+When $\mu - 2 >> 2y\epsilon$, we find we that we cannot satisfy \eqref{eq:bc}, so we also disregard this case. To see this, observe that $\phi(y)$ becomes the solution to the equation
+\begin{equation}
+  \frac{\D^2 \phi}{\D y^2} - (\mu-2) \phi(y) = 0 \;,
+\end{equation}
+with the general solution
+\begin{equation}
+  \phi(y) = k_1 \e^{y\sqrt{\mu-2}} + k_2 \e^{-y\sqrt{\mu-2}} \;.
+\end{equation}
+As $y\to\infty$ we require that $\phi(y)$ is finite. Thus, $k_1 = 0$, and
+\begin{equation}
+  \phi(y) = k_2 \e^{-y\sqrt{\mu-2}} \;.
+\end{equation}
+Inserting this into the boundary condition \eqref{eq:bc}, we find
+\begin{equation}
+ -\sqrt{\mu-2} =\left( \frac{\mu}{c} -1 \right) \;,
+\end{equation}
+where
+\begin{equation}
+  c = (1+z_-) \;.
+\end{equation}
+This can be rearranged to give
+\begin{equation}
+  0 = \mu^2 - (2(1+z_-) + (1+z_-)^2)\mu + (1+z_-)^2 \;,
+\end{equation}
+and
+\begin{equation}
+  \mu_\pm = \frac{c}{2} \left( (2+c) \pm \sqrt{ (2+c)^2 - 12}  \right)\;.
+\end{equation}
+To have real eigenvalues $\mu$, we require
+\begin{eqnarray}
+  (c+2)^2 - 12 & \ge & 0 \nonumber \\
+  (c - c_+)(c-c_-) & \ge & 0 \;,
+\end{eqnarray}
+where
+\begin{equation}
+  c_\pm = -2 \pm 2 \sqrt{3} \;.
+\end{equation}
+Because
+\begin{equation}
+  0 < c = (1+z_-) < 1 \;,
+\end{equation}
+we find that
+\begin{eqnarray}
+  (c-c_+) & < & 0  \nonumber \\
+  (c-c_-) & > & 0
+\end{eqnarray}
+and thus there are no real eigenvalues $\mu$ which satisfy the boundary condition when $\mu - 2 \gg 2y\epsilon$.
+
+This leaves us with the case $\mu = 2 + \delta$, where $\delta$ is a small quantity, like $\epsilon$. In this special case, the equation we want to solve for the eigenvector is
+\begin{equation}\label{eq:ctm2}
+   \frac{\D^2 \phi}{\D y^2} - (\delta + 2\epsilon y) \phi(y) = 0 \;,
+\end{equation}
+which is of the form of Airy's equation:
+\begin{equation}\label{eq:Airy-eq}
+  \frac{\D^2 f(z)}{\D z^2} - zf(z) = 0 \;,
+\end{equation}
+to which the solution is $f(z) = \Ai(z)$, where 
+\begin{equation}\label{eq:Airy-fn}
+  \Ai(x) = \frac{1}{\pi} \int_0^\infty \cos\left(\frac{t^3}{3} + xt\right) \D t \;.
+\end{equation}
+So to find $\phi(y)$ we make a change of variables:
+\begin{equation}
+  \phi(y) \to f(z) \;, \quad z = A + By \;.
+\end{equation}
+This gives us
+\begin{equation}
+  B^2 \frac{\D^2 f}{\D z^2} - \left( \delta + 2\epsilon \frac{(z-A)}{B} \right) f(y) = 0 \;,
+\end{equation}
+To bring this into the form of Airy's equation \eqref{eq:Airy-eq}, we require
+\begin{equation}
+  \delta - \frac{2\epsilon A}{B} = 0 \;, \quad \frac{2\epsilon}{B^3} = 1 \;,
+\end{equation}
+which tells us that 
+\begin{equation}
+  B = (2\epsilon)^{1/3} \;, \quad \delta = (2\epsilon)^{2/3} A \;.
+\end{equation}
+So we find that 
+\begin{equation}\label{eq:phi_gen_soln}
+  \phi(y) = \alpha \Ai(A + (2\epsilon)^{1/3}y) \;,
+\end{equation}
+where $\alpha$ is some constant. We can get an approximate value for $A$ by considering the boundary condition \eqref{eq:bc}. Because $0 < 1+z_- < 1$, $D > 0$. This means that
+\begin{equation}
+ \frac{\phi'(0)}{\phi(0)} = D > 0 \;, \quad \phi'(0) = \left. \frac{\D \phi(y)}{\D y} \right|_{y=0} \;,
+\end{equation}
+and so
+\begin{equation}
+  \frac{\Ai'(A)}{\Ai(A)} = \frac{D}{(2\epsilon)^{1/3}} >> 1 \;, \quad \Ai'(A) = \left. \frac{\D \Ai(z)}{\D y} \right|_{y=0} \;.
+\end{equation}
+We can see from the plot in Figure \ref{fig:Airy-fn} that this condition can be satisfied near $x=z_0$, the first real root of the Airy function.
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.5\textwidth]{airy}
+  \caption{Plot of the Airy function, $\Ai(x)$, as given in \eqref{eq:Airy-fn}}
+  \label{fig:Airy-fn}
+\end{figure}
+$\phi(y)$ must be positive and not infinite, however, so
+\begin{equation}
+  A = z_0 + \Or( (2\epsilon)^{1/3} )  = z_0 + \beta (2\epsilon)^{1/3} \;,
+\end{equation}
+where $\beta$ is some finite constant. So finally, we can write
+\begin{equation}
+  \phi(y) = \alpha \Ai \bigg( (y+\beta)(2\epsilon)^{1/3} - |z_0| \bigg)
+\end{equation}
+
+
+\subsection{Continuum Limit of the Left-Eigenvector}
+
+Again, using \eqref{eq:z+} and \eqref{eq:q} we can make a continuum approximation for $\psi(y)$:
+\begin{equation}
+  (2-\mu - 2y\epsilon) \psi(y) + 2\epsilon \frac{\D \psi}{\D y} + \frac{\D^2 \psi}{\D y^2} = 0 + \mbox{higher order terms} \;.
+\end{equation}
+Assuming the second term
+\begin{equation*}
+  2\epsilon \frac{\D \psi}{\D y}
+\end{equation*}
+can be neglected with the other higher order terms {\bf (NOTE: 2015-06-15: Can it be negledted with the higher order terms???)}, then we recover the same equation \eqref{eq:ctm} as we did for $\phi$: 
+\begin{equation}\label{eq:ctm_psi}
+  (2-\mu - 2y\epsilon) \psi(y) + \frac{\D^2 \psi}{\D y^2} = 0 + \mbox{higher order terms} \;.
+\end{equation}
+However, from \eqref{eq:psi_bc}, we find a different boundary condition:
+\begin{equation}
+   \tilde{D}\psi(1) = \left(\mu - \frac{c^2}{\mu} - 1 \right) \psi(1) = \left. \frac{ \D \psi }{\D y} \right|_{y=1} \;.
+\end{equation}
+Thus, $\psi(y)$ solves the same differential equation as $\phi(y)$, except with a different boundary condition:
+\begin{equation}\label{eq:psi_gen_soln}
+  \psi(y) = \alpha \Ai(A + (2\epsilon)^{1/3}y) \;.
+\end{equation}
+As with $\phi(y)$,
+\begin{equation}
+ \frac{\psi'(0)}{\psi(0)} = \tilde{D} > 0 \;,
+\end{equation}
+and so
+\begin{equation}
+  \frac{\Ai'(A)}{\Ai(A)} = \frac{\tilde{D}}{(2\epsilon)^{1/3}} >> 1 \;.
+\end{equation}
+$A$ is obtained using the boundary condition again, but with a slight modification due the the boundary condition being at $y=1$, not $0$:
+\begin{equation}
+  A +(2\epsilon)^{1/3} = z_0 + \Or( (2\epsilon)^{1/3} )  = z_0 + \beta (2\epsilon)^{1/3} \;,
+\end{equation}
+and so
+\begin{equation}
+  \psi(y) = \alpha \Ai(z_0 + (y+\beta-1)(2\epsilon)^{1/3}) \;.
+\end{equation}
+
+
+\subsection{Computing Properties of $P(y)$}
+
+From \eqref{eq:phi_basis}, 
+\begin{equation}
+  \ket{\phi} = \int_{0}^\infty  \D y\; \phi(y') \ket{y'}\;,
+\end{equation}
+thus
+\begin{equation}
+  \braket{y}{\phi} = \phi(y) \;.
+\end{equation}
+Similarly,
+\begin{equation}
+  \braket{\psi}{y} = \psi(y)\;.
+\end{equation}
+Now we can write
+\begin{equation}
+  P(0) = \frac{c}{\mu} \frac{\psi(1)\phi(0)}{Z} \;,
+\end{equation}
+and
+\begin{equation}
+ P(y) = \frac{ \psi(y)\phi(y)}{Z} \;, \quad y \ge 1 \;,
+\end{equation}
+where
+\begin{equation}
+  Z = \frac{c}{\mu}\psi(1)\phi(0)  + \int_{1}^\infty \D y' \; \psi(y')\phi(y') \;.
+\end{equation}
+To calculate the $n$-th moment of $P(y)$, we need to compute
+\begin{equation}
+  \langle y^n \rangle = \frac{1}{Z} \left( \frac{c}{\mu}\psi(1)\phi(0)  + \int_{1}^\infty \D y \; \psi(y)\phi(y) \right) \;.
+\end{equation}
+{\bf (NOTE: I'm not convinced. It seems I have an expression for $P(y)$ for $y=0$ and $y\in[1,\infty)$, but not for $y\in(0,1)$??)}
+
+%  OLD STUFF:
+% \begin{equation}
+%   \langle y^n \rangle = \int_0^\infty \D y \; \frac{ y^n \phi(y)^2 }{Z} \;,
+% \end{equation}
+% which means computing
+% \begin{equation}
+%   \langle y^n \rangle = \int_0^\infty \D y \; \frac{\alpha^2 y^n }{Z} \left[ \Ai \bigg( (y+\beta)(2\epsilon)^{1/3} - |z_0| \bigg) \right]^2 \;,
+% \end{equation}
+% where
+% \begin{equation}
+%  Z = \int_0^\infty \D y' \; \alpha^2 \left[ \Ai \bigg( (y'+\beta)(2\epsilon)^{1/3} - |z_0| \bigg) \right]^2\;.
+% \end{equation}
+% The factors of $\alpha^2$ cancel, so 
+% \begin{equation}
+% %   \langle y^n \rangle = \frac{ \int_0^\infty \D y \; y^n \left[ \Ai \bigg( (y+\beta)(2\epsilon)^{1/3} - |z_0| \bigg) \right]^2 }{ \int_0^\infty \D y' \; \left[ \Ai \bigg( (y'+\beta)(2\epsilon)^{1/3} - |z_0| \bigg) \right]^2 } \;.
+% \end{equation}
+
+\subsection{Scaling}
+
+The main thing that we want to get from this analysis is how properties such as the density of contacts, $\rho$, the mean distance from the membrane, $\langle y \rangle$, and the width $W = \sqrt( \langle y^2 \rangle - \langle y \rangle^2)$ scale with $L$. 
+% From previous analysis
+% \begin{equation}
+%   z_+^{-1} = q = 1 - \epsilon = 1 - \frac{1}{4u+1} \frac{d}{L} + \OLL \;.
+% \end{equation}
+% Thus
+% \begin{equation}
+%   \epsilon \sim \frac{1}{L} \;,
+% \end{equation}
+% and so all we really need to find is how $\langle y^n \rangle$ scales with $\epsilon$. {\bf (NOTE: actually, see below: have to find how $P(0)$ scales with $\epsilon$ before finding how $\epsilon$ scales with $P(0)$.)}
+We write
+\begin{equation}
+  z_+^{-1} = q = 1 - \epsilon \;, \quad \epsilon \ll 1 \;, 
+\end{equation}
+
+
+% Using the substitution
+% \begin{equation}
+%   z = (y+\beta)(2\epsilon)^{1/3} + z_0 \;,
+% \end{equation}
+% \begin{equation}
+%   \frac{\D y}{ \D z} = (2\epsilon)^{-1/3} \;,
+% \end{equation}
+% and the limits of integration are
+% \begin{eqnarray}
+%   y=0 \;: & & \quad z = \beta(2\epsilon)^{1/3} + z_0 \nonumber \\
+%   y\to\infty \;: & & \quad z\to\infty 
+% \end{eqnarray}
+% Also, 
+% \begin{equation}
+%   y = (2\epsilon)^{-1/3}(z-z_0) - \beta = (2\epsilon)^{-1/3}(z-z_0) \left( 1 - \frac{\beta}{(2\epsilon)^{-1/3}(z-z_0)} \right) \;.
+% \end{equation}
+% Because $\epsilon^{-1/3} \gg 1$,
+% \begin{equation}
+%   \frac{\beta}{(2\epsilon)^{-1/3}(z-z_0)} \ll 1 \;,
+% \end{equation}
+% and so
+% \begin{equation}
+%   y^n \simeq (2\epsilon)^{-n/3}(z-z_0)^n \left( 1 - \frac{n\beta}{(2\epsilon)^{-1/3}(z-z_0)} \right) \;.
+% \end{equation}
+% 
+% We can now substitute all of these things into the integral above:
+% % \begin{eqnarray}
+%   & \displaystyle\int_0^\infty \D y \; y^n \left[ \Ai \big( (y+\beta)(2\epsilon)^{1/3} - |z_0| \big) \right]^2 & = \cdots  \nonumber \\
+%   \cdots = & (2\epsilon)^{-(n+1)/3} \displaystyle\int_{\beta(2\epsilon)^{1/3}+z_0} ^\infty \D z \; (z-z_0)^n \big[ \Ai(z) \big]^2 & \;,
+% \end{eqnarray}
+% so
+% \begin{equation}
+%   \langle y^n \rangle = (2\epsilon)^{-n/3} \frac{ \displaystyle\int_{\beta(2\epsilon)^{1/3}+z_0} ^\infty \D z \; (z-z_0)^n \big[ \Ai(z) \big]^2 }{ \displaystyle\int_{\beta(2\epsilon)^{1/3}+z_0} ^\infty \D z \; \big[ \Ai(z) \big]^2 } \;.
+% \end{equation}
+% Unfortunately, the two integrals do not cancel because of the factor $(z+z_0)^n$. A plot of the region over which the integral is performed is shown in Figure \ref{fig:xnAiry2}, for the alternative substitution
+%  \begin{equation}
+%    x = (y+\beta)(2\epsilon)^{1/3} \;.
+%  \end{equation}
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.5\textwidth]{xn_plusz0_airy2}
+  \caption{Plot of the (significant part of the) region of integration over $x^n \Ai(x+z_0)^2$, for $n = 0,1,2$. $z_0 \simeq -2.338110$ (\emph{WolframAlpha}).}
+  \label{fig:xnAiry2}
+\end{figure}
+% If $\beta=0$ (or $\beta(2\epsilon)^{1/3}$ is small enough relative to $z_0$ that we can discard it) then, even though the integrals do not cancel, they no longer have any $\epsilon$ dependance, so in this case
+% \begin{equation}
+%   \langle y^n \rangle \sim \epsilon^{-n/3} \;.
+% \end{equation}
+
+To determine how $\epsilon$ is related to $L$ we must use the fact that $\pzero \sim L^{-1}$ and find how $\pzero$ scales with $\epsilon$.
+\begin{equation}
+  \pzero = \frac{\psi(1)\phi(0)}{Z}
+\end{equation}
+and
+\begin{equation}
+  \psi(1)\phi(0) = \alpha^2 [ \Ai(z_0 + \beta(2\epsilon)^{1/3}) ]^2 \;.
+\end{equation}
+Using
+\begin{eqnarray}
+  \Ai(z_0 + \delta) & \simeq & \Ai'(z_0)\delta + \frac{\Ai''(z_0)}{2} \delta^2 + \ldots \nonumber \\
+  \bigg( \Ai(z_0 + \delta) \bigg)^2 & \simeq & \bigg( \Ai'(z_0) \bigg)^2 \delta^2 + \Or(\delta^3) \;,
+\end{eqnarray}
+with
+\begin{equation}
+  \delta = \beta^2(2\epsilon)^{2/3} \;,
+\end{equation}
+we see that
+\begin{equation}
+  \psi(1)\phi(0) \sim \epsilon^{2/3} \;.
+\end{equation}
+$Z$ also scales with epsilon. 
+\begin{equation}
+ Z = \frac{c}{\mu}\psi(1)\phi(0)  + \int_{1}^\infty \D y \; \psi(y)\phi(y)  = \frac{c}{\mu}\psi(1)\phi(0) + \tilde{Z}\;.
+\end{equation}
+Explicitly, $\tilde{Z}$ is
+\begin{equation}
+ \tilde{Z} = \int_{1}^\infty \D y \; \alpha^2 \Ai( z_0 + (y+\beta-1)(2\epsilon)^{1/3}) \Ai ( z_0 + (y+\beta)(2\epsilon)^{1/3}) \;.
+\end{equation}
+Using the susbstitution
+\begin{equation}
+  x = (y+\beta-1)(2\epsilon)^{1/3} \;,
+\end{equation}
+\begin{equation}
+ \tilde{Z} = \alpha^2 (2\epsilon)^{-1/3} \int_{\beta(2\epsilon)^{1/3}}^\infty \D y \;  \Ai( z_0 + x) \Ai ( z_0 + x + (2\epsilon)^{1/3}) \;.
+\end{equation}
+We then expand in terms of $(2\epsilon)^{1/3}$, to get 
+\begin{eqnarray}
+ \tilde{Z}  & = & (2\epsilon)^{-1/3} \alpha^2  \int_{\beta(2\epsilon)^{1/3}}^\infty \D y \;  \Ai( z_0 + x) \Ai ( z_0 + x)  \nonumber \\
+            & + & \alpha^2  \int_{\beta(2\epsilon)^{1/3}}^\infty \D y \;  \Ai( z_0 + x) \Ai' ( z_0 + x )  \nonumber \\
+            & + & \Or(2\epsilon)^{1/3}\;.
+\end{eqnarray}
+% Using the substitution above for $y$ in terms of $x$ given above, 
+% \begin{equation}
+%   Z = (2\epsilon)^{-1/3} \int_{\beta(2\epsilon)^{1/3}}^\infty [ \Ai ( x + z_0 ) ]^2 \D x \;.
+% \end{equation}
+% Thus,
+% \begin{equation}
+%   Z \sim \epsilon^{-1/3}
+% \end{equation}
+% and
+% \begin{equation}
+%   P(0) \sim \frac{ \epsilon^{2/3} }{ \epsilon^{-1/3} } \sim \epsilon^1 \;.
+% \end{equation}
+% This means that
+% \begin{equation}
+%   \epsilon \sim L^{-1}
+% \end{equation}
+% and
+% \begin{equation}
+%   \langle y^n \rangle \sim L^{n/3} \;,
+% \end{equation}
+% which gives
+% \begin{equation}
+%   \langle y \rangle \sim L^{1/3} \;, \quad W \sim L^{1/3} \;.
+% \end{equation}
+So
+\begin{equation}
+  Z \sim \epsilon^{2/3} + \epsilon^{-1/3} \;,
+\end{equation}
+and
+\begin{equation}
+  P(0) \sim \frac{\epsilon^{2/3}}{\epsilon^{2/3} + \epsilon^{-1/3}} = \frac{\epsilon}{\epsilon + 1} \sim \epsilon \;.
+\end{equation}
+This means that
+\begin{equation}
+  \epsilon \sim \frac{1}{L} \;,
+\end{equation}
+and so
+\begin{equation}
+  \langle y \rangle \sim L^{1/3} \;, \quad W \sim L^{1/3} \;.
+\end{equation}
+{\bf (NOTE: this comes from $\langle y^n \rangle$ scaling, which I've assumed is unchanged...)}
+
+\section{Reduced Transfer Matrix}
+
+\emph{(See Section \ref{sec:K_thoughts} for my thoughts on how this might tell us about how the width, etc... scales with $L$.)}\newline
+
+The quantity
+\begin{equation}
+  P(y) = \frac{ \bra{y} T^L \ket{y} }{ \sum_{y'} \bra{y'} T^L \ket{y'} }
+\end{equation}
+is the probability that a single site picked at random has height $y$. In the mean field equation we used the probability $K$ that the interface \emph{does not} touch the membrane. Explicitly, we chose
+\begin{equation}\label{eq:K_no_correl}
+  K = (1-P(0))^L \;.
+\end{equation}
+This choice assumes that there are no correlations between the neighbouring sites on the interfce, however now that we've started using the transfer matrix $T$, we have started to put nearest-neightbour height restrictions back in. It follows then that the choice in \eqref{eq:K_no_correl} may not be the best one.
+
+We can define a reduced transfer matrix $\tilde{T}$ which selects only configurations where $\emph{none}$ of the heights are $0$. There are two possible definitions ot $\tilde{T}$ that can do this:
+\begin{equation}
+  \tilde{T}_r = T(\mathbb{1}-\ket{0}\bra{0}) = T\sum_{y=1}^\infty \ket{y}\bra{y} \;,
+\end{equation}
+\begin{equation}
+  \tilde{T}_r = \begin{pmatrix}
+            0 & c   & 0   & 0   & 0   & \cdots \\
+            0 & 0   & q   & 0   & 0   &        \\
+            0 & q^2 & 0   & q^2 & 0   &        \\
+            0 & 0   & q^3 & 0   & q^3 &        \\
+       \vdots &     &     &     &     & \ddots \\
+      \end{pmatrix} \;;
+\end{equation}
+or
+\begin{equation}
+  \tilde{T}_l = (\mathbb{1}-\ket{0}\bra{0})T = \sum_{y=1}^\infty \ket{y}\bra{y}T \;,
+\end{equation}
+\begin{equation}
+  \tilde{T}_r = \begin{pmatrix}
+            0 & 0   & 0   & 0   & 0   & \cdots \\
+            q & 0   & q   & 0   & 0   &        \\
+            0 & q^2 & 0   & q^2 & 0   &        \\
+            0 & 0   & q^3 & 0   & q^3 &        \\
+       \vdots &     &     &     &     & \ddots \\
+      \end{pmatrix} \;.
+\end{equation}
+
+Whichever definition we use, the probability have a configuration does not touch the membrane is
+\begin{equation}
+  K = \frac{ \sum_y \bra{y} \tilde{T}^L \ket{y} }{\sum_{y'} \bra{y'} T^L \ket{y'}}  = \frac{1}{Z} \sum_y \bra{y} \tilde{T}^L \ket{y} \;,
+\end{equation}
+where $Z$ is the same partition function for all configurations given in the previous sections. To calculate $K$ we need to find the eigenvectors of $\tilde{T}$ in the same way we did for $T$. 
+
+\subsection{Eigevectors of $\tilde{T}_r$}
+
+The right eigenvectors $\phi_{r,y}$ satisfy
+\begin{eqnarray}
+  c\phi_{r,1} & = & \mu \phi_{r,0} \;, \\
+  q \phi_{r,2} & = & \mu \phi_{r,1} \;, 
+\end{eqnarray}
+and
+\begin{equation}
+  q^y (\phi_{r,y-1} + \phi_{r,y+1} ) = \mu \phi_{r,y} \;, \quad y > 1 \;.
+\end{equation}
+
+The left eigenvectors of of $\tilde{T}_r$ satisfy
+\begin{eqnarray}
+  0 & = & \mu \psi_{r,0} \;, \\
+  c \psi_{r,0} + q^2 \psi_{r,2} & = & \mu \psi_{r,1} \;,
+\end{eqnarray}
+and
+\begin{equation}
+  q^{y-1} \psi_{r,y-1} + q^{y+1} \psi_{r,y+1} = \mu \psi_{r,y} \;, \quad y > 1 \;.
+\end{equation}
+
+
+\subsection{Eigevectors of $\tilde{T}_l$}
+
+The right eigenvectors $\phi_{l,y}$ satisfy
+\begin{eqnarray}
+  0 & = & \mu \phi_{l,0} \;, \\
+  q (\phi_{l,0} + \phi_{l,2}) & = & \mu \phi_{l,1} \;, 
+\end{eqnarray}
+and
+\begin{equation}
+  q^y (\phi_{l,y-1} + \phi_{l,y+1} ) = \mu \phi_{l,y} \;, \quad y > 1 \;.
+\end{equation}
+
+The left eigenvectors of of $\tilde{T}_l$ satisfy
+\begin{eqnarray}
+  q \psi_{l,1} & = & \mu \psi_{l,0} \;, \\
+  q^2 \psi_{l,2} & = & \mu \psi_{l,1} \;,
+\end{eqnarray}
+and
+\begin{equation}
+  q^{y-1} \psi_{l,y-1} + q^{y+1} \psi_{l,y+1} = \mu \psi_{l,y} \;, \quad y > 1 \;.
+\end{equation}
+
+\subsection{Continuum Limit}
+
+We can take the continuum limit in the same way as before:
+\begin{equation}
+  q = 1 - \epsilon \;,
+\end{equation}
+\begin{equation}
+  \chi_{y\pm 1} = \chi(y) \pm \frac{\D \chi }{\D y} + \frac{1}{2} \frac{ \D^2 \chi}{\D y^2} + \mbox{h.o.t.} \;,
+\end{equation}
+where for notation's sake $\chi(y)$ can be either $\phi(y)$ or $\psi(y)$. For both $\phi$ and $\psi$, and both $\tilde{T}_r$ and $\tilde{T}_l$, the eigenfunctions satisfy the same differential equations as the eigenfunctions of $T$:
+\begin{equation}\label{eq:ctm}
+  (2-\mu - 2y\epsilon) \phi(y) + \frac{\D^2 \phi}{\D y^2} = 0 + \mbox{higher order terms} \;, %partial derivative?
+\end{equation}
+\begin{equation}
+  (2-\mu - 2y\epsilon) \psi(y) + 2\epsilon \frac{\D \psi}{\D y} + \frac{\D^2 \psi}{\D y^2} = 0 + \mbox{higher order terms} \;.
+\end{equation}
+The difference comes in the boundary conditions for $\phi_r(y)$, $\psi_r(y)$, $\phi_l(y)$ and $\psi_l(y)$.
+
+\subsubsection{Boundary conditions for $\tilde{T}_r$}
+
+The relationship
+\begin{equation}
+  (1-\epsilon) \phi_{r,2} = \mu \phi_{r,1}
+\end{equation}
+gives the boundary condition
+\begin{equation}\label{eq:rr_bc}
+  \left. \frac{ \D \phi_r}{\D y} \right|_{y=1} = [\mu - 1 + \mu \epsilon + \Or(\epsilon^2) ] \phi_r(1) \;, \quad \mu \ne 0 \;.
+\end{equation}
+ 
+The relationship
+\begin{equation}
+ (1-\epsilon^2) \psi_{r,2} = \psi_{r,1}   
+\end{equation}
+gives the boundary condition
+\begin{equation}\label{eq:rl_bc}
+  \left. \frac{ \D \psi_r}{ \D y} \right|_{y=1} = [\mu -1  + 2\mu\epsilon + \Or(\epsilon^2) ] \psi_r(y) \;, \quad \mu \ne 0 \;.
+\end{equation}
+
+\subsubsection{Boundary conditions for $\tilde{T}_l$}
+
+The relationship
+\begin{equation}
+  (1-\epsilon)\phi_{l,2} = \mu \phi_{l,1}
+\end{equation}
+gives the boundary condition
+\begin{equation}\label{eq:lr_bc}
+  \left. \frac{ \D \phi_l}{\D y} \right|_{y=1} = [\mu - 1 + \mu \epsilon + \Or(\epsilon^2) ] \phi_l(1) \;, \quad \mu \ne 0 \;.
+\end{equation}
+
+The relationship
+\begin{equation}
+  (1-\epsilon)^2 \psi_{l,2} = \mu \psi_{l,1} 
+\end{equation}
+gives the boundary condition
+\begin{equation}\label{eq:ll_bc}
+  \left. \frac{ \D \psi_l}{ \D y} \right|_{y=1} = [\mu -1  + 2\mu\epsilon + \Or(\epsilon^2) ] \psi_l(y) \;, \quad \mu \ne 0 \;.
+\end{equation}
+
+\subsubsection{Differences at $y=0$}
+
+So we see that the only difference between the continuum limit eigenfunctions of $\tilde{T}_r$ and $\tilde{T}_l$ come in at $y=0$:
+\begin{eqnarray}
+  c\phi_{r,1} = \mu \phi_{r,0} & \to & \phi_r(0) = \frac{c}{\mu} \phi_r(1) \\
+  0 = \mu \psi_{r,0} & \to & \psi_r(0) = 0 \;, \mu \ne 0 \\
+  0 = \mu \phi_{l,0} & \to & \phi_l(0) = 0 \;, \mu \ne 0 \\
+  q \psi_{l,1} = \mu \psi_{l,0} & \to & \psi_l(0) = \frac{(1-\epsilon)}{\mu} \;.
+\end{eqnarray}
+ This is good because it means that
+\begin{equation}
+  P(0) = \frac{\psi_x(0)\phi_x(0)}{Z} = 0 \;,
+\end{equation}
+whichever definition of $\tilde{T}$ you use ($x = l,r$).
+
+\subsubsection{Solution}
+
+So now we can do away with the subscript $r$,$l$ notation. The solution for $\phi(y)$ is the same as the earlier result \eqref{eq:phi_gen_soln}:
+\begin{equation}
+ \phi(y) = \alpha \Ai(A + (2\epsilon)^{1/3} y) \;,
+\end{equation}
+and likewise, from \eqref{eq:psi_gen_soln},
+\begin{equation}
+  \psi(y) = \alpha \Ai(A + (2\epsilon)^{1/3} y)
+\end{equation}
+as well.
+
+Now we look at the boundary conditions. From \eqref{eq:rr_bc} and \eqref{eq:lr_bc}, the boundary condition(s) for $\phi(y)$, we find
+\begin{eqnarray}
+  (2\epsilon)^{1/3} \frac{\Ai'( A + (2\epsilon)^{1/3} )}{\Ai(A + (2\epsilon)^{1/3})} & = & \mu -1 + \mu \epsilon + \Or(\epsilon^2) \;, \\
+                    \frac{\Ai'( A + (2\epsilon)^{1/3} )}{\Ai(A + (2\epsilon)^{1/3})} & = & \frac{\mu -1}{(2\epsilon)^{1/3}} + \Or(\epsilon^{2/3}) \;,
+\end{eqnarray}
+where again
+\begin{equation}
+  \Ai'(z) = \left. \frac{ \D \Ai(\tilde{z})}{\D \tilde{z}} \right|_{\tilde{z}=z} \;.
+\end{equation}
+Just as before, as $\epsilon\to0$, this boundary condition is satisfied when
+\begin{equation}
+  A + (2\epsilon)^{1/3} = z_0 + \beta(2\epsilon)^{1/3} + \Or((2\epsilon)^{2/3}) \;.
+\end{equation}
+Thus,
+\begin{equation}
+  \phi(y) = \alpha \Ai( z_0 + (y + \beta - 1)(2\epsilon)^{1/3} ) \;.
+\end{equation}
+For $\psi(y)$, using the boundary condition(s) \eqref{eq:rl_bc} and \eqref{eq:ll_bc}, an almost identical analysis follows, yielding an identical solution:
+\begin{equation}
+  \psi(y) = \alpha \Ai( z_0 + (y + \beta - 1)(2\epsilon)^{1/3} ) \;.
+\end{equation}
+The constants $\alpha$ and $\beta$ are not necessarily the same for both however, so we label them $\alpha_\phi$, $\beta_\phi$, $\alpha_\psi$, and $\beta_\psi$ from now on.
+So finally, we have found
+\begin{equation}
+  \bra{y}\tilde{T}^L\ket{y} = \alpha_\phi\alpha_\psi\int_1^\infty \D y \; \Ai[ z_0 + (y + \beta_\phi - 1)(2\epsilon)^{1/3} ]\Ai[ z_0 + (y + \beta_\psi - 1)(2\epsilon)^{1/3} ] \;.
+\end{equation}
+
+\subsubsection{Scaling}
+
+We can perform the same scaling analysis as previously. First, use the substitution
+\begin{equation}
+ x = (y + \beta_\phi -1)(2\epsilon)^{1/3} \;,
+\end{equation}
+to write
+\begin{equation}
+  \bra{y}\tilde{T}^L\ket{y} = \alpha_\phi\alpha_\psi (2\epsilon)^{-1/3} \int_{\beta_\phi(2\epsilon)^{1/3}}^\infty \D x \; \Ai[ z_0 + x ]\Ai[ z_0 + x (\beta_\psi - \beta_\phi)(2\epsilon)^{1/3} ] \;.
+\end{equation}
+Assuming that the integral scales like $\epsilon^0$ to leading order in $\epsilon$, then
+\begin{equation}
+  \bra{y}\tilde{T}^L\ket{y} \sim (2\epsilon)^{-1/3} \sim \epsilon^{-1/3} \;.
+\end{equation}
+From previous calculation, $Z$ scales like $\epsilon^{-1/3}$, so
+\begin{equation}
+  K \sim \frac{ \epsilon^{-1/3} }{ \epsilon^{-1/3} } \sim \epsilon^0 \;.
+\end{equation}
+
+
+\subsection{Understanding the scaling - the relationship with $L$?}\label{sec:K_thoughts}
+
+When we defined $K = (1-P(0))^L$ it was clear how the system size $L$ came into the equations via $P(0)$, and we could link $\epsilon$ to $L$, and thus $\overline{y}$ and $W^2$ to $L$. Now, with a general $K$, which we try to calculate using the transfer matrix $\tilde{T}$, $L$ doesn't come into it anywhere! In fact, it's not even clear that $q \simeq 1- \epsilon$. It is only clear that $z_+ = z_+(u,K)$ and $z_- = z_-(u,K)$. What does this mean? Well, probably that the Airy function analysis, and the continuum limit using $\epsilon$, are not valid. $T = T(u,K)$ and $\tilde{T} = \tilde{T}(u,K)$, so maybe we have to find $K$ in a horrible self-consistent way. That still doesn't tell us how to get $L$ involved. Perhaps we have then to guess $P(0) \sim L^{-1}$ as our simulations suggest, and then use this and $K$ to find how the width scales with $L$?
+
+
+
+
+\section{Transfer Matrix with $q=1$}
+
+We can see what scaling we get when $q=1$. As can be seen from Figure \ref{fig:evects-epsilon}, when $\epsilon > 0$ the eigenvectors decay fast, as found above, and when $\epsilon =0$, the eigenvectors are extended and periodic, and there is a continuous spectrum of eigenvalues.
+\begin{figure}
+  \centering
+  \includegraphics[width=\textwidth]{eigs_N500c05_e-range.pdf}
+  \label{fig:evects-epsilon}
+\end{figure}
+
+We proceed by redefining the transfer matrix $T$ with $q=1$:
+\begin{equation}
+  T = \begin{pmatrix}
+       0 & c & 0 & 0 & 0 & \cdots \\
+       1 & 0 & 1 & 0 & 0 &        \\
+       0 & 1 & 0 & 1 & 0 &        \\
+       0 & 0 & 1 & 0 & 1 &        \\
+       \vdots &  &  &  &  & \ddots \\
+      \end{pmatrix} \;,
+\end{equation}
+where $c=(1+z_-) <1$. Solving for the right eigenvectors 
+\begin{equation}
+  \ket{\phi(\mu)} = \sum_{y=0}^\infty \phi_y(\mu) \ket{y}
+\end{equation}
+and eigenvalues $\mu$ gives us the recursion relation
+\begin{equation}
+  \mu\phi_y = \phi_{y+1} + \phi_{y-1} \;, \quad y>0 \;,
+\end{equation}
+with the boundary condition
+\begin{equation}
+  \mu\phi_0 = c\phi_1 \;.
+\end{equation}
+For the left eigenvectors
+\begin{equation}
+  \bra{\psi(\mu)} = \sum_{y=0}^\infty \psi_y(\mu) \bra{y} \;,
+\end{equation}
+with the same eigenvalues $\mu$, we find the same recursion relation
+\begin{equation}
+  \mu \psi_y = \psi_{y+1} + \psi_{y-1} \;,
+\end{equation}
+but with different boundary conditions:
+\begin{equation}
+  \mu \psi_0 = \psi_1 
+\end{equation}
+and
+\begin{equation}
+  \mu \psi_1 = c \psi_0 + \psi_2 \;.
+\end{equation}
+
+
+\subsection{Trial Solution}
+We proceed with the trial solution
+\begin{equation}
+  \phi_y = At^y + Bt^{-y} \;.
+\end{equation}
+With simple substitution it can be shown that this solution satisfies the recursion with the condition
+\begin{equation}
+  \mu = t_+ + t_+^{-1} = t_- + t_-^{-1} \;,
+\end{equation}
+Where
+\begin{equation}
+  t_\pm = \frac{\mu \pm (\mu^2-4)^{1/2}}{2} \;
+\end{equation}
+and
+\begin{equation}
+  t_+ = t_-^{-1} \;.
+\end{equation}
+Thus
+\begin{equation}
+  \phi_y = At_+^y + Bt_-^y \;.
+\end{equation}
+It is useful at this point to note some convenient relationships between $t$ and $\mu$:
+\begin{equation}
+  t_+ + t_- = \mu \;,
+\end{equation}
+\begin{equation}
+  t_+ - t_- = (\mu^2 -4)^{1/2} \;,
+\end{equation}
+\begin{equation}
+  t_+t_- = 1 \;,
+\end{equation}
+and
+\begin{equation}
+  t_+^2 + t_-^2 = \mu^2 - 2 \;.
+\end{equation}
+We can also try the same solution for $\psi$:
+\begin{equation}
+  \psi_y = \tilde{A}t_+^y + \tilde{B}t_-^y \;.
+\end{equation}
+There are three different solutions depending on $\mu$. 
+
+\subsubsection{$\mu > 2$}
+
+When $\mu > 2$, both $t_+$ and $t_-$ are real and positive. Thus,
+\begin{equation}
+  t_+ > t_- \;
+\end{equation}
+and
+\begin{equation}
+  t_+ > 1 \;, \quad t_- < 1 \;.
+\end{equation}
+As $y\to \infty$, $\phi_y \to At_+^y$, which is unbounded because $t_+>0$. Thus, $A=0$ and
+\begin{equation}
+  \phi_y = Bt_-^y \;.
+\end{equation}
+If we fit this to the boundary condition, we find
+\begin{equation}
+  t_- = \frac{\mu}{c} \;.
+\end{equation}
+If we substitute this back in to the equation for $t_-$ we find
+\begin{equation}
+  \frac{c-2}{2c} = \frac{\mu^2-4}{\mu^2} \;.
+\end{equation}
+Thus, for this solution to exist we require $c > 2$, but in our system $c < 1$, so we cannot use solutions with $\mu > 2$.
+
+
+\subsubsection{$\mu =2$}
+When $\mu = 2$,
+\begin{equation}
+  t_+ = t_- = \frac{\mu}{2} = 1 \;.
+\end{equation}
+So, in this case, 
+\begin{equation}
+  \phi_y = A + B
+\end{equation}
+for all $y$. Furthermore, the boundary condition can only be satisfied if
+\begin{equation}
+  A = -B \;, \quad \mbox{or} \quad A = B = 0 \;.
+\end{equation}
+Either way, this gives $\phi_y=0$ which is not a useful solution.
+
+
+
+\subsubsection{$\mu < 2$}
+When $\mu < 2$, $t_\pm$ are complex:
+\begin{equation}
+  t_\pm = t\mathrm{e}^{\pm i\theta} \;,
+\end{equation}
+\begin{equation}
+  t_+t_- = t^2 = 1 \;.
+\end{equation}
+Also,
+\begin{equation}
+  t_\pm = t_\mp^* \;, \quad t_\pm^* = t_\pm^{-1} \;.
+\end{equation}
+Thus, 
+\begin{equation}
+  \mu = 2\cos(\theta)\;,
+\end{equation}
+with
+\begin{eqnarray}
+  0 < & \theta & < \pi \nonumber \\
+  -2 < & \mu & < 2 
+\end{eqnarray}
+The boundary condition for the right egenvectors $\mu\phi_0=c\phi_1$ gives
+\begin{eqnarray}
+  \frac{\mu}{c}(A+B) & =&  A t_+ + Bt_- \nonumber \\
+  \left[ \mu \frac{1-c}{c} + t_- \right] A & = & -\left[ \mu\frac{1-c}{c} + t_+ \right] B \nonumber \\
+  \left[ \frac{\mu}{c} - \mu + t_- \right] A & = & -\left[ \frac{\mu}{c} - \mu + t_+ \right] B \nonumber \\
+  \left[ \frac{\mu}{c} - t_+ \right] A & = & -\left[ \frac{\mu}{c} - t_- \right] B \nonumber \\
+  \frac{B}{A} & = & -\frac{(\mu - ct_+)}{ (\mu - ct_-)}  \;,
+\end{eqnarray}
+Thus
+\begin{equation}
+  \phi_y = A \left[ t_+^y - \frac{(ct_+ - \mu)}{ (ct_- - \mu)} t_-^y \right] \;,
+\end{equation}
+for all $y\ge0$.
+
+For the left eigenvector, we substitute the first boundary condition $\mu\psi_0 = \psi_1$ into second boundary condition $\mu\psi_1 = c\psi_0+\psi_2$ to get
+\begin{equation}
+  \frac{\mu^2-c}{\mu} \psi_1 = \psi_2 \;.
+\end{equation}
+Using the solution $\psi_y = \tilde{A} t_+^y + \tilde{B} t_-^y$ we find
+\begin{equation}
+  \frac{\tilde{B}}{\tilde{A}} = - \frac{t_+}{t_-} \frac{(t_+\mu-\mu^2+c)}{(t_-\mu-\mu^2+c)}
+\end{equation}
+which can be simplified to 
+\begin{equation}
+  \frac{\tilde{B}}{\tilde{A}} = - \frac{(c t_+ - \mu)}{(ct_- - \mu )}\;.
+\end{equation}
+So we find the components of left eigenvector $\psi_y$ are
+\begin{equation}
+  \psi_y = \tilde{A} \left[ t_+^y - \frac{(c t_+ - \mu)}{(ct_- - \mu )} t_-^y \right] \;.
+\end{equation}
+for $y>0$. For $y=0$, we use the first boundary condition to find
+\begin{equation}
+  \psi_0 = \frac{\tilde{A}}{\mu} \left[ t_+ - \frac{(ct_+-\mu)}{(ct_--\mu)} t_- \right] \;.
+\end{equation}
+Note that, for $y>0$, $\psi_y = \phi_y$. $\psi_0 \ne \phi_0$.
+
+\subsubsection{Some Useful Related Algebra}
+
+We have $-2< \mu < 2$, with 
+\begin{equation}
+  \phi_y = A \left[ t_+^y - r t_-^y \right] \;,
+\end{equation}
+where
+\begin{equation}
+  r = \frac{(ct_+ - \mu)}{ (ct_- - \mu)} \;.
+\end{equation}
+
+Note that $r^*$ = $r^{-1}$, so we can write
+\begin{equation}
+  r = \mathrm{e}^{i\rho(\theta)} \;.
+\end{equation}
+With a bit of algebra, one can show that
+\begin{equation}
+  r(\mu(\theta)) = \frac{ (c-1)^2\mu^2 - (4-\mu^2) + 2i(c-1)\mu(4-\mu^2)^{1/2} }{ (c-1)^2\mu^2 + 4 - \mu^2 } \;, 
+\end{equation}
+and
+\begin{equation}
+  \cos\rho = \frac{ (c-1)^2 \cos^2 \theta - \sin^2\theta }{(c-1)^2 \cos^2 \theta + \sin^2\theta } \;, 
+\end{equation}
+\begin{equation}
+  \sin\rho = \frac{ 2(c-1) \cos\theta\sin\theta }{(c-1)^2 \cos^2 \theta + \sin^2\theta } \;, 
+\end{equation}
+
+Using $r^* = r^{-1}$, $t_+^* = t_-$, $t_- = t_+^{-1}$:
+\begin{equation}
+  \phi^*_y(\mu) = A^* \left[ t_-^y - r^{-1}t_+^y \right] \;,
+\end{equation}
+and so
+\begin{equation}
+  \phi_y(\mu) \phi^*_y(\mu) = - |A|^2 \left[ r t_-^y -2  + (rt_-^y)^{-1} \right] \;,
+\end{equation}
+which can be `simplified' to
+\begin{equation}
+  \phi_y(\mu) \phi^*_y(\mu) = 4|A|^2 \sin^2 \left( \frac{\rho - 2y\theta}{2} \right) \;.
+\end{equation}
+
+\subsection{Chebyshev Polynomial Solutions}
+
+The recursion relation 
+\begin{equation}
+  \mu \phi_y  = \phi_{y+1} + \phi_{y-1} \;,
+\end{equation}
+can be satisfied by the functions $T_n(x)$ and  $U_n(x)$, which are the Chebyshev Polynomials of the first and second kind respectively, which satisfy
+\begin{eqnarray}
+  T_0(x) & = & 1 \nonumber \\
+  T_1(x) & = & x \nonumber \\
+  2xT_n(x) & = & T_{n+1}(x) + T_{n-1}(x) \;
+\end{eqnarray}
+and
+\begin{eqnarray}
+  U_0(x) & = & 1 \nonumber \\
+  U_1(x) & = & 2x \nonumber \\
+  2xU_n(x) & = & U_{n+1}(x) + U_{n-1}(x) \;.
+\end{eqnarray}
+It is useful to note that these functions are real (for real $x$). We find numerically that the eigenvectors of the transfer matrix are also real. 
+
+We can satisfy the recursion relation for $\phi_y$ alongside the boundary condition $\mu\phi_0 = c\phi_1$ with the solution
+\begin{equation}
+  \phi_y(2x) = \alpha T_y(x) + \beta U_n(x) \;,
+\end{equation}
+where $2x = \mu$. If we now set $\phi_0 = 1$, we find $\beta = 1 - \alpha$, and using the boundary condition we find
+\begin{equation}
+  \phi_y(2x) = 2\left( \frac{c-1}{c}\right) T_y(x) +  \left(\frac{2-c}{c} \right) U_n(x) \;.
+\end{equation}
+
+We can try a similar solution for the left eigenfunctions $\psi_y$:
+\begin{equation}
+  \psi_y(2x) = \gamma T_y(x) + \delta U_y(x) \;.
+\end{equation}
+Using the boundary condition 
+\begin{equation}
+  2x\psi_1 = \frac{c}{2x} \psi_1 + \psi_2
+\end{equation}
+we find
+\begin{equation}
+  \delta = \frac{(c-2)}{2(1-c)} \gamma \;.
+\end{equation}
+Then, by setting $\psi_0 = 1$ and using $2x\psi_0 = \psi_1$ we find
+\begin{equation}
+  \gamma = 2(c-1)
+\end{equation}
+and
+\begin{equation}
+  \psi_y(2x) = 2(c-1) T_y(x) + (2-c) U_y(x) = c\phi_y(2x) \;.
+\end{equation}
+for $y>0$. For $y=0$, $\psi_0 = 1$ as we fixed earlier. (Note: according to the formula for $y>0$, $\psi_0 = 2 $ which is not correct.)
+
+\subsection{Calculating $P(y)$ and Moments}
+
+As noted previously
+\begin{equation}
+  P(y) = \frac{ \bra{y} T^L \ket{y} }{ Z } \;,
+\end{equation}
+where
+\begin{equation}
+  Z = \sum_{y'=0}^\infty \bra{y'} T^L \ket{y'} \;.
+\end{equation}
+To calculatate $P(y)$ we must compute the integral
+\begin{equation}
+  P(y) = \frac{ \bra{y} \displaystyle\int_{-2}^2 \D \mu \; \mu^L T^L \ket{\phi(\mu)} \braket{\psi(\mu)}{y} }{ Z }
+\end{equation}
+With the eigenvectors calculated above, we find that, for $y>0$, 
+\begin{equation}
+  P(y) = \frac{ 2^{L+1}}{c} \frac{1}{ Z }\displaystyle\int_{-1}^1 \D x \; x^L \left[ \psi_y(2x) \right]^2 \;, 
+\end{equation}
+where
+\begin{eqnarray}
+  \left[ \psi_y(2x) \right]^2 & = & 4(c-1)^2 \left[ T_y(x) \right] ^2 \nonumber \\
+			      & + & 4(c-1)(2-c) T_y(x)U_y(x) \nonumber \\
+			      & + & (2-c)^2 \left[ U_y(x) \right]^2 \;.
+\end{eqnarray}
+For $y=0$:
+\begin{equation}
+  P(0) = \frac{ 2^{L+1}}{ Z }\displaystyle\int_{-1}^1 \D x \; x^L = \; \frac{ 2^{L+1}}{ Z } \frac{(-1)^L+1}{L+1} \;.
+\end{equation}
+Thus
+\begin{equation}
+  P(0) = \begin{cases}
+	    0 & : L \mbox{ odd} \\
+	    \frac{ 2^{L+2}}{ Z(L+1) }& : L \mbox{ even}
+         \end{cases} \;.
+\end{equation}
+This makes some sense because it's impossible to impose the periodic boundary condition ($\bra{y} \cdots \ket{y}$) if $L$ is odd. I have assumedthat $Z$ doesn't diverge; I don't know whether or not it diverges, but I have a feeling it does.
+
+Using the identity (according to wikipedia)
+\begin{equation}
+  2T_n(x) = U_y(x) - U_{y-2}(x) \;,
+\end{equation}
+we can write
+\begin{equation}
+  \psi_y(2x) = U_y(x) + (1-c) U_{y-2}(x) \;.
+\end{equation}
+
+
+% APPENDICES ------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+\newpage
+\appendix
+
+\section{Chebyshev Polynomial Relations (From Wikipedia)}
+
+\begin{equation}
+  T_n(x) = \frac{1}{2} ( U_n(x) - U_{n-2}(x) )
+\end{equation}
+\begin{equation}
+  T_{n+1}(x) = xT_n(x) - (1-x^2)U_{n-1}(x)
+\end{equation}
+\begin{equation}
+  T_n(x) = U_n(x) - xU_{n-1}(x)
+\end{equation}
+
+\begin{eqnarray}
+ T_0(x) = 1 & \;, &  U_{-1}(x) = 0 \nonumber \\
+ T_{n+1}(x) & = & xT_n(x) - (1-x^2)U_{n-1}(x) \nonumber \\
+ U_n(x) & = & xU_{n-1}(x) + T_n(x)
+\end{eqnarray}
+
+\begin{equation}
+  T_n(x)^2 - T_{n-1}(x)T_{n+1}(x) = 1-x^2 > 0 \;, \quad \mbox{for} \quad -1 < x < 1
+\end{equation}
+\begin{equation}
+  U_n(x)^2 - U_{n-1}(x)U_{n+1}(x) = 1 > 0
+\end{equation}
+
+\begin{equation}
+  \int_{-1}^{1} \frac{T_n(y)}{(y-x) \sqrt{1-y^2} } \D x = \pi U_{n-1}(x)
+\end{equation}
+\begin{equation}
+  \int_{-1}^{1} \frac{ \sqrt{1-y^2} U_{n-1}(y) }{ y-x} \D x = -\pi T_n(x)
+\end{equation}
+
+\begin{equation}
+  \int_{-1}^{1} \frac{T_n(x)T_m(x)}{\sqrt{1-x^2}} \D x = 
+    \begin{cases}
+      0 & :n \ne m \\
+      \pi & : n = m = 0 \\
+      \pi/2 & : n = m \ne 0 \\
+    \end{cases}
+\end{equation}
+\begin{equation}
+  \int_{-1}^{1} U_n(x)U_m(x) \sqrt{1-x^2} \D x = 
+    \begin{cases}
+      0 & :n \ne m \\
+      \pi/2 & : n = m \ne 0 \\
+    \end{cases} 
+\end{equation}
+
+
+
+ 
+
+% \section{Vector Notes}
+% 
+% \subsection{Definitions}
+% 
+% $\ket{y}$:
+% \begin{equation}
+%   \ket{0} = \begin{pmatrix}1 \\ 0 \\ 0 \\ \vdots \\ \end{pmatrix} \;,\quad \ket{1} = \begin{pmatrix}0 \\ 1 \\ 0 \\ \vdots \\ \end{pmatrix} \;, \quad \ket{2} = \begin{pmatrix}0 \\ 0 \\ 1 \\ \vdots \\ \end{pmatrix} \;,\quad \mbox{etc.} \;.
+% \end{equation}
+% $\bra{y}$:
+% \begin{equation}
+%   \bra{0} = \begin{pmatrix}1 & 0 & 0 & \cdots \end{pmatrix} \;,\quad \bra{1} = \begin{pmatrix}0 & 1 & 0 & \cdots \end{pmatrix} \;, \quad \bra{2} = \begin{pmatrix}0 & 0 & 1 & \cdots \end{pmatrix} \;,\quad \mbox{etc.} \;.
+% \end{equation}
+% \begin{equation}
+%   \ket{\phi(\mu)} = \sum_{y=0}^\infty \phi_y(\mu) \ket{y} \;.
+% \end{equation}
+% \begin{equation}
+%   \bra{\phi(\mu)} = \sum_{y=0}^\infty \phi^*_y(\mu) \bra{y} \;.
+% \end{equation}
+% \begin{equation}
+%   \bra{\psi(\mu)} = \sum_{y=0}^\infty \psi_y(\mu) \bra{y} \;.
+% \end{equation}
+% \begin{equation}
+%   \ket{\psi(\mu)} = \sum_{y=0}^\infty \psi^*_y(\mu) \ket{y} \;.
+% \end{equation}
+% Matrix, $T$:
+% \begin{equation}
+%   T = T_{yy'} \ket{y}\bra{y'} \;.
+% \end{equation}
+% Transfer matrix, $T$:
+% \begin{eqnarray}
+%   T_{yy'} & = & \sum_{x}\mu_x \phi_y(\mu_x) \phi^*_{y'}(\mu_x) \nonumber \\
+%   T & = & \sum_{\mu} \mu \ket{\phi(\mu)} \bra{\phi(\mu)}
+% \end{eqnarray}
+% $T^L$:
+% \begin{eqnarray}
+%   T^L_{yy'} & = & \sum_{x}\mu^L_x \phi_y(\mu_x) \phi^*_{y'}(\mu_x) \nonumber \\
+%   T^L & = & \sum_{\mu} \mu^L \ket{\phi(\mu)} \bra{\phi(\mu)}
+% \end{eqnarray}
+% 
+% 
+
+\end{document}

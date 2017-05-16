@@ -1,0 +1,339 @@
+\documentclass[a4paper,10pt]{article}
+%\documentclass[a4paper,10pt]{scrartcl}
+
+% PACKAGES
+
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{amsmath}
+
+% SETTINGS
+
+\setlength{\parindent}{1em}
+\setlength{\parskip}{1em}
+
+% \hoffset=-50pt
+% \textwidth=440pt
+
+% COMMANDS
+
+\newcommand{\fref}[1]{Figure \ref{#1}}
+
+% TITLE
+
+\title{Roughness Exponent, $\alpha$, in the $u=0$ Regime}
+\author{Justin Whitehouse}
+\date{\today}
+
+\pdfinfo{%
+  /Title    ()
+  /Author   ()
+  /Creator  ()
+  /Producer ()
+  /Subject  ()
+  /Keywords ()
+}
+
+\begin{document}
+\maketitle
+
+\abstract{Research in collaboration with: David Mukamel, Weizmann Institute of Science, Israel; Martin Evans and Richard Blythe, University of Edinburgh}
+
+\tableofcontents
+\newpage
+
+
+% INTRODUCTION =============================================================================================================================================================
+\section{Introduction}
+
+In the regime where $u = 0$, the membrane can only move towards the interface (see \fref{fig:MI_direction_sketch}).
+\begin{figure}[h!]
+ \centering
+ \includegraphics[width=0.8\textwidth]{img/MI_direction_sketch}
+ \label{fig:MI_direction_sketch}
+\end{figure}
+The The parameter $p$ is the probability that a point on the interface will grow ``upwards'' (towards the membrane). 
+
+For the case $p=0$, the interface cannot grow towards the membrane, which means that the membrane never impedes the growth of the interface. Thus, we expect the roughness exponent, $\alpha$, to be equal to $1/2$ as it is in a standard KPZ interface. 
+
+In the regime $p > 1/2$, the interface is biased towards the membrane. Because the membrane and interface are biased towards each other, we expect the interface to press up tight to the membrane, and be flat. Thus, we expect to see $\alpha = 0$ in this regime. 
+
+In the regime $0 < p < 1/2$, we don't \emph{a priori} know what to expect (I think), but simulations suggest that the width in this regime has roughness exponent $\alpha \simeq 1/3$, with some corrections that depend on $p$ and the system size $L$.
+
+To summarise, our guesses are
+\begin{itemize}
+ \item $p =0$: $\alpha = 1/2$
+ \item $0 < p < 1/2$: $\alpha = 1/3$
+ \item $1/2 < p \le 1$: $\alpha = 0$
+\end{itemize}
+
+Our guess for a plot of $\alpha$ against $p$ is shown in \fref{fig:alpha-p_guess_sketch}.
+\begin{figure}[h!]
+ \centering
+ \includegraphics[width=0.8\textwidth]{img/alpha-p_guess_sketch}
+ \caption{Sketch of guess of $\alpha(p)$.}
+ \label{fig:alpha-p_guess_sketch}
+\end{figure}
+From the numerics, my expectation (guess) was to see a curve which monotonically decreased from $\alpha = 1/2$ at $p=0$ to $\alpha = 1/3$ at $p = 1/3$. What we actually see/measure is a bit more interesting than this, and shown in \fref{fig:alpha-p_u00}. 
+\begin{figure}[bh!]
+ \centering
+ \includegraphics[width=0.8\textwidth]{img/alpha-p_u00}
+ \caption{Measured roughness exponent $\alpha$ against the hop probability $p$.}
+ \label{fig:alpha-p_u00}
+\end{figure}
+
+Going forward we are interested in learning the scaling of the width when $p$ is close to $0$ and also when it is close to $1/2$.
+
+\subsection{Scaling Function Proposals}
+
+Based on our expectations of the dependance of the roughness exponent $\alpha$ on $p$, as shown in \fref{fig:alpha-p_guess_sketch}, we predict that the width $W(p,L)$ is described by certain scaling functions near the points $p=0$ and $p=1/2$.
+
+\subsubsection{Crossover from $p=0$ to $p>0$}
+
+We predict that near $p=0$, $W$ has the following form:
+\begin{equation}
+  W(p,L) = L^{1/2} g(pL^\gamma)
+\end{equation}
+where $g$ is some function which should obey
+\begin{equation}
+  g(0)= \mbox{const.}
+\end{equation}
+while in the limit of $x \to \infty$
+\begin{equation}
+  g(x) \propto x^\phi \;.
+\end{equation}
+
+This form is motivated as follows. First, we require that there is a crossover in the system size scaling of $W$ from $W \sim L^{1/2}$ at $p=0$ to $W \sim L^{1/3}$ for $0<p<1/2$. This means that the function $g(x)$ should be constant (w.r.t $L$) as $x\to0$ to get the $L^{1/2}$ scaling at $p=0$. Going the other way, as $x$ gets larger, we require $g(x)\to x^\phi$ (where $\phi$ is to be determined) in order to make the crossover from $L^{1/2}$ to $L^{1/3}$.
+
+The argument $pL^\gamma$ of $g$ describes the fact that, for finite systems, $p$ has to be smaller than one over some power $\gamma$ of $L$, such that $p \ll 1/ L^\gamma $ for the crossover from $\alpha = 1/3$ to $\alpha = 1/2$ to be seen in simulations\footnote{(Note to self: consider $L \to \infty$. This requires $p=0$ to see $W \sim L^{1/2}$, as we would expect.)}.
+
+\subsubsection{For $p$ close to $1/2$}
+
+We make a similar prediction for the scaling of $W$ near $p = 1/2$:
+\begin{equation}\label{eq:p0.5g_scaling}
+  W(L,p)= L^{1/3} f[L|p-0.5|^\delta] \;,
+\end{equation}
+where $f(x)$ goes to a constant for $p<0.5$, and should diverge as $x^{-1/3}$ for $p>0.5$.
+
+For $p<1/2$ we expect $f(x)$ to go to a constant as $x$ increases, because this means that the width will scale as $W \sim L^{1/3}$, which is what we expect to see when $0 < p < 1/2$.
+
+For $p > 1/2$ we expect to $f(x) \to x^{-1/3}$ as $x$ increases because this would result in the scailng $W \sim L^{1/3}L^{-1/3} = L^0$, which is what we expect to see when $p>1/2$.
+
+
+\subsection{Summary of Results}
+
+Here is a summary of the initial results. {\bf (NOTE: for all: need to do more sophisticated scaling collapse for more precise and accurate estimates of exponents.)}
+
+\subsubsection{Near $p=0$}
+
+\begin{equation}
+  W(p,L) = L^{1/2} g(pL^\gamma) \;, \quad \gamma = 1/2 \; \mbox{(measured: $\gamma \simeq 0.60$)} \;,
+\end{equation}
+where
+\begin{equation}
+ g(x) \to x^\phi \;, \quad x\to\infty \;, \quad\phi = -1/3\; \mbox{(measured: $\phi \simeq -0.28$)} \;,
+\end{equation}
+and
+\begin{equation}
+  g(0) = 0 \;.
+\end{equation}
+
+\subsubsection{For $p>1/2$}
+
+\begin{equation}
+  W(p,L) = L^{1/3} f(L|p-0.5|^\delta) \;, \quad \delta = 1 \; \mbox{(measured: $\delta \simeq 1.0$)} \;,
+\end{equation}
+where
+\begin{equation}
+  f(x) \to x^{-1/3} \;, \quad x \to \infty \;.
+\end{equation}
+
+\subsubsection{For $p < 1/2$}
+
+\begin{equation}
+  W(p,L) = L^{1/3} f(L|p-0.5|^\delta) \;, \quad \delta = 1 \; \mbox{(measured: $\delta \simeq 1.0$)} \;,
+\end{equation}
+where
+\begin{equation}
+  f(x) \to \mbox{const.} \;, \quad x \to \infty \;.
+\end{equation}
+
+{\bf (NOTE: Need some more analysis here)}
+
+(Actually there may be some evidence to suggest we need to think more about this and do some more careful analysis.)
+
+\subsection{At $p=1/2$}
+
+Numerically I have measured the roughness exponent $\alpha \simeq 0.29$ at $p=1/2$. I think we were hoping/expecting to see $\alpha=1/3$. I have some tentative evidence that may indicate that with increasing system size $\alpha \to 1/3$ at this point.
+
+
+\newpage
+% CROSSOVER SCALING - SMALL P ==============================================================================================================================================
+\section{Crossover Scaling, from $p=0$ to $p > 0$}
+
+As described above, for the crossover from $\alpha = 1/2$ at $p = 0$ to $\alpha \simeq 1/3$ for $0 < p  < 1/2$, we expect the width to have the following form:
+\begin{equation}
+  W(p,L) = L^{1/2} g(pL^\gamma)
+\end{equation}
+where $g$ is some function which should obey
+\begin{equation}
+  g(0)= \mbox{const.}
+\end{equation}
+while in the limit of $x \to \infty$
+\begin{equation}
+  g(x) \propto x^\phi \;.
+\end{equation}
+Because we expect $W \sim L^{1/3}$ as we move away from $p=0$, the two exponents $\gamma$ and $\phi$ should obey
+\begin{equation}
+  1/2 +\gamma \phi = 1/3
+\end{equation}
+and hence the product of the two exponents should satisfy
+\begin{equation}\label{eq:gamma_phi}
+  \gamma \phi = -1/6
+\end{equation}
+We can try to determine these exponents by trying to get data collapse of the plot of
+\begin{equation}
+  W(p,L)L^{-1/2} \; \mbox{vs.} \; pL^\gamma
+\end{equation}
+and determine the exponent $\gamma$ which yields the best data collapse in this way.
+
+Using a quick and simple data collapse, where I guess the scaling exponent $\gamma$, we see that to the nearest $0.1$ the choice of $\gamma$ which gives the best collapse is $\gamma = 0.6$ (see \fref{fig:pLW_g06}).
+\begin{figure}
+  \centering
+  \includegraphics[width=0.8\textwidth]{img/u00_pLW_data_psmallsets_g06}
+  \caption{Plot of $WL^{-1/2}$ against $pL^\gamma$, with $\gamma = 0.6$.}
+  \label{fig:pLW_g06}
+\end{figure}
+
+If $\gamma = 6/10$ then using \eqref{eq:gamma_phi} $\phi = -10/36$. However, if we guess that numerical errors are hiding the true value $\gamma = 1/2$, then in this case $\phi$ would be equal to $-1/3$.
+
+I am currently working on producing a better estimate (using numerical methods) of the exponent $\gamma$.
+
+
+\newpage
+%  SCALING NEAR P = 1/2 ====================================================================================================================================================
+\section{Scaling near $p=1/2$}
+
+Near $p=0.5$ we expect the width to have the following form:
+\begin{equation}
+  W(L,p)= L^{1/3} f[L|p-0.5|^\delta]
+\end{equation}
+where $f(x)$ goes to a constant for $p<0.5$ and it should diverge as $x^{-1/3}$ or $p>0.5$.
+
+To investigate this, I have plot the data $WL^{-1/3}$ against $L|p-0.5|^\delta$, and made guesses for $\delta$. I have found that to the nearest $0.1$, the best choice for $\delta$ is $\delta = 1$. The data collapse is shown in \fref{fig:p05_delta1_scaling}. The upper portion of the graph comes from data where $p < 1/2$, and the lower portion comes from data where $p > 1/2$. 
+\begin{figure}
+ \centering
+ \includegraphics[width=0.8\textwidth]{img/u00_pLW_data_Lsets_p05_delta100_logxy}
+ \caption{Data collapse for the width near $p = 1/2$. The points in the upper portion are from data with $p<1/2$, and those from the lower portion are from points with $p > 1/2$.}
+ \label{fig:p05_delta1_scaling}
+\end{figure}
+
+\subsection{Scaling at $p > 1/2$}
+
+The data collapse for $p>1/2$ is shown in \fref{fig:p05g_logfit}. 
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.8\textwidth]{img/u00_pLW_data_Lsets_p05g_WL0_logfit.png} 
+  \caption{(NOTE: the farthest right point in each data set comes from the width measured at $p=1$, which does not seem to follow the trend. \emph{This can be seen more clearly in \fref{fig:p05g_delta100_Wp}})}
+  \label{fig:p05g_logfit}
+\end{figure}
+% \begin{figure}
+%   \centering
+%   \includegraphics[width=0.8\textwidth]{u00_pLW_data_Lsets_p05g_delta100_a033_logxy.png}
+%   \caption{}
+%   \label{fig:p05g_delta100_a033}
+% \end{figure}
+What we see is that 
+\begin{equation}
+ \ln(WL^{-1/3}) = -k \ln (L|p-1/2|^\delta) \;,  
+\end{equation}
+where we have measured $k \simeq 0.3$. If we assume that $k=1/3$ is the true value, then we find that
+\begin{equation}
+  W = |p-1/2|^{-\delta/3} \;.
+\end{equation}
+A plot of $W/|p-1/2|^{-\delta/3}$ against $L|p-1/2|^\delta$ should show a straight, horizontal line. This plot is shown in \fref{fig:p05g_delta100_Wp}. We do see a straight line, but it is not quite horizontal.
+\begin{figure}
+  \centering
+  \includegraphics[width=0.8\textwidth]{img/u00_pLW_data_Lsets_p05g_delta100_Wp_logxy.png} 
+  \caption{Collapse of the $W$ data for $p > 1/2$. (NOTE: the farthest right point in each data set comes from the width measured at $p=1$, which does not seem to follow the trend.)}
+  \label{fig:p05g_delta100_Wp}
+\end{figure}
+
+We actually measured $k = 1/3 - \sigma$, where $\sigma$ is small, then 
+\begin{equation}
+  W = |p-1/2|^{-\delta/3} (L|p-1/2|^\delta)^{\sigma}\;.
+\end{equation}
+For a sufficiently small $\sigma$, we should see a line with positive gradient $\sigma$ on a plot of $\log[W/|p-1/2|^{-\delta/3}]$ against $\log[L|p-1/2|^\delta]$, which is what we see in \fref{fig:p05g_delta100_Wp}.
+
+The evidence from \fref{fig:p05g_delta100_Wp} and from the plot in \fref{fig:p05g_logfit} seem confirm our scaling assumption \eqref{eq:p0.5g_scaling} with $\delta = 1$ is correct, although a more precise measurement of the exponents is required to be sure. Explicitly, we have found
+\begin{equation}
+ W(p,L) = L^{1/3} f(L|p-1/2|) \;, \quad p > 1/2 \;, 
+\end{equation}
+where $f(x)$ diverges as $x^{-1/3}$.
+
+What we have yet to learn is the scaling of $f(x)$ as $x \to 0$. We are starting to see some of his behaviour in the small $|p-1/2|$ regions of the plots in \fref{fig:p05g_logfit} and \fref{fig:p05g_delta100_Wp}.
+
+\subsection{Scaling at $p < 1/2$}
+
+Turning our attention to the scaling for $p < 1/2$, we can see from \fref{fig:p05l_delta1} that for small values of $|p-1/2|$ the curve is approximately flat, which indicates that the scaling function $f(x)$ is approxmiately constant when $p < 1/2$ and $x$ is small.
+\begin{figure}
+  \centering
+  \includegraphics[width=0.8\textwidth]{img/u00_pLW_data_Lsets_p05l_delta100_logxy.png}
+  \caption{Plot of $WL^{-1/3}$ against $L|p-0.5|^\delta$ (log axes) for $p < 1/2$.}
+  \label{fig:p05l_delta1}
+\end{figure}
+% img/u00_pLW_data_Lsets_p05l_delta080_close_a025_logxy.png
+% img/u00_pLW_data_Lsets_p05l_delta100_close_a025_logxy.png
+
+{\bf (NOTE: need to do some more analysis for this bit.)}
+
+(Actually the fact that the plot in \fref{fig:p05l_delta1} is not `exactly' flat may be down to more than numerical errors. It may be that there is some structure there we need to think about. This will come up again at the end of the next section!)
+
+\subsection{Scaling of $f(x)$ as $x\to0$ (at $p = 1/2$)}
+
+To investigate the scaling of $f(x)$ for small $x$, we look at how the width $W$ scales with the system size $L$ for $p = 1/2$. If we expect that $f(x)\to\mbox{ const.}$ as $x \to 0$ then we should expect to see that $W \sim L^\alpha$, with $\alpha = 1/3$. To do this we preform a linear regression on the data for the measured width $W$ against the system size $L$.
+\begin{figure}
+  \centering
+  \includegraphics[width=0.8\textwidth]{img/u00_pLW_data_phalf_lnWlnL.png}
+  \caption{The slope of the linear fit of $ln(W)$ against $ln(L)$ gives us an estimate for the roughness exponent $\alpha\simeq0.29$ at $p=1/2$.}
+  \label{fig:phalf_fit}
+\end{figure}
+As we can see from \fref{fig:phalf_fit}, we find a good fit for $\alpha\simeq0.29$. 
+
+\begin{figure}[h!]
+ \centering
+ \includegraphics[width=0.8\textwidth]{img/alpha-p_u00_3sets_zoom_p05.png}
+ \caption{View of $\alpha$ against $p$ near $\alpha =1/2$. Subsets of the full data at different system size ranges are shown.}
+ \label{fig:alpha-p_u00_3sets_zoom_p05}
+\end{figure}
+This is actually what we see from \fref{fig:alpha-p_u00}, which presents our measurements of $\alpha$ as a function of $p$, measured using a simple linear regression as above. We can look closer at the region around $p=0.5$. As shown in \fref{fig:alpha-p_u00_3sets_zoom_p05}, by doing the analysis and plotting using sequential subsets of the data (subsets of different system size ranges) we see a few interesting things. 
+
+The first is that for $p>1/2$, the transition at $p=1/2$ becomes sharper, and the values of $\alpha$ are closer to zero. This matches up with ur expectations and our earlier measurements. 
+
+The second is that for $p < 1/2$, it looks like increasing the system size is pushing the peak of the curve, where $\alpha\simeq1/3$, closer to $p = 1/2$.
+
+Finally, for $p<1/2$ the exponent $\alpha$ also seems to decrease as we increase the system sizes. I think this is contrary to what we expected, which is that for larger system sizes the points would move in the other direction to be closer to $\alpha = 1/3$. It may be then that for $p < 1/2$, $f(x) \to x^{-\psi}$ as $x \to\infty$, which would mean that 
+\begin{equation}
+  W \sim L^{1/3-\psi} \;, \quad 0 < \psi < 1/3 \;,  
+\end{equation}
+in this region.
+
+\begin{figure}[h!]
+ \centering
+ \includegraphics[width=0.8\textwidth]{img/u00_pLW_data_Lsets_p05lfit_2_rsp.png}
+ \caption{A collapse of the $W$ data for $p < 1/2$.}
+ \label{fig:u00_pLW_data_Lsets_p05lfit_2_rsp}
+\end{figure}
+To test this we can do as we did for $p>1/2$ and plot $\ln(W/L^{1/3})$ against $\ln(L|p-1/2|^\delta)$ to see if there is a data collapse. This collapse can be seen in \fref{fig:u00_pLW_data_Lsets_p05lfit_2_rsp} for $\delta=1$. The data collapses well for one small region of the curve, but there are lots of different features across the range where the collapse is not so good. 
+
+I think that this needs a bit more thought to figure out what's going on here. Maybe there are intermediate scaling regimes? Maybe other values of $\delta$ would be more appropriate.
+
+% Mathematically speaking, finding an exponent $\alpha = 1/3 - \sigma = 0.29$ may have the following origin: if $f(x) \to x^{-\sigma}$ as $x\to 0$, then as $L|p-1/2|^\delta \to 0$, 
+% \begin{equation}
+%  W \to L^{1/3 - \sigma} |p-1/2|^{-\delta \sigma} \;. 
+% \end{equation}
+% This is problematic because if $p \to 1/2$ then $W$ diverges, because both $\delta$ and $\sigma$ are positive. If we had measured $\alpha=1/3$, we would be in the situation that $\sigma = 0$ and everything is as expected.
+
+
+
+\end{document}
